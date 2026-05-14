@@ -1,0 +1,1502 @@
+[
+  {
+    "id": 1,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Your tremble means you’re alive, not that you’re broken."
+  },
+  {
+    "id": 2,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Shaking doesn’t mean collapse — it means you’re ready to ground yourself."
+  },
+  {
+    "id": 3,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Every quake is a chance to build stronger foundations."
+  },
+  {
+    "id": 4,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Wobbly steps are still steps forward."
+  },
+  {
+    "id": 5,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "You can hold steady, even while the world shakes."
+  },
+  {
+    "id": 6,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Fear shakes loud, but courage holds steady."
+  },
+  {
+    "id": 7,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Earthquakes don’t last forever — neither will this storm."
+  },
+  {
+    "id": 8,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Even cracks can grow flowers."
+  },
+  {
+    "id": 9,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Strength isn’t the absence of tremors — it’s learning to move through them."
+  },
+  {
+    "id": 10,
+    "character": "Quake",
+    "characterSlug": "quake",
+    "text": "Quakes pass, but you remain."
+  },
+  {
+    "id": 11,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Even storms rest when they reach the harbor."
+  },
+  {
+    "id": 12,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Your calm is your anchor; let it steady you."
+  },
+  {
+    "id": 13,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Still waters hold strength too."
+  },
+  {
+    "id": 14,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Peace isn’t weakness — it’s preparation."
+  },
+  {
+    "id": 15,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Harbors remind us: you don’t have to sail all the time."
+  },
+  {
+    "id": 16,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Quiet is where your answers hide."
+  },
+  {
+    "id": 17,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Rest is the rhythm that keeps you going."
+  },
+  {
+    "id": 18,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Anchors aren’t just heavy — they’re grounding."
+  },
+  {
+    "id": 19,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Safety is not a pause, it’s a gift."
+  },
+  {
+    "id": 20,
+    "character": "Harbor",
+    "characterSlug": "harbor",
+    "text": "Be the harbor you wish you could find."
+  },
+  {
+    "id": 21,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "The buzz only wins if you never turn the dial."
+  },
+  {
+    "id": 22,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Noise is a distraction, not a direction."
+  },
+  {
+    "id": 23,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Static fades when you focus on your true signal."
+  },
+  {
+    "id": 24,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Every frequency has clarity waiting underneath."
+  },
+  {
+    "id": 25,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "You can’t hear yourself if you never tune out the noise."
+  },
+  {
+    "id": 26,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Clarity hides beneath the clutter."
+  },
+  {
+    "id": 27,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Silence isn’t empty — it’s clear."
+  },
+  {
+    "id": 28,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Confusion is loud; truth whispers."
+  },
+  {
+    "id": 29,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "Static is temporary, but your signal is permanent."
+  },
+  {
+    "id": 30,
+    "character": "Static",
+    "characterSlug": "static",
+    "text": "You are not the noise."
+  },
+  {
+    "id": 31,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "The path is already inside you — follow it."
+  },
+  {
+    "id": 32,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "True north is found, not given."
+  },
+  {
+    "id": 33,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "Direction matters more than speed."
+  },
+  {
+    "id": 34,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "The compass doesn’t shout, it whispers."
+  },
+  {
+    "id": 35,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "You already know the way — trust it."
+  },
+  {
+    "id": 36,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "Getting lost is how you learn the map."
+  },
+  {
+    "id": 37,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "North isn’t a place, it’s a knowing."
+  },
+  {
+    "id": 38,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "Don’t confuse movement with direction."
+  },
+  {
+    "id": 39,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "Even when the stars hide, your compass works."
+  },
+  {
+    "id": 40,
+    "character": "North",
+    "characterSlug": "north",
+    "text": "Your steps align when your purpose does."
+  },
+  {
+    "id": 41,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Holding too tight makes what you fear slip away faster."
+  },
+  {
+    "id": 42,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Scarcity shrinks, trust expands."
+  },
+  {
+    "id": 43,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Loosen your grip, and you’ll see there’s enough."
+  },
+  {
+    "id": 44,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Fear is the tightest prison — release is the key."
+  },
+  {
+    "id": 45,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "There’s freedom in knowing you don’t have to clutch everything."
+  },
+  {
+    "id": 46,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Greed locks doors; trust opens them."
+  },
+  {
+    "id": 47,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "You don’t own security by squeezing it."
+  },
+  {
+    "id": 48,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "The tighter the fist, the less you can hold."
+  },
+  {
+    "id": 49,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Fear hoards, but trust multiplies."
+  },
+  {
+    "id": 50,
+    "character": "Pinch",
+    "characterSlug": "pinch",
+    "text": "Enough starts with belief."
+  },
+  {
+    "id": 51,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Overflow is meant to be shared."
+  },
+  {
+    "id": 52,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Generosity multiplies what you give."
+  },
+  {
+    "id": 53,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "The more you open your hand, the more you’ll hold."
+  },
+  {
+    "id": 54,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Abundance is a mindset, not just a number."
+  },
+  {
+    "id": 55,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "What’s enough grows when you believe it."
+  },
+  {
+    "id": 56,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Plenty doesn’t brag, it provides."
+  },
+  {
+    "id": 57,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Giving is the proof of having."
+  },
+  {
+    "id": 58,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "There is more in community than in hoarding."
+  },
+  {
+    "id": 59,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "The universe doesn’t ration possibility."
+  },
+  {
+    "id": 60,
+    "character": "Plenty",
+    "characterSlug": "plenty",
+    "text": "Scarcity is a lie — there’s plenty here."
+  },
+  {
+    "id": 61,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Perfection is procrastination in disguise."
+  },
+  {
+    "id": 62,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Better done today than perfect tomorrow."
+  },
+  {
+    "id": 63,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Shine doesn’t come from spotless — it comes from showing up."
+  },
+  {
+    "id": 64,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Progress is the polish that really matters."
+  },
+  {
+    "id": 65,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Perfection freezes, progress frees."
+  },
+  {
+    "id": 66,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Your flaws don’t erase your brilliance."
+  },
+  {
+    "id": 67,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "The first draft counts too."
+  },
+  {
+    "id": 68,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Your shine is in your showing, not your hiding."
+  },
+  {
+    "id": 69,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "Perfection is static — growth is movement."
+  },
+  {
+    "id": 70,
+    "character": "Polish",
+    "characterSlug": "polish",
+    "text": "You’re already enough, unfinished edges and all."
+  },
+  {
+    "id": 71,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Takeoff matters more than the landing."
+  },
+  {
+    "id": 72,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Imagination is your runway."
+  },
+  {
+    "id": 73,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Play is how you discover new skies."
+  },
+  {
+    "id": 74,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Adventures begin where hesitation ends."
+  },
+  {
+    "id": 75,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Pilot your ideas — they don’t fly themselves."
+  },
+  {
+    "id": 76,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "You can’t soar if you never launch."
+  },
+  {
+    "id": 77,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Play makes progress possible."
+  },
+  {
+    "id": 78,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Risk isn’t reckless — it’s flight."
+  },
+  {
+    "id": 79,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Dreams need pilots, not passengers."
+  },
+  {
+    "id": 80,
+    "character": "Pilot",
+    "characterSlug": "pilot",
+    "text": "Every crash teaches a smoother flight."
+  },
+  {
+    "id": 81,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Boundaries make space for freedom."
+  },
+  {
+    "id": 82,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Strong frames build tall towers."
+  },
+  {
+    "id": 83,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Structure isn’t a cage, it’s scaffolding."
+  },
+  {
+    "id": 84,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Rules can free you, if you make them yours."
+  },
+  {
+    "id": 85,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Chaos collapses where boundaries aren’t built."
+  },
+  {
+    "id": 86,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Strong structures bend before they break."
+  },
+  {
+    "id": 87,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Without frames, the picture falls apart."
+  },
+  {
+    "id": 88,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "A plan isn’t prison, it’s possibility."
+  },
+  {
+    "id": 89,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Freedom grows best in solid soil."
+  },
+  {
+    "id": 90,
+    "character": "Frame",
+    "characterSlug": "frame",
+    "text": "Order is the foundation of peace."
+  },
+  {
+    "id": 91,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Numbers don’t lie — and neither does your growth."
+  },
+  {
+    "id": 92,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Every step counts, even the small ones."
+  },
+  {
+    "id": 93,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Receipts are reminders that progress happened."
+  },
+  {
+    "id": 94,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "What you track grows stronger."
+  },
+  {
+    "id": 95,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Accountability is proof of care, not punishment."
+  },
+  {
+    "id": 96,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "The data of your effort will tell the story."
+  },
+  {
+    "id": 97,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Receipts don’t just prove, they protect."
+  },
+  {
+    "id": 98,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Growth leaves evidence — write it down."
+  },
+  {
+    "id": 99,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Progress is math you can believe in."
+  },
+  {
+    "id": 100,
+    "character": "Ledger",
+    "characterSlug": "ledger",
+    "text": "Ledger shows the story your memory forgets."
+  },
+  {
+    "id": 101,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Your light is worthy, even if it’s been hiding."
+  },
+  {
+    "id": 102,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Stepping out of the shade doesn’t make you fragile — it makes you seen."
+  },
+  {
+    "id": 103,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "The world needs what you’ve kept in the dark."
+  },
+  {
+    "id": 104,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Being invisible protects you — but it also hides your brilliance."
+  },
+  {
+    "id": 105,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Even shadows prove the light exists."
+  },
+  {
+    "id": 106,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Shade hides, but can’t erase."
+  },
+  {
+    "id": 107,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Fear dims you — courage reveals you."
+  },
+  {
+    "id": 108,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Your silence still shines."
+  },
+  {
+    "id": 109,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "Coming into the light isn’t weakness, it’s arrival."
+  },
+  {
+    "id": 110,
+    "character": "Shade",
+    "characterSlug": "shade",
+    "text": "The world is better when you’re visible."
+  },
+  {
+    "id": 111,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "You don’t have to live in the loop forever."
+  },
+  {
+    "id": 112,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Every echo fades when you find your own sound."
+  },
+  {
+    "id": 113,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Repetition can be prison — or practice."
+  },
+  {
+    "id": 114,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Break the loop by singing something new."
+  },
+  {
+    "id": 115,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "You’re not just an echo; you’re a voice."
+  },
+  {
+    "id": 116,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Echoes remind you of where you’ve been — not where you’re going."
+  },
+  {
+    "id": 117,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Your voice is more than a copy."
+  },
+  {
+    "id": 118,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "An echo fades into silence unless you choose a new note."
+  },
+  {
+    "id": 119,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Reverb isn’t reality."
+  },
+  {
+    "id": 120,
+    "character": "Echo",
+    "characterSlug": "echo",
+    "text": "Echoes don’t define you; your original sound does."
+  },
+  {
+    "id": 121,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Your truth carries farther than your fear."
+  },
+  {
+    "id": 122,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Authenticity always vibrates louder than lies."
+  },
+  {
+    "id": 123,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Speak once, resonate forever."
+  },
+  {
+    "id": 124,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "The real you has an audience waiting."
+  },
+  {
+    "id": 125,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "When you resonate, others will harmonize."
+  },
+  {
+    "id": 126,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Your honesty is an amplifier."
+  },
+  {
+    "id": 127,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Courage makes the clearest sound."
+  },
+  {
+    "id": 128,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Your voice is already powerful — own it."
+  },
+  {
+    "id": 129,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "Resonance comes from roots, not masks."
+  },
+  {
+    "id": 130,
+    "character": "Resonate",
+    "characterSlug": "resonate",
+    "text": "What you say matters when it’s true."
+  },
+  {
+    "id": 131,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Sparks don’t mean you’re done — they mean you need fuel."
+  },
+  {
+    "id": 132,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Running on empty is still running — but it’s not forever."
+  },
+  {
+    "id": 133,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "You can rebuild the engine one part at a time."
+  },
+  {
+    "id": 134,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Burnout is not your end, it’s your pause."
+  },
+  {
+    "id": 135,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Even sputters can start fires again."
+  },
+  {
+    "id": 136,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Exhaustion is a message, not a failure."
+  },
+  {
+    "id": 137,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Rest restores more than effort does."
+  },
+  {
+    "id": 138,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "A stutter in the flame isn’t the end of the fire."
+  },
+  {
+    "id": 139,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "Every engine cools before it runs again."
+  },
+  {
+    "id": 140,
+    "character": "Sputter",
+    "characterSlug": "sputter",
+    "text": "You are not broken, you are just paused."
+  },
+  {
+    "id": 141,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Progress isn’t a straight line, it’s a dance."
+  },
+  {
+    "id": 142,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Flow forward — not rushed, just steady."
+  },
+  {
+    "id": 143,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "The river doesn’t apologize for its pace."
+  },
+  {
+    "id": 144,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Movement itself is the proof of life."
+  },
+  {
+    "id": 145,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Find your rhythm, and the rest will follow."
+  },
+  {
+    "id": 146,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Grace is not perfection — it’s presence."
+  },
+  {
+    "id": 147,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Even pauses are part of the dance."
+  },
+  {
+    "id": 148,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Water carves canyons by flowing, not forcing."
+  },
+  {
+    "id": 149,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "Flow is freedom in motion."
+  },
+  {
+    "id": 150,
+    "character": "Flow",
+    "characterSlug": "flow",
+    "text": "The dance doesn’t end, it changes."
+  },
+  {
+    "id": 151,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "It’s okay to drift — even clouds reach the sky."
+  },
+  {
+    "id": 152,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Not all wandering is wasted."
+  },
+  {
+    "id": 153,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Drift long enough, and you’ll see your horizon."
+  },
+  {
+    "id": 154,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Vision starts where drifting ends."
+  },
+  {
+    "id": 155,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "You’re not lost — you’re moving differently."
+  },
+  {
+    "id": 156,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Wandering can still lead home."
+  },
+  {
+    "id": 157,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Direction comes after drifting."
+  },
+  {
+    "id": 158,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "You don’t need to hurry to arrive."
+  },
+  {
+    "id": 159,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "The horizon waits for drifters too."
+  },
+  {
+    "id": 160,
+    "character": "Drift",
+    "characterSlug": "drift",
+    "text": "Sometimes floating brings the clearest view."
+  },
+  {
+    "id": 161,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Luxury can sweeten life — just don’t let it drown you."
+  },
+  {
+    "id": 162,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "You deserve pleasure, but you also deserve peace."
+  },
+  {
+    "id": 163,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Velvet feels soft — until it covers your eyes."
+  },
+  {
+    "id": 164,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "A taste of sweetness isn’t the same as living on sugar."
+  },
+  {
+    "id": 165,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Indulgence is best savored, not swallowed whole."
+  },
+  {
+    "id": 166,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Desire can drive you, but it shouldn’t chain you."
+  },
+  {
+    "id": 167,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "A velvet trap is still a trap."
+  },
+  {
+    "id": 168,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "What glitters can guide — or blind."
+  },
+  {
+    "id": 169,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Want isn’t the enemy, waste is."
+  },
+  {
+    "id": 170,
+    "character": "Velour",
+    "characterSlug": "velour",
+    "text": "Pleasure has power when you stay in control of it."
+  },
+  {
+    "id": 171,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Sweetness can comfort, or it can suffocate."
+  },
+  {
+    "id": 172,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Not everything warm is safe."
+  },
+  {
+    "id": 173,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Honey sticks when you don’t know how to let go."
+  },
+  {
+    "id": 174,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Comfort is a gift — captivity is not."
+  },
+  {
+    "id": 175,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Love yourself enough not to get stuck in sweetness."
+  },
+  {
+    "id": 176,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Traps often look like hugs first."
+  },
+  {
+    "id": 177,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Too much comfort can be a cage."
+  },
+  {
+    "id": 178,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Not every bond is built to hold you right."
+  },
+  {
+    "id": 179,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Sweetness can soothe or strangle — learn the difference."
+  },
+  {
+    "id": 180,
+    "character": "Honeytrap",
+    "characterSlug": "honeytrap",
+    "text": "Honey heals when it’s spread, not when it traps."
+  },
+  {
+    "id": 181,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Turn it up — but don’t blow out your speakers."
+  },
+  {
+    "id": 182,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Hype without direction is just noise."
+  },
+  {
+    "id": 183,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Energy is fuel — not the destination."
+  },
+  {
+    "id": 184,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "The loudest sound isn’t always the clearest."
+  },
+  {
+    "id": 185,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Rest notes make the music matter."
+  },
+  {
+    "id": 186,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Volume isn’t the same as impact."
+  },
+  {
+    "id": 187,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Overdrive burns the engine — pace keeps it running."
+  },
+  {
+    "id": 188,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Every song needs silence to breathe."
+  },
+  {
+    "id": 189,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "A spark is powerful — but only with control."
+  },
+  {
+    "id": 190,
+    "character": "Amp",
+    "characterSlug": "amp",
+    "text": "Amp up, but don’t burn out."
+  },
+  {
+    "id": 191,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Shine so bright they can’t ignore you."
+  },
+  {
+    "id": 192,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Spotlights reveal — but they can also blind."
+  },
+  {
+    "id": 193,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Attention isn’t affection."
+  },
+  {
+    "id": 194,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Sparkle for yourself, not just the applause."
+  },
+  {
+    "id": 195,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Even mirrors crack if they’re asked to shine too long."
+  },
+  {
+    "id": 196,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Your worth isn’t measured in applause."
+  },
+  {
+    "id": 197,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Lights go out, but your glow doesn’t have to."
+  },
+  {
+    "id": 198,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Performance can be play, not prison."
+  },
+  {
+    "id": 199,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "Validation fades; self-belief stays."
+  },
+  {
+    "id": 200,
+    "character": "Mirrorball",
+    "characterSlug": "mirrorball",
+    "text": "The stage is temporary — the soul is not."
+  },
+  {
+    "id": 201,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Mistakes aren’t malfunctions."
+  },
+  {
+    "id": 202,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Glitches break patterns so you can see new ones."
+  },
+  {
+    "id": 203,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Perfection is overrated — errors are teachers."
+  },
+  {
+    "id": 204,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Distortion isn’t the end — it’s a remix."
+  },
+  {
+    "id": 205,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "What looks broken may be showing you another path."
+  },
+  {
+    "id": 206,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Glitches don’t erase the signal, they highlight it."
+  },
+  {
+    "id": 207,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "The loop can break when you embrace the error."
+  },
+  {
+    "id": 208,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Chaos is sometimes the doorway to creativity."
+  },
+  {
+    "id": 209,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "Static in the system doesn’t mean you’re failing."
+  },
+  {
+    "id": 210,
+    "character": "Glitch",
+    "characterSlug": "glitch",
+    "text": "A glitch is just a pause in perfection."
+  },
+  {
+    "id": 211,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Command without compassion is just control."
+  },
+  {
+    "id": 212,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Boots can stomp — or they can clear a path."
+  },
+  {
+    "id": 213,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Leadership is more than barking orders."
+  },
+  {
+    "id": 214,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Rules can shape, not just restrict."
+  },
+  {
+    "id": 215,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Discipline builds when it’s fair."
+  },
+  {
+    "id": 216,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Power without empathy collapses on itself."
+  },
+  {
+    "id": 217,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Strength is sharpest when it protects, not just punishes."
+  },
+  {
+    "id": 218,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "A footprint can guide or scar — choose wisely."
+  },
+  {
+    "id": 219,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "Respect is earned, not forced."
+  },
+  {
+    "id": 220,
+    "character": "Bossy Boots",
+    "characterSlug": "bossy-boots",
+    "text": "True authority lifts, it doesn’t crush."
+  },
+  {
+    "id": 221,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "The house always wins — unless you change the game."
+  },
+  {
+    "id": 222,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "Everything has a price. Even freedom."
+  },
+  {
+    "id": 223,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "I don’t chase you. You’ll come to me."
+  },
+  {
+    "id": 224,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "Play my way, and you’ll never win. Write your own rules."
+  },
+  {
+    "id": 225,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "I’m not inevitable — but I want you to believe I am."
+  },
+  {
+    "id": 226,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "Charm hides chains. Learn to see both."
+  },
+  {
+    "id": 227,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "Wealth glitters, but it also blinds."
+  },
+  {
+    "id": 228,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "Control doesn’t look dangerous until you can’t escape it."
+  },
+  {
+    "id": 229,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "The system feeds on your belief in it."
+  },
+  {
+    "id": 230,
+    "character": "Capital",
+    "characterSlug": "capital",
+    "text": "I don’t need to fight you — I own the ground you stand on."
+  },
+  {
+    "id": 231,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Every guess is just a step toward the answer."
+  },
+  {
+    "id": 232,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Uncertainty isn’t failure — it’s curiosity in disguise."
+  },
+  {
+    "id": 233,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Second-guessing means you care enough to think twice."
+  },
+  {
+    "id": 234,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "The unknown is not an enemy, it’s an invitation."
+  },
+  {
+    "id": 235,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Even guesses move you forward — standing still does not."
+  },
+  {
+    "id": 236,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Doubt is a compass pointing you toward clarity."
+  },
+  {
+    "id": 237,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Wrong turns still teach you the map."
+  },
+  {
+    "id": 238,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Not knowing is the start of learning."
+  },
+  {
+    "id": 239,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "Every choice teaches, even if it wasn’t perfect."
+  },
+  {
+    "id": 240,
+    "character": "Guess",
+    "characterSlug": "guess",
+    "text": "You don’t need every answer to begin."
+  },
+  {
+    "id": 241,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Your voice is strongest when it carries truth."
+  },
+  {
+    "id": 242,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Signal cuts through noise — stay steady."
+  },
+  {
+    "id": 243,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Clarity doesn’t shout, it shines."
+  },
+  {
+    "id": 244,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Even static can’t block a true signal."
+  },
+  {
+    "id": 245,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Your message matters — keep transmitting."
+  },
+  {
+    "id": 246,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Truth travels farther than distortion."
+  },
+  {
+    "id": 247,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Signal is strongest when it’s authentic."
+  },
+  {
+    "id": 248,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Noise fades, but your signal remains."
+  },
+  {
+    "id": 249,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Communication builds bridges where silence builds walls."
+  },
+  {
+    "id": 250,
+    "character": "Signal",
+    "characterSlug": "signal",
+    "text": "Stay tuned to yourself — that’s your clearest channel."
+  }
+]
