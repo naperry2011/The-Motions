@@ -1,0 +1,73 @@
+# The Motions
+
+> Premium scroll-animated web platform for The Motions — a creative IP and solopreneur brand companion built around the Mo Town universe (25 characters, 250 quotes, geography, arcs, exacerbator interactions) and an 8-module / 216-path workbook program.
+
+## Project Overview
+
+**Tech Stack:** Next.js 15 (App Router) · TypeScript · Tailwind · Framer Motion · Lenis · Supabase · Vercel
+**Status:** v1 shipping (marketing + lore + quote library + workbook sales page + waitlist). v2 (paid gated workbook program with Stripe) deferred.
+**Purpose:** Public face for The Motions IP. Free public lore + quote library + waitlist now; paid workbook program later.
+
+## Core Documentation
+
+- `README.md` — (not at repo root; see `web/README.md` for run instructions)
+- `CODE_MAP.md` — Feature-to-file map
+- `docs/ai/memory.md` — Project history and current state
+- `docs/ai/roadmap.md` — Forward-looking priorities
+- `docs/ai/tasks.md` — Active work
+- `docs/ai/decisions.md` — Architecture decisions (ADRs)
+- `docs/ai/architecture.md` — System design
+- `ENTRY_POINTS.md` — Where execution starts
+- `DATA_FLOW.md` — System-level data movement
+- `IMPORT_GRAPH_SUMMARY.md` — Dependency hotspots
+- `FEATURE_BOUNDARIES.md` — Component responsibilities
+
+## Key Files by Area
+
+### Web app (Next.js)
+- `web/app/page.tsx` — Cinematic homepage
+- `web/app/layout.tsx` — Root layout, fonts, Lenis provider, nav/footer
+- `web/app/universe/page.tsx` — Mo Town overview
+- `web/app/universe/characters/page.tsx` — Character index
+- `web/app/universe/characters/[slug]/page.tsx` — Character profile (SSG via `generateStaticParams`)
+- `web/app/universe/{geography,lore,arcs,exacerbators}/page.tsx` — Narrative pages
+- `web/app/quotes/page.tsx` — Quote library
+- `web/app/workbook/page.tsx` — Workbook sales page
+- `web/app/api/waitlist/route.ts` — Waitlist API
+
+### Animation primitives
+- `web/lib/animations/LenisProvider.tsx`
+- `web/components/motion/{TextReveal,RevealOnView,Parallax,Marquee}.tsx`
+
+### Content pipeline (build-time)
+- `web/scripts/build-content.ts` — Parses source docs → JSON
+- `web/content/*.json` — Generated artifacts (committed)
+- `web/lib/content.ts` — Typed loader
+
+### Backend
+- `web/lib/supabase/server.ts` — Supabase SSR client
+- `web/supabase/migrations/0001_init.sql` — `waitlist` table + RLS
+
+### Source content (read by the pipeline only)
+- `Character Documentation/*.docx`
+- `The Motions Workbook Compotents/{Module*.xlsx,motions_complete_250_quotes.csv}`
+- `THE MOTIONS UNIVERSE LORE - CLIENT WORK CONNECTION.docx`
+
+## Common Tasks
+
+**To run locally:** `cd web && npm install && npm run content:build && npm run dev`
+**To rebuild content from sources:** `cd web && npm run content:build` (re-run any time a source `.docx`/`.xlsx`/`.csv` changes)
+**To deploy:** push `main` to GitHub; Vercel auto-deploys. Project must have Root Directory = `web` and Framework Preset = Next.js.
+**To add a character:** add a row to `motions_complete_250_quotes.csv`, re-run content pipeline. (The CSV is canonical — see `docs/ai/decisions.md` ADR-003.)
+**To edit narrative pages (geography/lore/arcs/exacerbators):** edit the source `.docx` in `Character Documentation/`, re-run content pipeline.
+**To apply a Supabase migration:** paste the SQL from `web/supabase/migrations/*.sql` into the Supabase SQL Editor (no migration runner wired).
+
+## Environment Variables
+
+Set in `web/.env.local` (and as Vercel project env vars):
+
+- `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL (no trailing path)
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — publishable key (`sb_publishable_…` or legacy anon JWT)
+- `SUPABASE_SERVICE_ROLE_KEY` — secret key (`sb_secret_…` or legacy service_role JWT); server-only, never expose
+
+When `NEXT_PUBLIC_SUPABASE_URL` is unset, `/api/waitlist` soft-fails with `{ok: true, queued: false}` so local dev still works.
