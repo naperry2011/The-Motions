@@ -8,24 +8,25 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
 
 ## Current Focus
 
-**Theme:** v1 polish + launch
+**Theme:** Phase 1 polish — every public surface looks and feels like Mo Town, not a generic Next.js site.
 **Goals:**
-1. Replace placeholder copy and character stubs with the real editorial voice
-2. Drop in real graphics (existing PNG library under `The Motions Graphics (*)`, quote posts, character art) so the cinematic layer has visual weight, not just type
-3. Validate the homepage / workbook waitlist conversion on real traffic before building paid tier
+1. Bring the four narrative pages (geography / lore / arcs / exacerbators) up to the same cartoon-vibe bar as the character profiles
+2. Editorial / copy pass so the marketing surfaces stop sounding generic
+3. Mobile menu so non-character pages are reachable on phones beyond the Workbook CTA
 
 ## Now
 
-- Editorial pass on hand-authored MDX (homepage manifesto, lore essays, workbook sales-page long-form) — Not started
-- Character bio backfill: either fix the docx parser heuristics OR hand-author bios in MDX per character — Not started
-- Move graphics/quote-post images into `web/public/assets/**` and surface them on character cards + quote library — Not started
+- Character profile bios fleshed out from the canonical database — **Done** (`f8bfbcc`)
+- Character profile vibe + mobile pass — **Done** (`bea18fa`)
+- Narrative pages styling pass (geography, lore, arcs, exacerbators) — **Not started**
 
 ## Next
 
-- Custom domain + Vercel production swap from the auto-generated URL
-- Analytics (Vercel Analytics or Plausible) + Open Graph images per route
-- Sitemap, robots.txt, structured data for the universe pages
-- Mobile pass — verify scroll animations hold 60fps on mid-range Android
+- `/universe` overview polish (currently just a 6-tile grid + Welcome billboard)
+- Mobile nav hamburger so universe/characters/quotes are reachable from mobile beyond the homepage entry point
+- Editorial copy pass on homepage manifesto + workbook sales-page long-form
+- Custom domain + Vercel production swap
+- Analytics + OG images + sitemap.xml + robots.txt (one combined chore)
 
 ## Later
 
@@ -34,19 +35,25 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
   - Gated routes: `/workbook/program/module/[n]`, `/workbook/program/path/[n]/[p]`
   - `module_progress`, `path_progress` tables + progress UI
   - Exercise PDF downloads from Supabase Storage
-  - Magic-link sign-in UI (Supabase Auth is already wired but ungated)
+  - Magic-link sign-in UI (Supabase Auth already wired but ungated)
   - Resend (or similar) for waitlist + enrollment emails
 - Mo Town interactive map (illustrated SVG with hotspots → character / district)
-- Per-character art commissions (placeholder is type-only today)
+- Per-character art for Amp and Velour (currently use hero card; no portrait or scene)
 - Cohort program: scheduled live sessions layered on top of the self-paced workbook
 
 ## Recently Completed
 
-- v1 platform end-to-end (10 routes, content pipeline, motion primitives, Supabase waitlist) — 2026-05-14
-- Vercel deploy from GitHub `naperry2011/The-Motions` — 2026-05-14
-- Supabase project + migration + key wiring + end-to-end smoke test — 2026-05-14
+- Phase 1 visual rebrand to Mo Town cartoon style — 2026-05-14
+- Full graphics wiring (logo, billboard, group shot, 88 quote posters, sample PDF) — 2026-05-14
+- Graphics(1) 50-file audit + remap to hero-cards/ + scenes/ — 2026-05-14
+- Image optimization pipeline (sharp → WebP, 317 MB → 29 MB) — 2026-05-14
+- Quote library redesign (compact grid, pagination, modal) — 2026-05-14
+- Character bios from canonical database (structured traits) — 2026-05-14
+- Sitewide mobile pass (nav, hero fonts, paddings, toolbar wrap) — 2026-05-14
+- Hotfix to `main` after PR-merge JSX corruption — 2026-05-14
 
 ## Deferred / Cancelled
 
-- Headless CMS (Sanity / Payload) — Chose committed JSON + MDX instead. Revisit only if non-technical editing becomes a blocker.
-- GSAP ScrollTrigger usage — Installed but never imported in v1. Framer Motion `whileInView` + `useScroll` covered every section. Keep for later if a pinned sequence demands it.
+- Headless CMS (Sanity / Payload) — Sticking with committed JSON. Revisit only if non-technical editing becomes a blocker.
+- GSAP ScrollTrigger usage — Installed but never imported. Framer Motion `whileInView` + `useScroll` covers every section. Keep for later if a pinned sequence demands it.
+- Per-character commissioned portrait art for Amp/Velour — Hero card stands in well enough; deferring until v2.

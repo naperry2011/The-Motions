@@ -4,8 +4,8 @@
 
 ## Project Overview
 
-**Tech Stack:** Next.js 15 (App Router) · TypeScript · Tailwind · Framer Motion · Lenis · Supabase · Vercel
-**Status:** v1 shipping (marketing + lore + quote library + workbook sales page + waitlist). v2 (paid gated workbook program with Stripe) deferred.
+**Tech Stack:** Next.js 15 (App Router) · TypeScript · Tailwind · Framer Motion · Lenis · sharp · Supabase · Vercel
+**Status:** Phase 1 complete on `perry-phase1` — Mo Town cartoon visual identity, full graphics wired, structured character profiles, mobile pass. v2 (paid gated workbook program with Stripe) deferred.
 **Purpose:** Public face for The Motions IP. Free public lore + quote library + waitlist now; paid workbook program later.
 
 ## Core Documentation
@@ -17,6 +17,7 @@
 - `docs/ai/tasks.md` — Active work
 - `docs/ai/decisions.md` — Architecture decisions (ADRs)
 - `docs/ai/architecture.md` — System design
+- `docs/asset-map.md` — Graphics(1) numbered-file audit + per-character art availability matrix
 - `ENTRY_POINTS.md` — Where execution starts
 - `DATA_FLOW.md` — System-level data movement
 - `IMPORT_GRAPH_SUMMARY.md` — Dependency hotspots
@@ -39,10 +40,27 @@
 - `web/lib/animations/LenisProvider.tsx`
 - `web/components/motion/{TextReveal,RevealOnView,Parallax,Marquee}.tsx`
 
+### Decor + brand primitives
+- `web/components/decor/Squiggle.tsx` — Squiggle, Zigzag, ShakeLines, Dot SVG components
+- `web/components/decor/Sticker.tsx` — Cartoon-style rotated chip with offset shadow
+- `web/components/decor/CharacterPortrait.tsx` — CharacterPortrait / HeroCard / Title / Scene loaders + `hasPortrait` / `hasHeroCard` / `hasTitle` / `hasScene` presence checks
+- `web/components/decor/QuotePost.tsx` — `hasQuotePost(id)` + QuotePost component
+
 ### Content pipeline (build-time)
-- `web/scripts/build-content.ts` — Parses source docs → JSON
+- `web/scripts/build-content.ts` — Parses source docs → JSON (includes structured CharacterTraits extraction)
+- `web/scripts/optimize-images.ts` — sharp pipeline: source PNG → resized WebP per role directory
+- `web/scripts/remap-illustrations.ts` — Re-runnable mover that codifies the Graphics(1) audit mapping
 - `web/content/*.json` — Generated artifacts (committed)
-- `web/lib/content.ts` — Typed loader
+- `web/lib/content.ts` — Typed loader; exports `getCharacter`, `getQuotesByCharacter`, `getPair` helpers + `CharacterTraits` type
+
+### Assets
+- `web/public/assets/characters/{slug}.webp` — small character portraits (16 of 25)
+- `web/public/assets/hero-cards/{slug}.webp` — character + name plate art (25 of 25)
+- `web/public/assets/scenes/{slug}.webp` — rich location panels (23 of 25)
+- `web/public/assets/titles/{slug}.webp` — wordmark-only title cards (18 of 25)
+- `web/public/assets/quote-posts/{id}.webp` — designed quote posters (88 of 250)
+- `web/public/assets/illustrations/{welcome,cast}.webp` — Mo Town billboard + cast group shot
+- `web/public/assets/logo/motions-outlined.png` — official bubble wordmark
 
 ### Backend
 - `web/lib/supabase/server.ts` — Supabase SSR client
@@ -57,10 +75,12 @@
 
 **To run locally:** `cd web && npm install && npm run content:build && npm run dev`
 **To rebuild content from sources:** `cd web && npm run content:build` (re-run any time a source `.docx`/`.xlsx`/`.csv` changes)
-**To deploy:** push `main` to GitHub; Vercel auto-deploys. Project must have Root Directory = `web` and Framework Preset = Next.js.
-**To add a character:** add a row to `motions_complete_250_quotes.csv`, re-run content pipeline. (The CSV is canonical — see `docs/ai/decisions.md` ADR-003.)
+**To optimize new image assets:** drop PNGs into the relevant `web/public/assets/<role>/` folder, then `cd web && npm run assets:optimize` (sharp converts to WebP in place — see ADR-007)
+**To deploy:** push `main` to GitHub; Vercel auto-deploys. Project must have Root Directory = `web` and Framework Preset = Next.js. Don't run `next build` locally while `next dev` is running — it clobbers vendor chunks the dev server depends on.
+**To add a character:** add a row to `motions_complete_250_quotes.csv`, re-run content pipeline. (The CSV is canonical — see `docs/ai/decisions.md` ADR-003. If the docx uses a different name, add an entry to `NAME_ALIASES` in `scripts/build-content.ts`.)
 **To edit narrative pages (geography/lore/arcs/exacerbators):** edit the source `.docx` in `Character Documentation/`, re-run content pipeline.
 **To apply a Supabase migration:** paste the SQL from `web/supabase/migrations/*.sql` into the Supabase SQL Editor (no migration runner wired).
+**To recover from `__webpack_modules__[moduleId] is not a function` in dev:** stop dev server → `rm -rf web/.next` → `npm run dev` → hard-refresh the browser.
 
 ## Environment Variables
 

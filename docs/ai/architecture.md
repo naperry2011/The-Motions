@@ -29,6 +29,18 @@ A statically pre-rendered Next.js 15 App Router site (`web/`) backed by Supabase
 - **Key files:** `web/lib/animations/LenisProvider.tsx`, `web/components/motion/*`
 - **Depends on:** Browser only; respects `prefers-reduced-motion`
 
+### Decor + brand primitives
+- **Responsibility:** Mo Town cartoon visual identity components — Squiggle / Zigzag / ShakeLines / Dot SVGs, Sticker badges, CharacterPortrait / HeroCard / Title / Scene presence-aware image loaders, QuotePost lookups
+- **Tech:** Plain SVG + Tailwind; `next/image` for raster assets
+- **Key files:** `web/components/decor/*`
+- **Depends on:** `public/assets/{characters,hero-cards,scenes,titles,quote-posts,illustrations,logo}/` directories — fs scan at module load builds presence sets (`hasPortrait`, `hasHeroCard`, etc.)
+
+### Asset pipeline
+- **Responsibility:** Optimize source PNGs into shipped WebP, normalize filenames to `{slug}.webp` per role directory
+- **Tech:** sharp
+- **Key files:** `web/scripts/optimize-images.ts`, `web/scripts/remap-illustrations.ts`, `docs/asset-map.md`
+- **Depends on:** Source PNGs in repo-root folders ("The Motions Graphics (1..5)", "The Motions Static Quote Posts")
+
 ### Database
 - **Responsibility:** Persist waitlist signups
 - **Tech:** Supabase Postgres, single table `public.waitlist`
@@ -60,7 +72,7 @@ A statically pre-rendered Next.js 15 App Router site (`web/`) backed by Supabase
 
 - **Supabase** — Postgres + Auth (Auth wired via `@supabase/ssr` but no sign-in UI in v1). API keys use the new `sb_publishable_…` / `sb_secret_…` format.
 - **Vercel** — hosting + CI/CD from GitHub `naperry2011/The-Motions`. Project Root Directory: `web`. Framework Preset: Next.js.
-- **Google Fonts** — Inter + Fraunces, loaded via `next/font/google`
+- **Google Fonts** — Inter (body), Fraunces (italic accents), Bowlby One (chunky display) — loaded via `next/font/google`
 
 ## Security Boundaries
 
@@ -73,5 +85,7 @@ A statically pre-rendered Next.js 15 App Router site (`web/`) backed by Supabase
 
 - No CMS — editorial changes require a redeploy (re-run content pipeline, push commit). Acceptable while authoring velocity is low.
 - Content shape is asserted with TypeScript `as` casts, not validated at runtime. Source-doc schema drift won't fail at compile time.
-- GSAP is installed but unused in v1; either remove or schedule a feature that needs it.
-- `public/assets/**` directories are stubbed but empty — graphics not yet wired in.
+- GSAP is installed but unused; either remove or schedule a feature that needs it.
+- Two characters (Amp, Velour) have no scene panel — profile pages skip the scene band silently.
+- The asset pipeline is destructive (replaces PNGs with WebP in place) — originals only live in the source folders.
+- `next build` clobbers `.next/server/vendor-chunks/*.js` that `next dev` depends on — never run both in parallel.
