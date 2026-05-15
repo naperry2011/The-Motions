@@ -38,7 +38,7 @@ export default function QuotesPage() {
             search by phrase, or shuffle to land somewhere unexpected. {quotePostIds.length}{' '}
             of the {allQuotes.length} ship with their own designed poster.
           </p>
-        </RevealOnView>
+        </div>
       </section>
 
       <QuoteLibrary
