@@ -4,8 +4,11 @@ import { allCharacters, getCharacter, getQuotesByCharacter } from '@/lib/content
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import {
   CharacterPortrait,
+  CharacterHeroCard,
   CharacterTitle,
   CharacterScene,
+  hasHeroCard,
+  hasPortrait,
   hasTitle,
   hasScene
 } from '@/components/decor/CharacterPortrait';
@@ -82,16 +85,33 @@ export default async function CharacterPage({
             </div>
 
             <RevealOnView delay={0.15} className="relative">
-              <div className="relative aspect-square animate-bobble">
-                <div className="absolute inset-0 rounded-full bg-mustard border-3 border-ink shadow-cartoon-lg" />
-                <CharacterPortrait
-                  slug={slug}
-                  name={character.name}
-                  size={520}
-                  priority
-                  className="relative h-full w-full object-contain p-6"
-                />
-              </div>
+              {hasHeroCard(slug) ? (
+                <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
+                  <CharacterHeroCard
+                    slug={slug}
+                    name={character.name}
+                    priority
+                    className="h-auto w-full"
+                  />
+                </div>
+              ) : hasPortrait(slug) ? (
+                <div className="relative aspect-square animate-bobble">
+                  <div className="absolute inset-0 rounded-full bg-mustard border-3 border-ink shadow-cartoon-lg" />
+                  <CharacterPortrait
+                    slug={slug}
+                    name={character.name}
+                    size={520}
+                    priority
+                    className="relative h-full w-full object-contain p-6"
+                  />
+                </div>
+              ) : (
+                <div className="flex aspect-square items-center justify-center rounded-3xl border-3 border-ink bg-mustard shadow-cartoon-lg">
+                  <span className="font-display text-9xl text-ink">
+                    {character.name.charAt(0)}
+                  </span>
+                </div>
+              )}
             </RevealOnView>
           </div>
         </div>

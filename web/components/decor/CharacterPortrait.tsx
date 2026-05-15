@@ -2,42 +2,27 @@ import Image from 'next/image';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Read once at module load to know which characters have portrait art
-const portraitDir = path.join(process.cwd(), 'public/assets/characters');
-let availablePortraits: Set<string>;
-try {
-  availablePortraits = new Set(
-    fs.readdirSync(portraitDir).map((f) => f.replace(/\.webp$/, ''))
-  );
-} catch {
-  availablePortraits = new Set();
+function readSlugSet(dir: string): Set<string> {
+  try {
+    return new Set(
+      fs
+        .readdirSync(path.join(process.cwd(), 'public/assets', dir))
+        .map((f) => f.replace(/\.webp$/, ''))
+    );
+  } catch {
+    return new Set();
+  }
 }
 
-const titleDir = path.join(process.cwd(), 'public/assets/titles');
-let availableTitles: Set<string>;
-try {
-  availableTitles = new Set(fs.readdirSync(titleDir).map((f) => f.replace(/\.webp$/, '')));
-} catch {
-  availableTitles = new Set();
-}
+const availablePortraits = readSlugSet('characters');
+const availableTitles = readSlugSet('titles');
+const availableScenes = readSlugSet('scenes');
+const availableHeroCards = readSlugSet('hero-cards');
 
-const sceneDir = path.join(process.cwd(), 'public/assets/scenes');
-let availableScenes: Set<string>;
-try {
-  availableScenes = new Set(fs.readdirSync(sceneDir).map((f) => f.replace(/\.webp$/, '')));
-} catch {
-  availableScenes = new Set();
-}
-
-export function hasPortrait(slug: string) {
-  return availablePortraits.has(slug);
-}
-export function hasTitle(slug: string) {
-  return availableTitles.has(slug);
-}
-export function hasScene(slug: string) {
-  return availableScenes.has(slug);
-}
+export const hasPortrait = (slug: string) => availablePortraits.has(slug);
+export const hasTitle = (slug: string) => availableTitles.has(slug);
+export const hasScene = (slug: string) => availableScenes.has(slug);
+export const hasHeroCard = (slug: string) => availableHeroCards.has(slug);
 
 export function CharacterPortrait({
   slug,
@@ -53,6 +38,19 @@ export function CharacterPortrait({
   priority?: boolean;
 }) {
   if (!hasPortrait(slug)) {
+    // Fall back to hero card if available, then to an initial circle.
+    if (hasHeroCard(slug)) {
+      return (
+        <Image
+          src={`/assets/hero-cards/${slug}.webp`}
+          width={size}
+          height={size}
+          alt={`${name} hero card`}
+          priority={priority}
+          className={className}
+        />
+      );
+    }
     return (
       <div
         className={`flex aspect-square items-center justify-center rounded-full bg-teal-500 font-display text-cream ${className ?? ''}`}
@@ -68,6 +66,30 @@ export function CharacterPortrait({
       width={size}
       height={size}
       alt={`${name} character art`}
+      priority={priority}
+      className={className}
+    />
+  );
+}
+
+export function CharacterHeroCard({
+  slug,
+  name,
+  className,
+  priority
+}: {
+  slug: string;
+  name: string;
+  className?: string;
+  priority?: boolean;
+}) {
+  if (!hasHeroCard(slug)) return null;
+  return (
+    <Image
+      src={`/assets/hero-cards/${slug}.webp`}
+      width={1200}
+      height={1000}
+      alt={`${name} — character hero card`}
       priority={priority}
       className={className}
     />

@@ -9,17 +9,28 @@ import { Sticker } from '@/components/decor/Sticker';
 import { Squiggle, Zigzag } from '@/components/decor/Squiggle';
 import {
   CharacterPortrait,
-  hasPortrait
+  CharacterHeroCard,
+  hasHeroCard
 } from '@/components/decor/CharacterPortrait';
 
 const featured = [3, 11, 27, 44, 58, 71, 92, 130, 165, 201, 237].map((i) =>
   allQuotes.find((q) => q.id === i)
 );
 
-// Prefer characters that have portrait art for the homepage carousel
-const featuredCharacters = allCharacters
-  .filter((c) => hasPortrait(c.slug))
-  .slice(0, 8);
+// Every canonical character has a hero card, so just curate eight for the homepage.
+const FEATURED_SLUGS = [
+  'quake',
+  'drift',
+  'pilot',
+  'flow',
+  'capital',
+  'mirrorball',
+  'honeytrap',
+  'ledger'
+];
+const featuredCharacters = FEATURED_SLUGS.map(
+  (s) => allCharacters.find((c) => c.slug === s)!
+).filter(Boolean);
 
 export default function HomePage() {
   return (
@@ -146,13 +157,23 @@ export default function HomePage() {
                   href={`/universe/characters/${c.slug}`}
                   className="group block overflow-hidden rounded-3xl border-3 border-ink bg-cream shadow-cartoon transition-transform hover:-translate-y-1 hover:rotate-[-0.6deg]"
                 >
-                  <div className="aspect-square bg-mustard">
-                    <CharacterPortrait
-                      slug={c.slug}
-                      name={c.name}
-                      size={400}
-                      className="h-full w-full object-contain p-3"
-                    />
+                  <div className="aspect-[4/3] overflow-hidden bg-ink">
+                    {hasHeroCard(c.slug) ? (
+                      <CharacterHeroCard
+                        slug={c.slug}
+                        name={c.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-mustard">
+                        <CharacterPortrait
+                          slug={c.slug}
+                          name={c.name}
+                          size={260}
+                          className="h-full w-full object-contain p-3"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="border-t-3 border-ink px-4 py-3">
                     <p className="font-display text-xl leading-none">{c.name}</p>

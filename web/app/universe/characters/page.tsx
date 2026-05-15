@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { allCharacters } from '@/lib/content';
 import { RevealOnView } from '@/components/motion/RevealOnView';
-import { CharacterPortrait } from '@/components/decor/CharacterPortrait';
+import { CharacterPortrait, CharacterHeroCard, hasHeroCard } from '@/components/decor/CharacterPortrait';
 import { Sticker } from '@/components/decor/Sticker';
 
 export const metadata = { title: 'Characters' };
@@ -27,7 +27,7 @@ export default function CharactersPage() {
         <RevealOnView delay={0.4} className="mt-12">
           <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
             <Image
-              src="/assets/illustrations/50.webp"
+              src="/assets/illustrations/cast.webp"
               width={1200}
               height={1500}
               alt="The full Mo Town cast"
@@ -45,13 +45,23 @@ export default function CharactersPage() {
               href={`/universe/characters/${c.slug}`}
               className="group block overflow-hidden rounded-3xl border-3 border-ink bg-cream shadow-cartoon transition-transform hover:-translate-y-1 hover:rotate-[-0.6deg]"
             >
-              <div className={`aspect-square ${i % 3 === 0 ? 'bg-mustard' : i % 3 === 1 ? 'bg-cream' : 'bg-terracotta/30'}`}>
-                <CharacterPortrait
-                  slug={c.slug}
-                  name={c.name}
-                  size={320}
-                  className="h-full w-full object-contain p-3"
-                />
+              <div className="aspect-[4/3] overflow-hidden bg-ink">
+                {hasHeroCard(c.slug) ? (
+                  <CharacterHeroCard
+                    slug={c.slug}
+                    name={c.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className={`flex h-full w-full items-center justify-center ${i % 3 === 0 ? 'bg-mustard' : i % 3 === 1 ? 'bg-cream' : 'bg-terracotta/30'}`}>
+                    <CharacterPortrait
+                      slug={c.slug}
+                      name={c.name}
+                      size={280}
+                      className="h-full w-full object-contain p-3"
+                    />
+                  </div>
+                )}
               </div>
               <div className="border-t-3 border-ink px-4 py-3">
                 <p className="font-display text-xl leading-none">{c.name}</p>

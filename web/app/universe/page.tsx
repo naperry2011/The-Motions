@@ -64,7 +64,7 @@ export default function UniversePage() {
         <RevealOnView delay={0.4} className="mt-14">
           <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
             <Image
-              src="/assets/illustrations/1.webp"
+              src="/assets/illustrations/welcome.webp"
               width={1600}
               height={840}
               alt="Welcome to Mo Town — where inner work has a zip code"
