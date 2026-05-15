@@ -49,19 +49,19 @@ export function WaitlistForm({ source = 'homepage' }: { source?: Source }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@yourdomain.com"
-        className="flex-1 rounded-full border border-ink-600 bg-ink-800/60 px-5 py-3 text-sm placeholder:text-ink-400 focus:border-ember-400 focus:outline-none"
+        className="flex-1 rounded-full border-3 border-ink bg-cream px-5 py-3 text-sm text-ink placeholder:text-ink/50 focus:border-terracotta focus:outline-none"
       />
       <button
         type="submit"
         disabled={state === 'loading'}
-        className="rounded-full bg-ember-500 px-6 py-3 text-sm font-medium uppercase tracking-widest text-ink-900 transition-colors hover:bg-ember-400 disabled:opacity-60"
+        className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
         {state === 'loading' ? 'Adding…' : 'Join waitlist'}
       </button>
       {msg && (
         <p
           role="status"
-          className={`text-xs sm:ml-2 ${state === 'error' ? 'text-red-400' : 'text-ink-200'}`}
+          className={`text-xs sm:ml-2 ${state === 'error' ? 'text-terracotta' : 'text-ink/70'}`}
         >
           {msg}
         </p>

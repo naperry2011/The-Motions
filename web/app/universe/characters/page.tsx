@@ -1,47 +1,71 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { allCharacters } from '@/lib/content';
-import { TextReveal } from '@/components/motion/TextReveal';
 import { RevealOnView } from '@/components/motion/RevealOnView';
+import { CharacterPortrait, CharacterHeroCard, hasHeroCard } from '@/components/decor/CharacterPortrait';
+import { Sticker } from '@/components/decor/Sticker';
 
 export const metadata = { title: 'Characters' };
 
 export default function CharactersPage() {
   return (
-    <div className="px-6 pt-40 pb-32">
+    <div className="bg-paper px-6 pt-36 pb-28">
       <section className="mx-auto max-w-7xl">
-        <p className="mb-6 text-xs uppercase tracking-[0.4em] text-ember-400">
+        <Sticker color="mustard" rotate={-3}>
           The Mo Town Cast
-        </p>
-        <TextReveal
-          as="h1"
-          text="The twenty-five."
-          className="font-display text-6xl md:text-7xl"
-        />
-        <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink-100">
+        </Sticker>
+        <h1 className="mt-6 font-display text-6xl leading-[0.95] md:text-7xl">
+          <span className="display-offset">The twenty-five.</span>
+        </h1>
+        <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink/80">
           <p>
-            Each character is a motion: a way solopreneur work moves through us. Click any
+            Each character is a motion — a way solopreneur work moves through us. Click any
             one to read their quotes and what corrupts them.
           </p>
         </RevealOnView>
+
+        <RevealOnView delay={0.4} className="mt-12">
+          <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
+            <Image
+              src="/assets/illustrations/cast.webp"
+              width={1200}
+              height={1500}
+              alt="The full Mo Town cast"
+              className="h-auto w-full"
+              priority
+            />
+          </div>
+        </RevealOnView>
       </section>
 
-      <section className="mx-auto mt-20 grid max-w-7xl grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <section className="mx-auto mt-16 grid max-w-7xl grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {allCharacters.map((c, i) => (
           <RevealOnView key={c.slug} delay={(i % 10) * 0.04}>
             <Link
               href={`/universe/characters/${c.slug}`}
-              className="group block aspect-[3/4] overflow-hidden rounded-2xl border border-ink-600 bg-ink-800/50 p-5 transition-colors hover:border-ember-400"
+              className="group block overflow-hidden rounded-3xl border-3 border-ink bg-cream shadow-cartoon transition-transform hover:-translate-y-1 hover:rotate-[-0.6deg]"
             >
-              <div className="flex h-full flex-col justify-between">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-300">
-                  Motion
-                </p>
-                <div>
-                  <p className="font-display text-3xl leading-none">{c.name}</p>
-                  <p className="mt-2 text-xs text-ink-300 group-hover:text-ember-400">
-                    {c.quoteCount} quotes →
-                  </p>
-                </div>
+              <div className="aspect-[4/3] overflow-hidden bg-ink">
+                {hasHeroCard(c.slug) ? (
+                  <CharacterHeroCard
+                    slug={c.slug}
+                    name={c.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className={`flex h-full w-full items-center justify-center ${i % 3 === 0 ? 'bg-mustard' : i % 3 === 1 ? 'bg-cream' : 'bg-terracotta/30'}`}>
+                    <CharacterPortrait
+                      slug={c.slug}
+                      name={c.name}
+                      size={280}
+                      className="h-full w-full object-contain p-3"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="border-t-3 border-ink px-4 py-3">
+                <p className="font-display text-xl leading-none">{c.name}</p>
+                <p className="mt-2 text-xs text-ink/60">{c.quoteCount} quotes →</p>
               </div>
             </Link>
           </RevealOnView>

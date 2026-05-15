@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0f0d05;
-  --fg: #f7f5f0;
+  --bg: #f4ead5;
+  --fg: #1a2027;
 }
 
 html,
@@ -13,6 +13,20 @@ body {
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Subtle paper-grain texture for editorial cream sections */
+.bg-paper {
+  background-color: #f4ead5;
+  background-image: radial-gradient(rgba(26, 32, 39, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Inverse for the teal cinematic sections */
+.bg-teal-grain {
+  background-color: #143840;
+  background-image: radial-gradient(rgba(247, 201, 72, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 html.lenis,
@@ -44,6 +58,21 @@ html.lenis body {
 }
 
 ::selection {
-  background: theme('colors.ember.500');
-  color: theme('colors.ink.900');
+  background: #e87454;
+  color: #f4ead5;
+}
+
+/* Chunky display headings get a terracotta offset shadow by default */
+.display-offset {
+  color: #1a2027;
+  text-shadow:
+    3px 3px 0 #e87454,
+    6px 6px 0 rgba(26, 32, 39, 0.15);
+}
+
+.display-offset-light {
+  color: #f4ead5;
+  text-shadow:
+    3px 3px 0 #e87454,
+    6px 6px 0 rgba(0, 0, 0, 0.25);
 }

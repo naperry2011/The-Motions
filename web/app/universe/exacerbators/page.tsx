@@ -5,6 +5,6 @@ export const metadata = { title: 'Exacerbators' };
 
 export default function ExacerbatorsPage() {
   return (
-    <NarrativePage eyebrow="Corruption Map" doc={exacerbatorsDoc} accent="text-motion-spark" />
+    <NarrativePage eyebrow="Corruption Map" doc={exacerbatorsDoc} stickerColor="mustard" />
   );
 }

@@ -1,16 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import { Inter, Fraunces, Bowlby_One } from 'next/font/google';
 import './globals.css';
 import { LenisProvider } from '@/lib/animations/LenisProvider';
 import { SiteNav } from '@/components/ui/SiteNav';
 import { SiteFooter } from '@/components/ui/SiteFooter';
 
 const sans = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
-const display = Fraunces({
+const editorial = Fraunces({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-editorial',
   display: 'swap',
   axes: ['SOFT', 'opsz']
+});
+const display = Bowlby_One({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: '400',
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -19,13 +25,16 @@ export const metadata: Metadata = {
     template: '%s · The Motions'
   },
   description:
-    'The Motions is a creative IP and solopreneur brand companion — a cinematic universe set in Mo Town with 250 quotes, 25 characters, and an 8-module workbook for going through the motions on purpose.'
+    'A solopreneur brand companion told through Mo Town — twenty-five characters, two hundred and fifty quotes, and an eight-module workbook for going through the motions on purpose.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body className="bg-ink-900 text-ink-50 font-sans antialiased">
+    <html
+      lang="en"
+      className={`${sans.variable} ${editorial.variable} ${display.variable}`}
+    >
+      <body className="bg-cream text-ink font-sans antialiased">
         <LenisProvider />
         <SiteNav />
         <main>{children}</main>
