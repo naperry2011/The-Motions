@@ -70,7 +70,7 @@ export default function HomePage() {
             <div className="relative aspect-square animate-bobble">
               <div className="absolute inset-0 rounded-full bg-mustard" />
               <Image
-                src="/assets/characters/quake.png"
+                src="/assets/characters/quake.webp"
                 alt="Quake — the trembling motion"
                 fill
                 priority

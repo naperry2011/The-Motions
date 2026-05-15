@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { allCharacters } from '@/lib/content';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import { CharacterPortrait } from '@/components/decor/CharacterPortrait';
@@ -21,6 +22,19 @@ export default function CharactersPage() {
             Each character is a motion — a way solopreneur work moves through us. Click any
             one to read their quotes and what corrupts them.
           </p>
+        </RevealOnView>
+
+        <RevealOnView delay={0.4} className="mt-12">
+          <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
+            <Image
+              src="/assets/illustrations/50.webp"
+              width={1200}
+              height={1500}
+              alt="The full Mo Town cast"
+              className="h-auto w-full"
+              priority
+            />
+          </div>
         </RevealOnView>
       </section>
 

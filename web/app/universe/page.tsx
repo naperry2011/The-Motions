@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import { allCharacters } from '@/lib/content';
 import { Sticker } from '@/components/decor/Sticker';
@@ -58,6 +59,19 @@ export default function UniversePage() {
             drifts, the bossy boots, the polish — so they have somewhere to live other than
             your nervous system.
           </p>
+        </RevealOnView>
+
+        <RevealOnView delay={0.4} className="mt-14">
+          <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
+            <Image
+              src="/assets/illustrations/1.webp"
+              width={1600}
+              height={840}
+              alt="Welcome to Mo Town — where inner work has a zip code"
+              className="h-auto w-full"
+              priority
+            />
+          </div>
         </RevealOnView>
       </section>
 

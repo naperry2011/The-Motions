@@ -29,12 +29,20 @@ export default function WorkbookPage() {
               Built for the work that has shape — but hasn&apos;t found its rhythm yet.
             </p>
           </RevealOnView>
-          <RevealOnView delay={0.35} className="mt-10">
+          <RevealOnView delay={0.35} className="mt-10 flex flex-wrap gap-4">
             <a
               href="#waitlist"
               className="inline-block rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon hover:-translate-y-0.5 transition-transform"
             >
               Join the waitlist
+            </a>
+            <a
+              href="/pdfs/sample-5min-light-page.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-full border-3 border-ink bg-cream px-6 py-3 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
+            >
+              Download sample page ↓
             </a>
           </RevealOnView>
         </div>

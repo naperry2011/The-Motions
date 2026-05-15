@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const links = [
@@ -26,11 +27,15 @@ export function SiteNav() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-full border-3 border-ink bg-mustard font-display text-ink shadow-cartoon-sm">
-            M
-          </span>
-          <span className="font-display text-lg tracking-tight text-ink">The Motions</span>
+        <Link href="/" className="flex items-center" aria-label="The Motions home">
+          <Image
+            src="/assets/logo/motions-outlined.png"
+            alt="The Motions"
+            width={160}
+            height={50}
+            priority
+            className="h-10 w-auto"
+          />
         </Link>
         <ul className="hidden items-center gap-7 text-sm font-medium text-ink md:flex">
           {links.map((l) => (

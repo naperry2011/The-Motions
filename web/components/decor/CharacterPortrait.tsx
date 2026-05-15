@@ -7,7 +7,7 @@ const portraitDir = path.join(process.cwd(), 'public/assets/characters');
 let availablePortraits: Set<string>;
 try {
   availablePortraits = new Set(
-    fs.readdirSync(portraitDir).map((f) => f.replace(/\.png$/, ''))
+    fs.readdirSync(portraitDir).map((f) => f.replace(/\.webp$/, ''))
   );
 } catch {
   availablePortraits = new Set();
@@ -16,7 +16,7 @@ try {
 const titleDir = path.join(process.cwd(), 'public/assets/titles');
 let availableTitles: Set<string>;
 try {
-  availableTitles = new Set(fs.readdirSync(titleDir).map((f) => f.replace(/\.png$/, '')));
+  availableTitles = new Set(fs.readdirSync(titleDir).map((f) => f.replace(/\.webp$/, '')));
 } catch {
   availableTitles = new Set();
 }
@@ -24,7 +24,7 @@ try {
 const sceneDir = path.join(process.cwd(), 'public/assets/scenes');
 let availableScenes: Set<string>;
 try {
-  availableScenes = new Set(fs.readdirSync(sceneDir).map((f) => f.replace(/\.png$/, '')));
+  availableScenes = new Set(fs.readdirSync(sceneDir).map((f) => f.replace(/\.webp$/, '')));
 } catch {
   availableScenes = new Set();
 }
@@ -64,7 +64,7 @@ export function CharacterPortrait({
   }
   return (
     <Image
-      src={`/assets/characters/${slug}.png`}
+      src={`/assets/characters/${slug}.webp`}
       width={size}
       height={size}
       alt={`${name} character art`}
@@ -86,7 +86,7 @@ export function CharacterTitle({
   if (!hasTitle(slug)) return null;
   return (
     <Image
-      src={`/assets/titles/${slug}.png`}
+      src={`/assets/titles/${slug}.webp`}
       width={750}
       height={500}
       alt={`${name} title card`}
@@ -107,7 +107,7 @@ export function CharacterScene({
   if (!hasScene(slug)) return null;
   return (
     <Image
-      src={`/assets/scenes/${slug}.png`}
+      src={`/assets/scenes/${slug}.webp`}
       width={1200}
       height={628}
       alt={`${name}'s district in Mo Town`}

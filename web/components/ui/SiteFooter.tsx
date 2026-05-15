@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Squiggle } from '@/components/decor/Squiggle';
 
 export function SiteFooter() {
@@ -8,7 +9,7 @@ export function SiteFooter() {
       <div className="px-6 py-20">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-12 md:flex-row">
           <div className="max-w-sm">
-            <p className="font-display text-3xl">The Motions</p>
+            <p className="font-display text-4xl text-cream">The Motions</p>
             <p className="mt-4 text-sm text-cream/80">
               A solopreneur&apos;s brand companion, told through Mo Town — a universe where
               characters embody the motions we move through to do meaningful work.

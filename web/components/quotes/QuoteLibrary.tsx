@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import type { Quote, Character } from '@/lib/content';
 
 const cardColors = [
@@ -14,11 +15,14 @@ const cardColors = [
 
 export function QuoteLibrary({
   quotes,
-  characters
+  characters,
+  quotePostIds
 }: {
   quotes: Quote[];
   characters: Character[];
+  quotePostIds: number[];
 }) {
+  const postSet = useMemo(() => new Set(quotePostIds), [quotePostIds]);
   const [active, setActive] = useState<string | 'all'>('all');
   const [q, setQ] = useState('');
   const [seed, setSeed] = useState(0);
@@ -73,24 +77,48 @@ export function QuoteLibrary({
 
       <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {filtered.map((qt, i) => (
-            <motion.li
-              key={qt.id}
-              layout
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className={`rounded-3xl border-3 border-ink p-6 shadow-cartoon-sm ${cardColors[i % cardColors.length]} ${
-                i % 2 === 0 ? '-rotate-[0.4deg]' : 'rotate-[0.4deg]'
-              }`}
-            >
-              <p className="font-display text-xl leading-snug text-ink">
-                &ldquo;{qt.text}&rdquo;
-              </p>
-              <p className="mt-4 font-editorial italic text-terracotta">— {qt.character}</p>
-            </motion.li>
-          ))}
+          {filtered.map((qt, i) => {
+            const hasPost = postSet.has(qt.id);
+            return (
+              <motion.li
+                key={qt.id}
+                layout
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`group overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-sm ${
+                  hasPost ? 'bg-ink' : cardColors[i % cardColors.length]
+                } ${i % 2 === 0 ? '-rotate-[0.4deg]' : 'rotate-[0.4deg]'}`}
+              >
+                {hasPost ? (
+                  <div className="relative aspect-[4/5] w-full">
+                    <Image
+                      src={`/assets/quote-posts/${qt.id}.webp`}
+                      alt={`${qt.character}: ${qt.text}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 border-t-3 border-ink bg-cream/95 px-5 py-3 backdrop-blur-sm">
+                      <p className="font-editorial italic text-terracotta">
+                        — {qt.character}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-6">
+                    <p className="font-display text-xl leading-snug text-ink">
+                      &ldquo;{qt.text}&rdquo;
+                    </p>
+                    <p className="mt-4 font-editorial italic text-terracotta">
+                      — {qt.character}
+                    </p>
+                  </div>
+                )}
+              </motion.li>
+            );
+          })}
         </AnimatePresence>
       </ul>
     </div>

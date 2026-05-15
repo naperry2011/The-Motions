@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "content:build": "tsx scripts/build-content.ts",
+    "assets:optimize": "tsx scripts/optimize-images.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
