@@ -2,151 +2,584 @@
   {
     "slug": "amp",
     "name": "Amp",
-    "bio": "",
+    "bio": "How He Operates: Cranks every emotion/situation to maximum intensity - no moderation; pushes people past limits; trapped in his own addiction cycle; turns the volume up on everything until it breaks",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Maximum Intensity",
+      "represents": "Taking everything to the furthest extreme - 100%, excess, over-stimulation",
+      "age": "28 (from image)",
+      "pronouns": "He/him",
+      "appearance": "High-energy, edgy, intense",
+      "personality": "An addict, thrill chaser. High-strung, almost jittery, but maintains control over it. Probably on drugs like Adderall. Impulsive, all over the place. Very irritable. Can't sit still, always needs MORE.",
+      "backstory": "Used to do high-octane sports (extreme sports, adrenaline junkie) until he fell into debt at the casino. Now has this job to pay off his debt, but it's also feeding his addiction.",
+      "role": "DJ at the casino - likes to \"turn up,\" everything for a hundred (the music never stops, the energy never drops, constant stimulation)",
+      "family": [
+        "SECRETLY DATING LEDGER",
+        "Ledger is trying to change him, but he's so stuck and she doesn't know the depths of his secrets and issues (the debt, the addiction, how deep he's in with Capital)",
+        "Good friends with Bossy Boots",
+        "Bossy has a quiet crush on him (he doesn't know)",
+        "Tries to engage with everyone, but they often find him annoying"
+      ]
+    },
+    "bodyHtml": "<p>How He Operates: Cranks every emotion/situation to maximum intensity - no moderation; pushes people past limits; trapped in his own addiction cycle; turns the volume up on everything until it breaks</p>",
     "quoteCount": 10
   },
   {
     "slug": "bossy-boots",
     "name": "Bossy Boots",
-    "bio": "",
+    "bio": "How She Operates: Enforces rules, maintains control, keeps order through force/authority; doesn't corrupt for fun, just maintains her territory",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Neutral",
+      "represents": "Control, enforcement, security",
+      "age": "32 (from image)",
+      "pronouns": "She/her",
+      "appearance": "Masculine-presenting woman, stud energy",
+      "personality": "Analytical, curt, very self-serving. NEUTRAL - not good, not bad. Just wants to be in control. Has soft spot for Harbor and North (harder on North). Professional, no-nonsense.",
+      "role": "Head of Security at the casino (enforces rules, maintains order, keeps things running smoothly)",
+      "family": [
+        "Harbor's biological granddaughter, North's brother",
+        "Gets along well with Honeytrap because Honeytrap listens and listens well",
+        "Honeytrap is the only one among the Exacerbators that knows about Glitch as he stays hidden for the most part",
+        "Doesn't like Velour because she thinks she's lazy",
+        "Good friends with Amp",
+        "Has a quiet crush on Amp (won't admit it)"
+      ],
+      "alignment": "Neutral - works for Capital but isn't inherently evil"
+    },
+    "bodyHtml": "<p>How She Operates: Enforces rules, maintains control, keeps order through force/authority; doesn't corrupt for fun, just maintains her territory</p>",
     "quoteCount": 10
   },
   {
     "slug": "capital",
     "name": "Capital",
-    "bio": "",
+    "bio": "Method: Like a Venus flytrap - apex predator that WAITS. You don't know you're ensnared until being dissolved. Everyone knows he's bad but can't prove it.What He Did to Mo Town: When Oliver gets laid off, Capital moves in, tears down historic/core part of city, builds massive casino, transforms Mo Town from peaceful to vibrant neon chaos. Casino \"supposed to\" generate revenue but is actually predatory, slowly eroding Mo Town's quality.Dynamic: The man who chose power over love; still thinks about what could have been with Harbor but won't change; uses everyone, even his own childrenRole in Story: The unseen hand. The big bad. Corrupting force when Oliver's stability crumbles. Represents predatory forces disguised as opportunity.KEY LOCATIONS IN MO TOWNBased on what we know, here are the key locations:1. MO TOWN CITY (Downtown Area)Before Capital: Normal, regular city. Very bright. Teal overtone everywhere.After Capital: Starts going downhill. Citizens aren't as happy. More neon, vibrant but predatory.The Casino: Not directly in the center, but close to downtown. Main base of operations for Capital and Exacerbators.2. HARBOR STREAM (Image #3 - Harbor's District)Harbor's Esoteric Store: Crystals, tarot, incense, spiritual items. A sanctuary of calm.Vibe: Peaceful, spiritual, calming. Where people go to find tranquility.3. QUAKE CITY (Image #2 - Quake's District)Delivery Routes: Where Quake works, making deliveries throughout Mo TownVibe: Busy, chaotic, anxiety-inducing. Lots of movement and uncertainty.4. STATIC CITY (Image #4 - Static's District)School: Where Static, North, Pilot, Pinch, and Sputter attendVibe: Overwhelming, noisy, full of external stimulation5. NORTH ROOF (Image #5 - North's District)Vibe: Clear, high above the chaos. Where North finds clarity and direction.6. POLISH HIGHRISE (Image #6 - Polish's District)Polish's Architecture Firm: High-end, sleek, perfect. Every detail controlled.Vibe: Structured, beautiful, but cold. Everything is designed perfectly.7. PILOT CITYSCAPE (Image #7 - Pilot's District)Boy Scout Meetup Spots: Adventure areas, building zonesVibe: Playful, exploratory, full of possibility and wonder8. PLENTY MARKET (Image #8 - Plenty's District)Plenty's Construction Company: Building supplies, market goods, abundanceVibe: Warm, welcoming, full of resources. Everything you need is here.9. PINCH BANK (Image #9 - Pinch's District)Bank/Savings: Where resources are hoarded, counted, worried aboutVibe: Scarcity-focused, anxious, counting pennies10. SHADE STREET (Image #10 - Shade's District)Graffiti-covered walls: Shade's art everywhere in the shadowsVibe: Dark, hidden, artistic. Messages left but artist unseen.11. SIGNAL NEWS (Image #11 - Signal's District)The News Station: Where Signal works as an internVibe: Busy, communicative, always broadcasting. Information everywhere.12. LEDGER STATS (Image #12 - Ledger's District)The Data Center: Where Ledger works doing analyticsVibe: Organized, numerical, tracking everything. Data visualizations everywhere.13. GUESS MARKET (Image #13 - Guess's District)Markets with too many options: Overwhelming choices, indecision everywhereVibe: Chaotic abundance of options, paralysis by choice14. SPUTTER INDUSTRIAL (Image #14 - Sputter's District)Robotics Club/Industrial Zone: Where Sputter takes things apartVibe: Mechanical, industrial, things in various states of assembly/disassembly15. FLO CITY PARK (Image #15 - Flo's District)Dance Studios/Performance Spaces: Where Flo practices and performsVibe: Flowing, graceful, movement-focused. Everything in rhythm.16. DRIFT STATION (Image #16 - Drift's District)Train/Transit Station: Representing drift, movement without directionVibe: Transient, unfocused, people passing through without destination17. FRAME OFFICE (Image #17 - Frame's District)Medical Office: Where Frame works as supervisor and Drift as admin assistantVibe: Structured, compartmentalized, cubicles, organized, clinical18. ECHO MUSIC ROOM (Image #18 - Echo's District)Mo Town University Music Department: Where Echo studiesVibe: Full of instruments, sounds, but Echo can't find his own voice among them19. RESONATE RADIO STATION (Image #19 - Resonate's District)Radio Station on Mo U Campus: Where Resonate hosts her late-night showVibe: Bold, authentic, broadcasting truth. Her voice cutting through.20. THE HISTORIC DISTRICT (What Capital Tore Down)Community Center: Where The Motions gathered before Capital arrivedVibe: [TO BE DEVELOPED - What did this represent? Community? Connection? The heart of Mo Town?]EXACERBATOR GROUP DYNAMICSOverall: They all work together when they HAVE to, otherwise they try to stay in their own lanes.Power Structure:Honeytrap leads (the mastermind, Capital's right hand)Bossy Boots enforces (head of security, neutral)Others have their roles but follow Honeytrap's leadSpecific Dynamics:Honeytrap: Can't stand any of them, tolerates Velour slightly more; gets along well with Bossy Boots (who listens well); only one who knows about GlitchVelour: Indifferent about everyone, pleasant but follows sister's lead, doesn't think for herselfBossy Boots: Doesn't like Velour (thinks she's lazy); good friends with Amp; has quiet crush on Amp; gets along with HoneytrapAmp: Tries to engage with everyone but they find him annoying; good friends with Bossy Boots; secretly dating Ledger (biggest secret)Mirrorball: Intentionally isolates in vain way but wants friendship; treats Glitch badly (feels bad but fears father more); lonely despite being center of attentionGlitch: Watches from shadows; wants relationships but stays hidden; only Honeytrap knows he exists; sometimes engages with Honeytrap (finds her beautiful but knows he's out of her league); wants relationship with Mirrorball but is treated badly",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "The Apex Predator",
+      "age": "74",
+      "pronouns": "He/him",
+      "represents": "The corrupting force, predatory capitalism, extractive systems, the \"unseen hand\"",
+      "appearance": "Debonair, sophisticated. Gray hair, gray beard, gray handlebar mustache. Silver fox aesthetic. The intention is actually IN THE EYES. He will be smiling but he will have ill intention in his observant eyes.",
+      "personality": "Calm, calculated, precise. Charming and personable on the surface (that's the front). Mob boss vibes underneath - so strong you can FEEL it. 25 steps ahead thinker. Patient, meticulous, predatory.",
+      "role": "Owns and operates the casino (main base of operations for all Exacerbators)",
+      "family": [
+        "Father to Mirrorball and Glitch",
+        "Treats Mirrorball better (brings in business); tolerates Glitch (keeps things running)",
+        "Used to date Harbor a long time ago when they were younger",
+        "Quietly misses Harbor - she was the one that got away",
+        "But his drive for power is greater than his love for her"
+      ]
+    },
+    "bodyHtml": "<p>Method: Like a Venus flytrap - apex predator that WAITS. You don't know you're ensnared until being dissolved. Everyone knows he's bad but can't prove it.</p><p>What He Did to Mo Town: When Oliver gets laid off, Capital moves in, tears down historic/core part of city, builds massive casino, transforms Mo Town from peaceful to vibrant neon chaos. Casino \"supposed to\" generate revenue but is actually predatory, slowly eroding Mo Town's quality.</p><p>Dynamic: The man who chose power over love; still thinks about what could have been with Harbor but won't change; uses everyone, even his own children</p><p>Role in Story: The unseen hand. The big bad. Corrupting force when Oliver's stability crumbles. Represents predatory forces disguised as opportunity.</p><p>KEY LOCATIONS IN MO TOWN</p><p>Based on what we know, here are the key locations:</p><p>1. MO TOWN CITY (Downtown Area)</p><p>Before Capital: Normal, regular city. Very bright. Teal overtone everywhere.</p><p>After Capital: Starts going downhill. Citizens aren't as happy. More neon, vibrant but predatory.</p><p>The Casino: Not directly in the center, but close to downtown. Main base of operations for Capital and Exacerbators.</p><p>2. HARBOR STREAM (Image #3 - Harbor's District)</p><p>Harbor's Esoteric Store: Crystals, tarot, incense, spiritual items. A sanctuary of calm.</p><p>Vibe: Peaceful, spiritual, calming. Where people go to find tranquility.</p><p>3. QUAKE CITY (Image #2 - Quake's District)</p><p>Delivery Routes: Where Quake works, making deliveries throughout Mo Town</p><p>Vibe: Busy, chaotic, anxiety-inducing. Lots of movement and uncertainty.</p><p>4. STATIC CITY (Image #4 - Static's District)</p><p>School: Where Static, North, Pilot, Pinch, and Sputter attend</p><p>Vibe: Overwhelming, noisy, full of external stimulation</p><p>5. NORTH ROOF (Image #5 - North's District)</p><p>Vibe: Clear, high above the chaos. Where North finds clarity and direction.</p><p>6. POLISH HIGHRISE (Image #6 - Polish's District)</p><p>Polish's Architecture Firm: High-end, sleek, perfect. Every detail controlled.</p><p>Vibe: Structured, beautiful, but cold. Everything is designed perfectly.</p><p>7. PILOT CITYSCAPE (Image #7 - Pilot's District)</p><p>Boy Scout Meetup Spots: Adventure areas, building zones</p><p>Vibe: Playful, exploratory, full of possibility and wonder</p><p>8. PLENTY MARKET (Image #8 - Plenty's District)</p><p>Plenty's Construction Company: Building supplies, market goods, abundance</p><p>Vibe: Warm, welcoming, full of resources. Everything you need is here.</p><p>9. PINCH BANK (Image #9 - Pinch's District)</p><p>Bank/Savings: Where resources are hoarded, counted, worried about</p><p>Vibe: Scarcity-focused, anxious, counting pennies</p><p>10. SHADE STREET (Image #10 - Shade's District)</p><p>Graffiti-covered walls: Shade's art everywhere in the shadows</p><p>Vibe: Dark, hidden, artistic. Messages left but artist unseen.</p><p>11. SIGNAL NEWS (Image #11 - Signal's District)</p><p>The News Station: Where Signal works as an intern</p><p>Vibe: Busy, communicative, always broadcasting. Information everywhere.</p><p>12. LEDGER STATS (Image #12 - Ledger's District)</p><p>The Data Center: Where Ledger works doing analytics</p><p>Vibe: Organized, numerical, tracking everything. Data visualizations everywhere.</p><p>13. GUESS MARKET (Image #13 - Guess's District)</p><p>Markets with too many options: Overwhelming choices, indecision everywhere</p><p>Vibe: Chaotic abundance of options, paralysis by choice</p><p>14. SPUTTER INDUSTRIAL (Image #14 - Sputter's District)</p><p>Robotics Club/Industrial Zone: Where Sputter takes things apart</p><p>Vibe: Mechanical, industrial, things in various states of assembly/disassembly</p><p>15. FLO CITY PARK (Image #15 - Flo's District)</p><p>Dance Studios/Performance Spaces: Where Flo practices and performs</p><p>Vibe: Flowing, graceful, movement-focused. Everything in rhythm.</p><p>16. DRIFT STATION (Image #16 - Drift's District)</p><p>Train/Transit Station: Representing drift, movement without direction</p><p>Vibe: Transient, unfocused, people passing through without destination</p><p>17. FRAME OFFICE (Image #17 - Frame's District)</p><p>Medical Office: Where Frame works as supervisor and Drift as admin assistant</p><p>Vibe: Structured, compartmentalized, cubicles, organized, clinical</p><p>18. ECHO MUSIC ROOM (Image #18 - Echo's District)</p><p>Mo Town University Music Department: Where Echo studies</p><p>Vibe: Full of instruments, sounds, but Echo can't find his own voice among them</p><p>19. RESONATE RADIO STATION (Image #19 - Resonate's District)</p><p>Radio Station on Mo U Campus: Where Resonate hosts her late-night show</p><p>Vibe: Bold, authentic, broadcasting truth. Her voice cutting through.</p><p>20. THE HISTORIC DISTRICT (What Capital Tore Down)</p><p>Community Center: Where The Motions gathered before Capital arrived</p><p>Vibe: [TO BE DEVELOPED - What did this represent? Community? Connection? The heart of Mo Town?]</p><p>EXACERBATOR GROUP DYNAMICS</p><p>Overall: They all work together when they HAVE to, otherwise they try to stay in their own lanes.</p><p>Power Structure:</p><p>Honeytrap leads (the mastermind, Capital's right hand)</p><p>Bossy Boots enforces (head of security, neutral)</p><p>Others have their roles but follow Honeytrap's lead</p><p>Specific Dynamics:</p><p>Honeytrap: Can't stand any of them, tolerates Velour slightly more; gets along well with Bossy Boots (who listens well); only one who knows about Glitch</p><p>Velour: Indifferent about everyone, pleasant but follows sister's lead, doesn't think for herself</p><p>Bossy Boots: Doesn't like Velour (thinks she's lazy); good friends with Amp; has quiet crush on Amp; gets along with Honeytrap</p><p>Amp: Tries to engage with everyone but they find him annoying; good friends with Bossy Boots; secretly dating Ledger (biggest secret)</p><p>Mirrorball: Intentionally isolates in vain way but wants friendship; treats Glitch badly (feels bad but fears father more); lonely despite being center of attention</p><p>Glitch: Watches from shadows; wants relationships but stays hidden; only Honeytrap knows he exists; sometimes engages with Honeytrap (finds her beautiful but knows he's out of her league); wants relationship with Mirrorball but is treated badly</p>",
     "quoteCount": 10
   },
   {
     "slug": "drift",
     "name": "Drift",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 7: DRIFT ↔ FRAME",
+      "state": "Shadow State",
+      "represents": "Scattered focus, being unfocused, aloofness, letting things drift without structure",
+      "age": "31 (from image)",
+      "pronouns": "She/her",
+      "personality": "Very aloof, head in the clouds. Silent, distant vibe. All over the place. Dreamy, disconnected, floats through life.",
+      "role": "Works in the same place as Frame as the admin assistant (likely scattered at her job - forgets tasks, daydreams, needs Frame's structure to function)",
+      "family": [
+        "Echo's sister, Frame's daughter",
+        "Because of the age gap between Drift and Echo, they aren't very close",
+        "But Drift wants to be more present in her brother's life because she can see his talent and wants him to succeed"
+      ],
+      "arc": "The scattered dreamer learning structure; trying to be a better sister; working for her dad helps her stay somewhat grounded"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "echo",
     "name": "Echo",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 8: ECHO ↔ RESONATE",
+      "state": "Shadow State",
+      "represents": "Lost voice, imitation, inability to find your own voice, echoing others instead of speaking authentically",
+      "age": "19 (from image)",
+      "pronouns": "He/him",
+      "personality": "Talented but struggles with finding his voice. Can play anything but sounds like everyone else. Searching for authenticity.",
+      "role": "Student at Mo Town University (Mo U); multi-instrumentalist musician (very talented - can play guitar, piano, drums, but always sounds derivative)",
+      "family": [
+        "Drift's brother, Frame's son",
+        "Not very close with Drift due to age gap, but she wants to be more present",
+        "Has a crush on Flo (she's older, beautiful, confident - everything he's not)"
+      ],
+      "arc": "The talented musician who doesn't know his own sound; learning authenticity from Resonate; crushing on someone who represents confidence"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "flow",
     "name": "Flow",
-    "bio": "",
+    "bio": "THE EXACERBATORS - Complete Profiles",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Grounded State",
+      "represents": "Flow, adaptability, being able to adjust but keep moving, consistency in motion",
+      "age": "22 (from image)",
+      "pronouns": "She/her",
+      "personality": "Beautiful, graceful, adaptive. Nurturing, protective, flowing. Adjusts to any situation but never loses her rhythm.",
+      "role": "Professional dancer - all different styles (breakdancing, contemporary, ballet, hip-hop - she can do it all and makes it look effortless)",
+      "family": [
+        "Sputter's older sister",
+        "Simply adores Sputter. Treats her more like a daughter than a sister.",
+        "Wants to be Shade's friend (sees them hiding and wants to bring them into the light)",
+        "Echo has a crush on Flo (she's beautiful, confident, talented - his opposite)"
+      ],
+      "arc": "Shows flexibility AND consistency; the loving but smothering older sister; wants to help everyone flow"
+    },
+    "bodyHtml": "<p>THE EXACERBATORS - Complete Profiles</p>",
     "quoteCount": 10
   },
   {
     "slug": "frame",
     "name": "Frame",
-    "bio": "",
+    "bio": "Aesthetic: Cubicles and structured environments",
+    "traits": {
+      "pairing": "PAIR 7: DRIFT ↔ FRAME",
+      "state": "Grounded State",
+      "represents": "Structure, compartmentalization, organization, everything in its place",
+      "age": "52 (from image)",
+      "pronouns": "He/him",
+      "personality": "Likes things organized. Puts everything in a box. Conservative middle-aged white guy energy. Methodical, precise, no-nonsense.",
+      "role": "Office medical supervisor (manages medical office - paperwork, organization, protocols, structure in healthcare setting). Drift works as his admin assistant.",
+      "family": [
+        "Father to Drift and Echo",
+        "Works with Drift (she's his admin assistant - he can keep an eye on her and provide structure)"
+      ],
+      "arc": "Helps Drift get structure; the organized dad who provides framework; teaches compartmentalization"
+    },
+    "bodyHtml": "<p>Aesthetic: Cubicles and structured environments</p>",
     "quoteCount": 10
   },
   {
     "slug": "glitch",
     "name": "Glitch",
-    "bio": "",
+    "bio": "How He Operates: Takes characters with internal struggles and makes their paralysis worse; traps them in contradictions and \"what ifs\"; works from shadows; makes people question themselves endlessly; embodies the glitch in the systemTHE VILLAIN",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Internal Indecision",
+      "represents": "INTERNAL-based indecision (vs. Guess's external-based). Lives in contradictions.",
+      "age": "31 (from image)",
+      "pronouns": "He/him",
+      "appearance": "Glitchy, flickering, unstable visually",
+      "personality": "Disillusioned. Lives in contradictions - wants to not care about dad disliking him but also seeks validation. Wants to leave the casino, but it's where he's comfortable. Doesn't like being apart but can \"be off\" if people can't see him. Torn, conflicted, stuck.",
+      "role": "IT tech at casino - handles all electronics, keeps casino functional behind the scenes (everything digital, security systems, slot machines, lights - he controls it all from the shadows). Stays hidden for the most part.",
+      "family": [
+        "Child of Capital, sibling to Mirrorball",
+        "The son Capital \"tolerates and has aspirations for, but he fails himself\"",
+        "Doesn't have good relationship with father",
+        "Unappreciated functional one while Mirrorball gets glory",
+        "Only Honeytrap knows about Glitch among Exacerbators (she's the only one who knows he exists)",
+        "Watches it all from the shadows",
+        "Sometimes engages with Honeytrap and finds her beautiful",
+        "Knows he's out of her league",
+        "Wants to have relationships",
+        "Doesn't get along with Mirrorball - no fault of his own, he wants relationships",
+        "Mirrorball treats him badly because of how Capital feels; Mirrorball feels bad but ire of father is worse"
+      ]
+    },
+    "bodyHtml": "<p>How He Operates: Takes characters with internal struggles and makes their paralysis worse; traps them in contradictions and \"what ifs\"; works from shadows; makes people question themselves endlessly; embodies the glitch in the system</p><p>THE VILLAIN</p>",
     "quoteCount": 10
   },
   {
     "slug": "guess",
     "name": "Guess",
-    "bio": "",
+    "bio": "Gender: UNKNOWN",
+    "traits": {
+      "pairing": "PAIR 6: GUESS ↔ LEDGER",
+      "state": "Shadow State",
+      "represents": "External-based indecision - having too many options, not knowing what works, paralyzed by external choices",
+      "age": "? (from image - intentionally unknown/mysterious)",
+      "pronouns": "They/them",
+      "appearance": "Completely cloaked/mysterious",
+      "personality": "Asks a lot of questions, kind of like the neighborhood kid that is always around and into something. Curious, inquisitive, always present but never settled.",
+      "role": "Part of main cast but maintains complete mystery. Seems to be everywhere and nowhere - observing, asking, never committing.",
+      "family": [
+        "Sibling to Shade",
+        "Static doesn't like Guess (too many questions, too much uncertainty)"
+      ],
+      "arc": "Embodies uncertainty itself; the curious, questioning presence; trying to find answers externally instead of internally"
+    },
+    "bodyHtml": "<p>Gender: UNKNOWN</p>",
     "quoteCount": 10
   },
   {
     "slug": "harbor",
     "name": "Harbor",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 1: QUAKE ↔ HARBOR",
+      "state": "Grounded State",
+      "represents": "Tranquility, peace, calm after the storm",
+      "age": "60 (from image)",
+      "pronouns": "She/her",
+      "personality": "Peaceful, grounded, wise. All about tranquility. Warm and welcoming like her esoteric store.",
+      "role": "Owns an esoteric store (crystals, tarot, incense, spiritual items - the kind of place where anxious people come seeking peace)",
+      "family": [
+        "Biological grandmother to North and Bossy Boots",
+        "Community grandmother to all of Mo Town",
+        "Used to date Capital a long time ago when they were younger",
+        "She knows that his heart has changed and he's not the same person"
+      ],
+      "backstory": "Used to be like Quake in her younger life - anxious and fearful - but grew up to find peace and tranquility",
+      "arc": "Living proof that anxiety can transform into peace; the one who got away from Capital; runs a sanctuary for those seeking calm"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "honeytrap",
     "name": "Honeytrap",
-    "bio": "",
+    "bio": "How She Operates: Lures with sweetness, makes people feel safe and special, then traps and shows true predatory nature; the ultimate manipulator",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "The Mastermind",
+      "represents": "The sweet trap - comfort/sweetness that looks good but is harmful",
+      "age": "37 (from image - same as triplets)",
+      "pronouns": "She/her",
+      "appearance": "Classic femme fatale look",
+      "personality": "Classic femme fatale. Cold-hearted, no regrets, self-serving, wanting to get to the top by any means necessary. NOT interested in being good, but acts that way until you're \"in.\" Calculating, ruthless.",
+      "role": "THE mastermind. Other Exacerbators listen to her. Capital's right hand. VIP access for \"highest of the high\" clients (exclusive, elite corruption).",
+      "family": [
+        "Triplet to Polish and Velour (stayed in Exacerbator life while Polish left)",
+        "Can't stand any of them, even her sisters",
+        "Tolerates Velour a bit more than the others",
+        "Gets along well with Bossy Boots because Bossy listens and listens well",
+        "Only one among Exacerbators who knows about Glitch (he stays hidden)",
+        "Glitch sometimes engages with Honeytrap and finds her beautiful, but he knows he's out of her league"
+      ]
+    },
+    "bodyHtml": "<p>How She Operates: Lures with sweetness, makes people feel safe and special, then traps and shows true predatory nature; the ultimate manipulator</p>",
     "quoteCount": 10
   },
   {
     "slug": "ledger",
     "name": "Ledger",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 6: GUESS ↔ LEDGER",
+      "state": "Grounded State",
+      "represents": "Data, tracking, record-keeping, knowing the score",
+      "age": "26 (from image)",
+      "pronouns": "She/her",
+      "personality": "Very cute, very brilliant. Easygoing, friendly, but likes to keep to herself. Organized, methodical, responsible but burdened.",
+      "role": "Works in a data center doing analytics, keeps count, keeps books (tracks patterns, makes sense of chaos through numbers)",
+      "family": [
+        "Oldest sibling to Signal and Resonate",
+        "Very close with siblings - looks out for each other",
+        "Loves her siblings, wants to protect them, but is dealing with her own situations",
+        "Undertones of resentment because she has become their adult instead of their sibling",
+        "Some discord with Resonate - Resonate feels like Ledger doesn't like her much, but doesn't fully understand the weight on Ledger's shoulders as their supporter",
+        "SECRETLY DATING AMP",
+        "Trying to change Amp, but he's so stuck and she doesn't know the depths of his secrets and issues"
+      ],
+      "arc": "Brings structure to Guess's uncertainty; struggling under weight of family responsibility; trying to save someone who might not want saving; keeps track of everything but can't control it all"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "mirrorball",
     "name": "Mirrorball",
-    "bio": "",
+    "bio": "Special Ability: Like a Pied Piper - brings people into \"look at me\" world, collusion, savoir-faireHow They Operate: Makes everything about image/performance/being admired; corrupts healthy self-expression into narcissism; reflects what people want to see until they're trapped in the illusion; isolated despite being center of attention",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Performance & Vanity",
+      "represents": "Reflection, performance, vanity, center of attention, fear of not being perfect/admired",
+      "age": "30 (from image)",
+      "pronouns": "They/them",
+      "appearance": "Androgynous, handsome, very flamboyant, shimmering, reflective",
+      "personality": "Very self-centered and self-serving, standoffish, but really just wants to be apart [of something]. Conceited, arrogant on surface. Intentionally isolates himself in a vain way, but really wants to find friendship in this group. But they won't. Lonely behind the performance.",
+      "role": "Resident entertainer at the casino (performs, dazzles, keeps people mesmerized and distracted)",
+      "family": [
+        "Child of Capital, sibling to Glitch",
+        "Loved by peers and family, respected by brother Glitch",
+        "Has Capital's favor because brings in customers",
+        "Doesn't get along with Glitch - treats him badly because of how Capital feels about Glitch",
+        "Feels bad about treating Glitch poorly, but the ire of his father is worse"
+      ]
+    },
+    "bodyHtml": "<p>Special Ability: Like a Pied Piper - brings people into \"look at me\" world, collusion, savoir-faire</p><p>How They Operate: Makes everything about image/performance/being admired; corrupts healthy self-expression into narcissism; reflects what people want to see until they're trapped in the illusion; isolated despite being center of attention</p>",
     "quoteCount": 10
   },
   {
     "slug": "north",
     "name": "North",
-    "bio": "",
+    "bio": "Neurodivergence: Autistic",
+    "traits": {
+      "pairing": "PAIR 2: STATIC ↔ NORTH",
+      "state": "Grounded State",
+      "represents": "Mental clarity, direction, cutting through the noise",
+      "age": "12 (from image)",
+      "pronouns": "He/him",
+      "personality": "Very direct, unfiltered, straight to the point. Really cares about people and wants to guide them. Doesn't understand social filters but means well.",
+      "role": "Goes to school (middle school age)",
+      "family": [
+        "Harbor's biological grandson",
+        "Bossy Boots' brother",
+        "Reluctant friends with Static (Static is annoyed with him but appreciates his friendship)"
+      ],
+      "arc": "Provides the clarity Static desperately needs; the direct compass"
+    },
+    "bodyHtml": "<p>Neurodivergence: Autistic</p>",
     "quoteCount": 10
   },
   {
     "slug": "pilot",
     "name": "Pilot",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 3: POLISH ↔ PILOT",
+      "state": "Grounded State",
+      "represents": "Adventure, innovation, exploration, playfulness",
+      "age": "8 (from image)",
+      "pronouns": "He/him",
+      "personality": "Adventurous, fun, cheerful. In his own mind, not fully connected to the world. Lives for innovation and building. Fearless explorer.",
+      "role": "In school (elementary) and Boy Scouts (loves the adventure, building fires, exploring)",
+      "family": [
+        "Polish's son, Pinch's brother, Plenty's son"
+      ],
+      "arc": "Helps his mom soften up and be open to adventure; shows that imperfection is part of the journey"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "pinch",
     "name": "Pinch",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 4: PINCH ↔ PLENTY",
+      "state": "Shadow State",
+      "represents": "Scarcity mindset, anxiety around lack, not having enough",
+      "age": "6 (from image)",
+      "pronouns": "She/her",
+      "personality": "Anxious, quiet, nervous, not really adventurous. Mother's perfectionism has made her confused and worried. Hoards small things, always worried about running out.",
+      "role": "In school (kindergarten/first grade age)",
+      "family": [
+        "Polish's daughter, Pilot's brother, Plenty's daughter",
+        "Static doesn't like her (finds her anxiety irritating)"
+      ],
+      "arc": "The worried little girl who sees lack everywhere; learning abundance from Plenty"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "plenty",
     "name": "Plenty",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 4: PINCH ↔ PLENTY",
+      "state": "Grounded State",
+      "represents": "Abundance mindset, resourcefulness, making the best of every situation",
+      "age": "42 (from image)",
+      "pronouns": "He/him",
+      "personality": "Everyday guy, makes the best out of every situation. Compassionate, loves to pour into people. Very happy with what he's got. Seldom pessimistic. Patient, warm, generous.",
+      "role": "Construction company owner and foreman (works in market business - likely construction materials/supplies). Builds things with his hands, creates abundance through building.",
+      "family": [
+        "Was married to Polish (separated)",
+        "Father to Pinch and Pilot",
+        "Loves Polish too and is sweet on her",
+        "Understands she's still guarded and is always there for her, even though she's mean"
+      ],
+      "arc": "Helps Pinch find abundance; the patient optimist who still loves his ex-wife; builds literal and metaphorical foundations"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "polish",
     "name": "Polish",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 3: POLISH ↔ PILOT",
+      "state": "Shadow State",
+      "represents": "Perfectionism, control to the point of paralysis",
+      "age": "37 (from image)",
+      "pronouns": "She/her",
+      "personality": "Finds her footing but polishes it to DEATH. Has good intentions but keeps them close to her chest. Guarded, exacting, critical. Starts to open up when Pilot helps.",
+      "role": "High-end architect (makes sense - she designs and controls every detail, everything must be perfect)",
+      "family": [
+        "Triplet sister to Honeytrap and Velour (left the Exacerbator life)",
+        "Was married to Plenty (separated)",
+        "Mother to Pinch and Pilot",
+        "Still loves Plenty but can't stand how optimistic and open he is",
+        "Mean to Plenty despite her feelings"
+      ],
+      "arc": "The perfectionist learning control can be destructive; softening through Pilot's influence"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "quake",
     "name": "Quake",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 1: QUAKE ↔ HARBOR",
+      "state": "Shadow State",
+      "represents": "Anxiety, fear, and everything that comes with that",
+      "age": "20 (from image)",
+      "pronouns": "They/them",
+      "personality": "Wants to be helpful but finds themselves messing things up unintentionally. Kind, shy, but really fun and friendly after they warm up and feel safe.",
+      "role": "Delivery person in Mo Town",
+      "sexuality": "Asexual",
+      "family": [
+        "Static's older sibling - normal sibling relationship, solid",
+        "Really wants to figure out how to be calm so they can help their brother",
+        "Best friends with Signal"
+      ],
+      "arc": "The anxious young adult trying to be helpful but self-sabotaging; learning calm from Harbor"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "resonate",
     "name": "Resonate",
-    "bio": "",
+    "bio": "Industry Connection: Radio station is on Mo U campus where Echo attends",
+    "traits": {
+      "pairing": "PAIR 8: ECHO ↔ RESONATE",
+      "state": "Grounded State",
+      "represents": "Authentic voice, resonating with your truth, bold self-expression",
+      "age": "19 (from image)",
+      "pronouns": "She/her",
+      "personality": "Bold, unapologetic, polarizing. Speaks her mind. People either love or hate her. Confident, doesn't care what others think.",
+      "role": "Disc jockey and radio host; hosts late-night \"woke, conspiracy, esoteric\" show where she speaks her mind (talks about shadow governments, astrology, spirituality, whatever she feels - totally herself)",
+      "family": [
+        "Youngest sibling to Signal and Ledger",
+        "Very close with siblings - looks out for each other",
+        "Has a special bond with Signal (he influenced her to go into communications and start her radio show)",
+        "Some discord with Ledger - feels like her sister doesn't like her much, but doesn't fully understand the weight on Ledger's shoulders as their supporter"
+      ],
+      "arc": "Shows Echo authentic voice; youngest sibling navigating family tensions; owning her truth"
+    },
+    "bodyHtml": "<p>Industry Connection: Radio station is on Mo U campus where Echo attends</p>",
     "quoteCount": 10
   },
   {
     "slug": "shade",
     "name": "Shade",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 5: SHADE ↔ SIGNAL",
+      "state": "Shadow State",
+      "represents": "Invisibility, hiding, wanting to belong but being unseen",
+      "age": "17 (from image)",
+      "pronouns": "They/them",
+      "personality": "Quiet, timid, always trying to be a part of something. Doesn't really have a home that we see. Artistic, observant from the shadows.",
+      "role": "Graffiti artist - tags all over Mo Town in dark shadows, leaving their mark but not wanting to be seen. This is their voice when they can't speak directly.",
+      "family": [
+        "Sibling to Guess",
+        "Flo wants to be Shade's friend (but Shade is too scared to let her in)"
+      ],
+      "arc": "The invisible artist who wants connection but is too scared to be visible; art is their only voice"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "signal",
     "name": "Signal",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 5: SHADE ↔ SIGNAL",
+      "state": "Grounded State",
+      "represents": "Communication, broadcasting, being seen and visible, sharing openly",
+      "age": "19 (from image)",
+      "pronouns": "He/him",
+      "personality": "Very intelligent, cranial, loves information. \"Over-informationer\" - word vomit sometimes. Enthusiastic communicator, wants everyone to know everything.",
+      "role": "News intern at the news station (learning broadcast journalism, gathering stories, reporting)",
+      "family": [
+        "Middle sibling to Ledger (oldest) and Resonate (youngest)",
+        "Very close with both sisters - looks out for each other",
+        "Wise and understands his older sister's disposition and tries to mitigate tensions",
+        "Has a special bond with his little sister",
+        "Was the influence for Resonate to go into communications and start her own radio show",
+        "Best friends with Quake"
+      ],
+      "arc": "The visible voice; helps Shade come out of shadows; mediates family tensions; inspired his sister's career"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "sputter",
     "name": "Sputter",
-    "bio": "",
+    "bio": "Spelling: S-P-U-T-T-E-R",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Shadow State",
+      "represents": "Inconsistency, stop/go energy, starting things but not finishing",
+      "age": "13 (from image)",
+      "pronouns": "She/her",
+      "personality": "Wild child energy. Takes things apart to see how they work, but NOT to put them back together. Curious but doesn't follow through. Impulsive, chaotic, brilliant but scattered.",
+      "role": "In school (middle school) and robotics club (perfect for taking things apart, but probably frustrates her teacher by never finishing projects)",
+      "family": [
+        "Flo's younger sister",
+        "Static really likes hanging out with Sputter (kindred chaotic spirits)",
+        "Loves her sister but gets annoyed and feels smothered sometimes"
+      ],
+      "arc": "The impulsive kid learning consistency from Flo; brilliantly chaotic"
+    },
+    "bodyHtml": "<p>Spelling: S-P-U-T-T-E-R</p>",
     "quoteCount": 10
   },
   {
     "slug": "static",
     "name": "Static",
     "bio": "",
+    "traits": {
+      "pairing": "PAIR 2: STATIC ↔ NORTH",
+      "state": "Shadow State",
+      "represents": "Mental fog, confusion, external influences clouding mental clarity",
+      "age": "10 (from image)",
+      "pronouns": "He/him",
+      "personality": "Irritable - not because he doesn't like people, but because he has SO much going on in his head. Easily overwhelmed by noise and stimulation.",
+      "role": "Goes to school (elementary age)",
+      "family": [
+        "Quake's little brother - normal sibling relationship, solid",
+        "Annoyed with North but appreciates his friendship - reluctant friends",
+        "Really likes hanging out with Sputter (they bond over taking things apart and chaotic energy)",
+        "Doesn't like Pinch (finds her anxiety annoying) or Guess (too many questions)"
+      ],
+      "arc": "The overwhelmed kid who can't think straight; needs clarity"
+    },
+    "bodyHtml": "",
     "quoteCount": 10
   },
   {
     "slug": "velour",
     "name": "Velour",
-    "bio": "",
+    "bio": "How She Operates: Makes everything SO comfortable you stop being cautious/productive; seduces with comfort and luxury until you're trapped in stagnation",
+    "traits": {
+      "pairing": "PAIR 9: SPUTTER ↔ FLO",
+      "state": "Indulgence",
+      "represents": "Luxury, comfort, indulgence to excess - comfortable to the point of stagnation",
+      "age": "37 (from image - same as triplets)",
+      "pronouns": "She/her",
+      "appearance": "Luxurious, soft, inviting",
+      "personality": "Slightly indifferent about everything, follows her sister's lead, doesn't really think for herself. Warm, indulgent, likes to be seen and feel good. Very laid back. Always pleasant. Passive.",
+      "role": "Gets people to relax in casino, making them vulnerable. \"Lets you do what you like to do.\" Creates comfortable spaces where people lose track of time and consequences.",
+      "family": [
+        "Triplet to Polish and Honeytrap",
+        "Indifferent about everyone - not really disliking anyone but also not liking them either",
+        "Bossy Boots doesn't like Velour because she thinks she's lazy"
+      ]
+    },
+    "bodyHtml": "<p>How She Operates: Makes everything SO comfortable you stop being cautious/productive; seduces with comfort and luxury until you're trapped in stagnation</p>",
     "quoteCount": 10
   }
 ]

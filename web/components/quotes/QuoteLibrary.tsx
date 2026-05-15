@@ -64,42 +64,44 @@ export function QuoteLibrary({
   return (
     <div>
       {/* Toolbar */}
-      <div className="sticky top-16 z-30 -mx-6 mb-10 border-y-3 border-ink bg-cream/95 px-6 py-3 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
+      <div className="sticky top-14 z-30 -mx-5 mb-8 border-y-3 border-ink bg-cream/95 px-5 py-3 backdrop-blur-md sm:top-16 sm:-mx-6 sm:mb-10 sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search 250 quotes…"
-            className="w-full flex-1 rounded-full border-3 border-ink bg-cream px-5 py-2 text-sm text-ink placeholder:text-ink/50 focus:border-terracotta focus:outline-none sm:min-w-[14rem] sm:w-auto"
+            className="w-full rounded-full border-3 border-ink bg-cream px-5 py-2 text-sm text-ink placeholder:text-ink/50 focus:border-terracotta focus:outline-none sm:min-w-[14rem] sm:flex-1"
             type="search"
           />
 
-          <select
-            value={active}
-            onChange={(e) => setActive(e.target.value)}
-            className="rounded-full border-3 border-ink bg-cream px-4 py-2 text-xs font-display uppercase tracking-wider text-ink focus:border-terracotta focus:outline-none"
-            aria-label="Filter by character"
-          >
-            <option value="all">All characters · 25</option>
-            {characters.map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <select
+              value={active}
+              onChange={(e) => setActive(e.target.value)}
+              className="flex-1 rounded-full border-3 border-ink bg-cream px-3 py-2 text-[11px] font-display uppercase tracking-wider text-ink focus:border-terracotta focus:outline-none sm:flex-none sm:px-4 sm:text-xs"
+              aria-label="Filter by character"
+            >
+              <option value="all">All · 25</option>
+              {characters.map((c) => (
+                <option key={c.slug} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
 
-          <button
-            onClick={() => setSeed(Math.floor(Math.random() * 9999) + 1)}
-            className="rounded-full border-3 border-ink bg-mustard px-4 py-2 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
-          >
-            Shuffle
-          </button>
+            <button
+              onClick={() => setSeed(Math.floor(Math.random() * 9999) + 1)}
+              className="shrink-0 rounded-full border-3 border-ink bg-mustard px-3 py-2 text-[11px] font-display uppercase tracking-wider text-ink shadow-cartoon-sm hover:-translate-y-0.5 transition-transform sm:px-4 sm:text-xs"
+            >
+              Shuffle
+            </button>
 
-          <p className="ml-auto font-display text-xs text-ink/70">
-            {filtered.length === quotes.length
-              ? `${quotes.length} quotes`
-              : `${filtered.length} of ${quotes.length}`}
-          </p>
+            <p className="ml-auto font-display text-[11px] text-ink/70 sm:text-xs">
+              {filtered.length === quotes.length
+                ? `${quotes.length}`
+                : `${filtered.length}/${quotes.length}`}
+            </p>
+          </div>
         </div>
       </div>
 

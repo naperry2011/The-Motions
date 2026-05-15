@@ -26,15 +26,15 @@ export function SiteNav() {
         scrolled ? 'border-b-3 border-ink bg-cream/95 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center" aria-label="The Motions home">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
+        <Link href="/" className="flex shrink-0 items-center" aria-label="The Motions home">
           <Image
             src="/assets/logo/motions-outlined.png"
             alt="The Motions"
             width={160}
             height={50}
             priority
-            className="h-10 w-auto"
+            className="h-8 w-auto sm:h-10"
           />
         </Link>
         <ul className="hidden items-center gap-7 text-sm font-medium text-ink md:flex">
@@ -51,9 +51,10 @@ export function SiteNav() {
         </ul>
         <Link
           href="/workbook"
-          className="rounded-full border-3 border-ink bg-terracotta px-5 py-2 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-0.5"
+          className="shrink-0 rounded-full border-3 border-ink bg-terracotta px-3 py-1.5 text-[10px] font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-0.5 sm:px-5 sm:py-2 sm:text-xs"
         >
-          Get the workbook
+          <span className="hidden sm:inline">Get the workbook</span>
+          <span className="sm:hidden">Workbook</span>
         </Link>
       </nav>
     </header>

@@ -21,14 +21,14 @@ function loadQuotePostIds(): number[] {
 export default function QuotesPage() {
   const quotePostIds = loadQuotePostIds();
   return (
-    <div className="bg-paper px-6 pt-32 pb-24">
+    <div className="bg-paper px-5 pt-24 pb-16 sm:px-6 sm:pt-32 sm:pb-24">
       <section className="mx-auto mb-8 max-w-7xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Sticker color="terracotta" rotate={-3}>
               The 250
             </Sticker>
-            <h1 className="mt-4 font-display text-4xl leading-[0.95] md:text-5xl">
+            <h1 className="mt-4 font-display text-3xl leading-[0.95] sm:text-4xl md:text-5xl">
               <span className="display-offset">Every quote,</span>{' '}
               <span className="font-editorial italic">every motion.</span>
             </h1>

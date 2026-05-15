@@ -45,12 +45,12 @@ const tiles = [
 
 export default function UniversePage() {
   return (
-    <div className="bg-paper px-6 pt-36 pb-28">
+    <div className="bg-paper px-5 pt-28 pb-20 sm:px-6 sm:pt-36 sm:pb-28">
       <section className="mx-auto max-w-7xl">
         <Sticker color="terracotta" rotate={-4}>
           The Universe
         </Sticker>
-        <h1 className="mt-6 font-display text-[clamp(4rem,12vw,12rem)] leading-none">
+        <h1 className="mt-5 font-display text-[clamp(3rem,14vw,12rem)] leading-none sm:mt-6">
           <span className="display-offset">Mo Town.</span>
         </h1>
         <RevealOnView delay={0.3} className="mt-10 max-w-2xl text-lg text-ink/80">

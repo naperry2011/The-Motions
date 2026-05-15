@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <div>
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden bg-paper pt-32 pb-20">
+      <section className="relative overflow-hidden bg-paper pt-24 pb-14 sm:pt-32 sm:pb-20">
         <div className="absolute -left-12 top-32 -z-10 animate-wobble">
           <Zigzag className="h-10 w-48 opacity-60" color="#f7c948" strokeWidth={5} />
         </div>
@@ -44,40 +44,40 @@ export default function HomePage() {
           <Squiggle className="h-8 w-40 opacity-70" color="#e87454" strokeWidth={5} />
         </div>
 
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:gap-12">
           <div>
             <Sticker color="mustard" rotate={-4}>
               A Solopreneur Brand Companion
             </Sticker>
-            <h1 className="mt-6 font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.95] tracking-tight">
+            <h1 className="mt-5 font-display text-[clamp(2.5rem,11vw,7rem)] leading-[0.95] tracking-tight sm:mt-6">
               <span className="display-offset">Going through</span>
               <br />
               <span className="display-offset">the motions,</span>
               <br />
               <span className="font-editorial italic text-teal">on purpose.</span>
             </h1>
-            <RevealOnView delay={0.4} className="mt-8 max-w-lg text-lg text-ink/80">
+            <RevealOnView delay={0.4} className="mt-6 max-w-lg text-base text-ink/80 sm:mt-8 sm:text-lg">
               The Motions is a creative universe — a town called Mo Town, twenty-five
               characters who embody the motions we move through, and an eight-module workbook
               for the work that hasn&apos;t found its rhythm yet.
             </RevealOnView>
-            <RevealOnView delay={0.55} className="mt-10 flex flex-wrap gap-4">
+            <RevealOnView delay={0.55} className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
               <Link
                 href="/universe"
-                className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1"
+                className="rounded-full border-3 border-ink bg-terracotta px-5 py-2.5 text-[11px] font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1 sm:px-6 sm:py-3 sm:text-xs"
               >
                 Enter Mo Town
               </Link>
               <Link
                 href="/workbook"
-                className="rounded-full border-3 border-ink bg-cream px-6 py-3 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm transition-transform hover:-translate-y-1"
+                className="rounded-full border-3 border-ink bg-cream px-5 py-2.5 text-[11px] font-display uppercase tracking-wider text-ink shadow-cartoon-sm transition-transform hover:-translate-y-1 sm:px-6 sm:py-3 sm:text-xs"
               >
                 See the workbook
               </Link>
             </RevealOnView>
           </div>
 
-          <RevealOnView delay={0.2} className="relative">
+          <RevealOnView delay={0.2} className="relative mx-auto w-full max-w-sm md:max-w-none">
             <div className="relative aspect-square animate-bobble">
               <div className="absolute inset-0 rounded-full bg-mustard" />
               <Image
@@ -91,7 +91,7 @@ export default function HomePage() {
             <Sticker
               color="terracotta"
               rotate={6}
-              className="absolute -bottom-2 -left-6 text-sm"
+              className="absolute -bottom-2 -left-2 text-xs sm:-left-6 sm:text-sm"
             >
               Meet Quake →
             </Sticker>
@@ -101,8 +101,8 @@ export default function HomePage() {
 
       {/* ── MANIFESTO (teal cinematic) ── */}
       <section className="bg-teal-grain text-cream">
-        <Squiggle className="h-6 w-full" color="#f7c948" />
-        <div className="mx-auto max-w-4xl px-6 py-28 text-center">
+        <Squiggle className="h-5 w-full sm:h-6" color="#f7c948" />
+        <div className="mx-auto max-w-4xl px-5 py-20 text-center sm:px-6 sm:py-28">
           <p className="font-display text-mustard text-xs uppercase tracking-[0.3em]">
             The Idea
           </p>
@@ -129,7 +129,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CHARACTER GRID ── */}
-      <section className="relative bg-paper px-6 py-28">
+      <section className="relative bg-paper px-5 py-16 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -209,7 +209,7 @@ export default function HomePage() {
       </section>
 
       {/* ── WORKBOOK TEASER ── */}
-      <section className="bg-paper px-6 py-28">
+      <section className="bg-paper px-5 py-16 sm:px-6 sm:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
           <div>
             <Sticker color="terracotta" rotate={-2}>
@@ -269,7 +269,7 @@ export default function HomePage() {
         className="relative bg-teal-grain text-cream"
       >
         <Zigzag className="h-6 w-full" color="#f7c948" />
-        <div className="mx-auto max-w-2xl px-6 py-28 text-center">
+        <div className="mx-auto max-w-2xl px-5 py-20 text-center sm:px-6 sm:py-28">
           <Sticker color="mustard" rotate={2}>
             Waitlist
           </Sticker>
