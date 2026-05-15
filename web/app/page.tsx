@@ -1,67 +1,112 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { allCharacters, allQuotes } from '@/lib/content';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import { Marquee } from '@/components/motion/Marquee';
-import { Parallax } from '@/components/motion/Parallax';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
+import { Sticker } from '@/components/decor/Sticker';
+import { Squiggle, Zigzag } from '@/components/decor/Squiggle';
+import {
+  CharacterPortrait,
+  hasPortrait
+} from '@/components/decor/CharacterPortrait';
 
 const featured = [3, 11, 27, 44, 58, 71, 92, 130, 165, 201, 237].map((i) =>
   allQuotes.find((q) => q.id === i)
 );
 
+// Prefer characters that have portrait art for the homepage carousel
+const featuredCharacters = allCharacters
+  .filter((c) => hasPortrait(c.slug))
+  .slice(0, 8);
+
 export default function HomePage() {
   return (
     <div>
-      {/* Hero */}
-      <section className="relative flex min-h-screen items-end overflow-hidden px-6 pb-24 pt-40">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-ink-900 via-ink-800 to-ink-900" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(242,92,31,0.18),transparent_60%),radial-gradient(circle_at_75%_70%,rgba(124,92,255,0.18),transparent_55%)]" />
+      {/* ── HERO ── */}
+      <section className="relative overflow-hidden bg-paper pt-32 pb-20">
+        <div className="absolute -left-12 top-32 -z-10 animate-wobble">
+          <Zigzag className="h-10 w-48 opacity-60" color="#f7c948" strokeWidth={5} />
+        </div>
+        <div className="absolute right-6 top-40 -z-10">
+          <Squiggle className="h-8 w-40 opacity-70" color="#e87454" strokeWidth={5} />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl">
-          <p className="mb-6 text-xs uppercase tracking-[0.4em] text-ember-400">
-            A solopreneur&apos;s brand companion
-          </p>
-          <h1 className="font-display text-[clamp(3rem,9vw,9rem)] leading-[0.95] tracking-tight">
-            <TextReveal as="h1" text="Going through the motions, on purpose." />
-          </h1>
-          <RevealOnView delay={0.6} className="mt-10 max-w-xl text-lg text-ink-100">
-            The Motions is a creative universe — a town called Mo Town, twenty-five characters
-            who embody the motions we move through, and an eight-module workbook for the work
-            that hasn&apos;t found its rhythm yet.
-          </RevealOnView>
-          <RevealOnView delay={0.9} className="mt-10 flex flex-wrap gap-4">
-            <Link
-              href="/universe"
-              className="rounded-full bg-ember-500 px-6 py-3 text-sm font-medium uppercase tracking-widest text-ink-900 hover:bg-ember-400"
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <Sticker color="mustard" rotate={-4}>
+              A Solopreneur Brand Companion
+            </Sticker>
+            <h1 className="mt-6 font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.95] tracking-tight">
+              <span className="display-offset">Going through</span>
+              <br />
+              <span className="display-offset">the motions,</span>
+              <br />
+              <span className="font-editorial italic text-teal">on purpose.</span>
+            </h1>
+            <RevealOnView delay={0.4} className="mt-8 max-w-lg text-lg text-ink/80">
+              The Motions is a creative universe — a town called Mo Town, twenty-five
+              characters who embody the motions we move through, and an eight-module workbook
+              for the work that hasn&apos;t found its rhythm yet.
+            </RevealOnView>
+            <RevealOnView delay={0.55} className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/universe"
+                className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1"
+              >
+                Enter Mo Town
+              </Link>
+              <Link
+                href="/workbook"
+                className="rounded-full border-3 border-ink bg-cream px-6 py-3 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm transition-transform hover:-translate-y-1"
+              >
+                See the workbook
+              </Link>
+            </RevealOnView>
+          </div>
+
+          <RevealOnView delay={0.2} className="relative">
+            <div className="relative aspect-square animate-bobble">
+              <div className="absolute inset-0 rounded-full bg-mustard" />
+              <Image
+                src="/assets/characters/quake.png"
+                alt="Quake — the trembling motion"
+                fill
+                priority
+                className="object-contain p-4"
+              />
+            </div>
+            <Sticker
+              color="terracotta"
+              rotate={6}
+              className="absolute -bottom-2 -left-6 text-sm"
             >
-              Enter Mo Town
-            </Link>
-            <Link
-              href="/workbook"
-              className="rounded-full border border-ink-300 px-6 py-3 text-sm font-medium uppercase tracking-widest text-ink-100 hover:border-ember-400 hover:text-ember-400"
-            >
-              See the workbook
-            </Link>
+              Meet Quake →
+            </Sticker>
           </RevealOnView>
         </div>
       </section>
 
-      {/* Manifesto */}
-      <section className="px-6 py-32">
-        <div className="mx-auto max-w-3xl">
+      {/* ── MANIFESTO (teal cinematic) ── */}
+      <section className="bg-teal-grain text-cream">
+        <Squiggle className="h-6 w-full" color="#f7c948" />
+        <div className="mx-auto max-w-4xl px-6 py-28 text-center">
+          <p className="font-display text-mustard text-xs uppercase tracking-[0.3em]">
+            The Idea
+          </p>
           <TextReveal
             as="h2"
             text="Every solopreneur is a town."
-            className="font-display text-5xl leading-tight md:text-6xl"
+            className="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] leading-tight"
           />
-          <RevealOnView delay={0.2} className="mt-10 space-y-6 text-lg text-ink-100">
+          <RevealOnView delay={0.2} className="mx-auto mt-10 max-w-2xl space-y-5 text-lg text-cream/85">
             <p>
-              Some days you&apos;re Quake — the tremble before a decision lands. Some days
-              you&apos;re Drift, watching the work float by because the wind isn&apos;t yours.
-              Other days, Pilot. Frame. Signal. Polish.
+              Some days you&apos;re <span className="font-editorial italic text-mustard">Quake</span>
+              — the tremble before a decision lands. Some days you&apos;re
+              <span className="font-editorial italic text-mustard"> Drift</span>, watching the
+              work float by because the wind isn&apos;t yours. Other days, Pilot. Frame.
+              Signal. Polish.
             </p>
             <p>
               The Motions is the map of those characters: who they are, where they live, what
@@ -69,71 +114,64 @@ export default function HomePage() {
             </p>
           </RevealOnView>
         </div>
+        <Squiggle className="h-6 w-full rotate-180" color="#f7c948" />
       </section>
 
-      {/* Universe teaser */}
-      <section className="relative overflow-hidden bg-ink-800 px-6 py-32">
-        <Parallax speed={0.2} className="absolute inset-x-0 top-0 -z-10">
-          <div className="h-[60vh] bg-[radial-gradient(circle_at_50%_50%,rgba(52,214,196,0.15),transparent_60%)]" />
-        </Parallax>
+      {/* ── CHARACTER GRID ── */}
+      <section className="relative bg-paper px-6 py-28">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col items-start justify-between gap-12 md:flex-row md:items-end">
-            <div className="max-w-xl">
-              <p className="mb-4 text-xs uppercase tracking-[0.4em] text-motion-drift">
-                The Universe
-              </p>
-              <TextReveal
-                as="h2"
-                text="Mo Town: where the motions live."
-                className="font-display text-5xl leading-tight md:text-6xl"
-              />
+          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <Sticker color="teal" rotate={-3}>
+                The Cast
+              </Sticker>
+              <h2 className="mt-5 font-display text-5xl leading-[0.95] md:text-6xl">
+                <span className="display-offset">Mo Town</span>
+                <br />
+                <span className="font-editorial italic">runs on motions.</span>
+              </h2>
             </div>
             <Link
-              href="/universe"
-              className="text-sm uppercase tracking-widest text-ember-400 hover:text-ember-500"
+              href="/universe/characters"
+              className="rounded-full border-3 border-ink bg-mustard px-5 py-2 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
             >
-              Walk the town →
+              All 25 →
             </Link>
           </div>
 
-          <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {allCharacters.slice(0, 10).map((c, i) => (
-              <RevealOnView key={c.slug} delay={i * 0.05}>
+          <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+            {featuredCharacters.map((c, i) => (
+              <RevealOnView key={c.slug} delay={(i % 4) * 0.06}>
                 <Link
                   href={`/universe/characters/${c.slug}`}
-                  className="group block aspect-[3/4] overflow-hidden rounded-2xl border border-ink-600 bg-ink-900/60 p-5 transition-colors hover:border-ember-400"
+                  className="group block overflow-hidden rounded-3xl border-3 border-ink bg-cream shadow-cartoon transition-transform hover:-translate-y-1 hover:rotate-[-0.6deg]"
                 >
-                  <div className="flex h-full flex-col justify-between">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-ink-300">
-                      Motion
-                    </p>
-                    <div>
-                      <p className="font-display text-3xl leading-none">{c.name}</p>
-                      <p className="mt-2 text-xs text-ink-300 group-hover:text-ember-400">
-                        {c.quoteCount} quotes →
-                      </p>
-                    </div>
+                  <div className="aspect-square bg-mustard">
+                    <CharacterPortrait
+                      slug={c.slug}
+                      name={c.name}
+                      size={400}
+                      className="h-full w-full object-contain p-3"
+                    />
+                  </div>
+                  <div className="border-t-3 border-ink px-4 py-3">
+                    <p className="font-display text-xl leading-none">{c.name}</p>
+                    <p className="mt-2 text-xs text-ink/60">{c.quoteCount} quotes →</p>
                   </div>
                 </Link>
               </RevealOnView>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Quote marquee */}
-      <section className="border-y border-ink-700/50 bg-ink-900 py-24">
-        <p className="mb-10 px-6 text-center text-xs uppercase tracking-[0.4em] text-ember-400">
-          From the 250
-        </p>
-        <Marquee duration={60}>
+      {/* ── QUOTE MARQUEE ── */}
+      <section className="relative border-y-3 border-ink bg-mustard py-16">
+        <Marquee duration={70}>
           {featured.filter(Boolean).map((q) => (
-            <span
-              key={q!.id}
-              className="font-display text-3xl text-ink-100 md:text-4xl"
-            >
+            <span key={q!.id} className="font-display text-2xl text-ink md:text-3xl">
               &ldquo;{q!.text}&rdquo;
-              <span className="ml-4 text-sm uppercase tracking-widest text-motion-spark">
+              <span className="ml-4 font-editorial italic text-terracotta">
                 — {q!.character}
               </span>
             </span>
@@ -142,36 +180,36 @@ export default function HomePage() {
         <div className="mt-10 text-center">
           <Link
             href="/quotes"
-            className="text-sm uppercase tracking-widest text-ember-400 hover:text-ember-500"
+            className="rounded-full border-3 border-ink bg-ink px-5 py-2 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
           >
             All 250 quotes →
           </Link>
         </div>
       </section>
 
-      {/* Workbook teaser */}
-      <section className="px-6 py-32">
+      {/* ── WORKBOOK TEASER ── */}
+      <section className="bg-paper px-6 py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
           <div>
-            <p className="mb-4 text-xs uppercase tracking-[0.4em] text-ember-400">
+            <Sticker color="terracotta" rotate={-2}>
               The Workbook
-            </p>
-            <TextReveal
-              as="h2"
-              text="Eight modules. Twenty-seven paths each."
-              className="font-display text-5xl leading-tight md:text-6xl"
-            />
-            <RevealOnView delay={0.2} className="mt-8 text-lg text-ink-100">
+            </Sticker>
+            <h2 className="mt-5 font-display text-5xl leading-[0.95] md:text-6xl">
+              <span className="display-offset">Eight modules.</span>
+              <br />
+              <span className="font-editorial italic">Two hundred and sixteen paths.</span>
+            </h2>
+            <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink/80">
               <p>
                 Going Through the Motions is a workbook for solopreneurs whose work has a
                 shape but no rhythm yet. Inner Compass. Safe Runway. Progress Over Perfect.
-                True And Seen. Eight modules, two hundred and sixteen practical paths.
+                True And Seen.
               </p>
             </RevealOnView>
             <RevealOnView delay={0.3} className="mt-8">
               <Link
                 href="/workbook"
-                className="rounded-full border border-ember-500 px-6 py-3 text-sm font-medium uppercase tracking-widest text-ember-400 hover:bg-ember-500 hover:text-ink-900"
+                className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon hover:-translate-y-0.5 transition-transform"
               >
                 Preview the workbook
               </Link>
@@ -180,21 +218,23 @@ export default function HomePage() {
           <RevealOnView delay={0.15}>
             <ul className="grid grid-cols-2 gap-3 text-sm">
               {[
-                ['02', 'Inner Compass'],
-                ['03', 'Safe Runway'],
-                ['04', 'Progress Over Perfect'],
-                ['05', 'True And Seen'],
-                ['06', 'Message Market Fit'],
-                ['07', 'Offer Architecture'],
-                ['08', 'Rhythm Systems'],
-                ['09', 'Proof & Performance']
-              ].map(([n, t]) => (
+                ['02', 'Inner Compass', 'bg-mustard'],
+                ['03', 'Safe Runway', 'bg-cream'],
+                ['04', 'Progress Over Perfect', 'bg-cream'],
+                ['05', 'True And Seen', 'bg-mustard'],
+                ['06', 'Message Market Fit', 'bg-mustard'],
+                ['07', 'Offer Architecture', 'bg-cream'],
+                ['08', 'Rhythm Systems', 'bg-cream'],
+                ['09', 'Proof & Performance', 'bg-mustard']
+              ].map(([n, t, bg], idx) => (
                 <li
                   key={n}
-                  className="rounded-2xl border border-ink-600 bg-ink-800/50 p-5"
+                  className={`rounded-2xl border-3 border-ink p-5 shadow-cartoon-sm ${bg} ${
+                    idx % 2 ? 'rotate-[0.6deg]' : '-rotate-[0.6deg]'
+                  }`}
                 >
-                  <p className="font-display text-2xl text-ember-400">M{n}</p>
-                  <p className="mt-2 text-ink-100">{t}</p>
+                  <p className="font-display text-2xl text-terracotta">M{n}</p>
+                  <p className="mt-2 font-display text-ink">{t}</p>
                 </li>
               ))}
             </ul>
@@ -202,18 +242,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Waitlist */}
+      {/* ── WAITLIST ── */}
       <section
         id="waitlist"
-        className="border-t border-ink-700/50 bg-gradient-to-b from-ink-900 to-ink-800 px-6 py-32"
+        className="relative bg-teal-grain text-cream"
       >
-        <div className="mx-auto max-w-2xl text-center">
-          <TextReveal
-            as="h2"
-            text="Get the Motions before it ships."
-            className="font-display text-4xl leading-tight md:text-5xl"
-          />
-          <RevealOnView delay={0.2} className="mt-6 text-ink-100">
+        <Zigzag className="h-6 w-full" color="#f7c948" />
+        <div className="mx-auto max-w-2xl px-6 py-28 text-center">
+          <Sticker color="mustard" rotate={2}>
+            Waitlist
+          </Sticker>
+          <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+            <span className="display-offset-light">Get the Motions</span>
+            <br />
+            <span className="font-editorial italic">before it ships.</span>
+          </h2>
+          <RevealOnView delay={0.2} className="mt-6 text-cream/80">
             <p>
               Join the waitlist for the workbook, character drops, and the first batch of
               guided cohorts.

@@ -1,28 +1,32 @@
-import { TextReveal } from '@/components/motion/TextReveal';
 import { RevealOnView } from '@/components/motion/RevealOnView';
+import { Sticker } from '@/components/decor/Sticker';
 import type { NarrativeDoc } from '@/lib/content';
 
 export function NarrativePage({
   eyebrow,
   doc,
-  accent = 'text-ember-400'
+  stickerColor = 'mustard'
 }: {
   eyebrow: string;
   doc: NarrativeDoc;
-  accent?: string;
+  stickerColor?: 'mustard' | 'terracotta' | 'teal' | 'cream';
 }) {
   return (
-    <div className="px-6 pt-40 pb-32">
-      <section className="mx-auto max-w-3xl">
-        <p className={`mb-6 text-xs uppercase tracking-[0.4em] ${accent}`}>{eyebrow}</p>
-        <TextReveal as="h1" text={doc.title} className="font-display text-5xl md:text-6xl" />
-        <RevealOnView delay={0.2} className="prose-motions mt-12">
+    <div className="bg-paper px-6 pt-36 pb-28">
+      <article className="mx-auto max-w-3xl">
+        <Sticker color={stickerColor} rotate={-3}>
+          {eyebrow}
+        </Sticker>
+        <h1 className="mt-6 font-display text-5xl leading-[0.95] md:text-6xl">
+          <span className="display-offset">{doc.title}</span>
+        </h1>
+        <RevealOnView delay={0.2} className="mt-12">
           <div
-            className="space-y-5 text-ink-100 [&_h1]:font-display [&_h1]:text-4xl [&_h1]:text-ink-50 [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:text-ink-50 [&_h3]:mt-8 [&_h3]:font-display [&_h3]:text-2xl [&_h3]:text-ink-50 [&_strong]:text-ember-400 [&_a]:text-ember-400 [&_a]:underline [&_li]:list-disc [&_li]:ml-6 [&_p]:leading-relaxed"
+            className="space-y-5 text-lg text-ink/85 [&_h1]:mt-12 [&_h1]:font-display [&_h1]:text-4xl [&_h1]:text-ink [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:text-ink [&_h3]:mt-8 [&_h3]:font-display [&_h3]:text-2xl [&_h3]:text-ink [&_strong]:text-terracotta [&_a]:text-terracotta [&_a]:underline [&_li]:list-disc [&_li]:ml-6 [&_p]:leading-relaxed [&_em]:font-editorial [&_em]:italic"
             dangerouslySetInnerHTML={{ __html: doc.html }}
           />
         </RevealOnView>
-      </section>
+      </article>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { allModules } from '@/lib/content';
-import { TextReveal } from '@/components/motion/TextReveal';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
+import { Sticker } from '@/components/decor/Sticker';
+import { Squiggle, Zigzag } from '@/components/decor/Squiggle';
 
 export const metadata = {
   title: 'Going Through the Motions — the workbook',
@@ -11,16 +12,18 @@ export const metadata = {
 
 export default function WorkbookPage() {
   return (
-    <div className="pt-40">
-      <section className="px-6">
+    <div>
+      <section className="bg-paper px-6 pt-36 pb-20">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-6 text-xs uppercase tracking-[0.4em] text-ember-400">The Workbook</p>
-          <TextReveal
-            as="h1"
-            text="Going Through the Motions."
-            className="font-display text-5xl leading-tight md:text-7xl"
-          />
-          <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink-100">
+          <Sticker color="mustard" rotate={-3}>
+            The Workbook
+          </Sticker>
+          <h1 className="mt-6 font-display text-5xl leading-[0.95] md:text-7xl">
+            <span className="display-offset">Going Through</span>
+            <br />
+            <span className="display-offset">the Motions.</span>
+          </h1>
+          <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink/80">
             <p>
               A solopreneur&apos;s brand companion. Eight modules. Twenty-seven paths each.
               Built for the work that has shape — but hasn&apos;t found its rhythm yet.
@@ -29,7 +32,7 @@ export default function WorkbookPage() {
           <RevealOnView delay={0.35} className="mt-10">
             <a
               href="#waitlist"
-              className="inline-block rounded-full bg-ember-500 px-6 py-3 text-sm font-medium uppercase tracking-widest text-ink-900 hover:bg-ember-400"
+              className="inline-block rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon hover:-translate-y-0.5 transition-transform"
             >
               Join the waitlist
             </a>
@@ -37,22 +40,26 @@ export default function WorkbookPage() {
         </div>
       </section>
 
-      <section className="px-6 py-24">
+      <section className="bg-paper px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-10 text-xs uppercase tracking-[0.4em] text-motion-drift">
+          <p className="mb-10 font-display text-xs uppercase tracking-wider text-terracotta">
             The eight modules
           </p>
           <ol className="space-y-4">
             {allModules.map((m, i) => (
               <RevealOnView key={m.number} delay={i * 0.05}>
-                <li className="rounded-3xl border border-ink-700 bg-ink-800/40 p-8 md:flex md:items-center md:justify-between md:gap-8">
+                <li
+                  className={`rounded-3xl border-3 border-ink p-7 shadow-cartoon-sm md:flex md:items-center md:justify-between md:gap-8 ${
+                    i % 2 === 0 ? 'bg-cream' : 'bg-mustard'
+                  } ${i % 2 === 0 ? '-rotate-[0.3deg]' : 'rotate-[0.3deg]'}`}
+                >
                   <div>
-                    <p className="font-display text-2xl text-ember-400">
+                    <p className="font-display text-2xl text-terracotta">
                       Module {String(m.number).padStart(2, '0')}
                     </p>
-                    <p className="mt-2 font-display text-3xl text-ink-50">{m.title}</p>
+                    <p className="mt-2 font-display text-3xl text-ink">{m.title}</p>
                   </div>
-                  <p className="mt-4 text-sm text-ink-200 md:mt-0">
+                  <p className="mt-4 font-editorial italic text-ink/70 md:mt-0">
                     {m.paths.length} paths · activities included
                   </p>
                 </li>
@@ -62,12 +69,13 @@ export default function WorkbookPage() {
         </div>
       </section>
 
-      <section className="border-t border-ink-700/60 px-6 py-24">
-        <div className="mx-auto max-w-3xl">
-          <p className="mb-6 text-xs uppercase tracking-[0.4em] text-motion-spark">
+      <section className="bg-teal-grain text-cream">
+        <Squiggle className="h-6 w-full" color="#f7c948" />
+        <div className="mx-auto max-w-3xl px-6 py-24">
+          <Sticker color="mustard" rotate={-2}>
             What you get
-          </p>
-          <ul className="grid gap-6 md:grid-cols-2">
+          </Sticker>
+          <ul className="mt-10 grid gap-5 md:grid-cols-2">
             {[
               [
                 'The full 216 paths',
@@ -86,26 +94,33 @@ export default function WorkbookPage() {
                 'Use the universe to locate where you are — and what motion to do next.'
               ]
             ].map(([t, d]) => (
-              <li key={t} className="rounded-2xl border border-ink-700 p-6">
-                <p className="font-display text-xl text-ink-50">{t}</p>
-                <p className="mt-2 text-sm text-ink-200">{d}</p>
+              <li
+                key={t}
+                className="rounded-3xl border-3 border-cream/30 bg-teal-700 p-6"
+              >
+                <p className="font-display text-xl text-mustard">{t}</p>
+                <p className="mt-2 text-sm text-cream/80">{d}</p>
               </li>
             ))}
           </ul>
         </div>
+        <Zigzag className="h-6 w-full rotate-180" color="#f7c948" />
       </section>
 
       <section
         id="waitlist"
-        className="border-t border-ink-700/60 bg-gradient-to-b from-ink-900 to-ink-800 px-6 py-32"
+        className="bg-paper px-6 py-28"
       >
         <div className="mx-auto max-w-2xl text-center">
-          <TextReveal
-            as="h2"
-            text="Be first when it ships."
-            className="font-display text-4xl md:text-5xl"
-          />
-          <RevealOnView delay={0.2} className="mt-6 text-ink-100">
+          <Sticker color="terracotta" rotate={3}>
+            Waitlist
+          </Sticker>
+          <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+            <span className="display-offset">Be first</span>
+            <br />
+            <span className="font-editorial italic">when it ships.</span>
+          </h2>
+          <RevealOnView delay={0.2} className="mt-6 text-ink/80">
             <p>
               The workbook releases in stages. Waitlist members get the first chapter, early
               pricing, and access to the first cohort.
