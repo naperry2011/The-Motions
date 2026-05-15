@@ -61,10 +61,37 @@ async function buildQuotes() {
 }
 
 // ---------- Characters ----------
-// Heuristic: split the character database doc into blocks by ALL-CAPS-or-titled
-// headings. Each block becomes a record with a name + raw body. Downstream
-// pages render the body as prose. This is intentionally forgiving — exact
-// field extraction can be tightened once we see the real structure.
+// Parses Character Documentation/COMPLETE MO TOWN CHARACTER DATABASE.docx.
+// Each character section is delimited by an ALL-CAPS name followed by a
+// parenthesised state/role marker:
+//   "QUAKE (Shadow State: Anxiety & Fear)"
+//   "BOSSY BOOTS (Neutral - Head of Security)"
+//   "CAPITAL (The Apex Predator)"
+// Within a section, lines like "Field: value" become structured traits.
+// Lines under a "Field:" line that has no inline value collect as bullets.
+
+type CharacterTraits = {
+  age?: string;
+  pronouns?: string;
+  represents?: string;
+  personality?: string;
+  role?: string;
+  sexuality?: string;
+  appearance?: string;
+  family?: string[];
+  backstory?: string;
+  arc?: string;
+  alignment?: string;
+  state?: string; // shadow / grounded / neutral / bad / etc
+  pairing?: string; // pair label (e.g. "Pair 1: Quake ↔ Harbor")
+};
+
+const NAME_ALIASES: Record<string, string> = {
+  flo: 'flow' // docx writes "FLO", canon is "Flow"
+};
+
+const HEADING_RE = /^([A-Z][A-Z\s]+?)\s+\(([^)]+)\)\s*$/;
+
 async function buildCharacters(quotes: Array<{ character: string; characterSlug: string }>) {
   console.log('Parsing characters…');
   const file = path.join(
@@ -75,36 +102,146 @@ async function buildCharacters(quotes: Array<{ character: string; characterSlug:
   const text = await readDocxText(file);
   const lines = text.split(/\r?\n/);
 
-  type Block = { name: string; body: string[] };
-  const blocks: Block[] = [];
-  let current: Block | null = null;
-
-  const isHeading = (line: string) => {
-    const t = line.trim();
-    if (!t) return false;
-    if (t.length > 60) return false;
-    // Heading heuristic: starts with capital, no sentence punctuation at end.
-    if (!/^[A-Z]/.test(t)) return false;
-    if (/[.!?,;:]$/.test(t)) return false;
-    // Must contain a letter run that's mostly capitalized OR title-case word.
-    return /^[A-Z][A-Za-z'\- ]{1,40}$/.test(t);
+  type Section = {
+    rawName: string;
+    canonSlug: string;
+    parenthetical: string;
+    pairing: string;
+    bodyLines: string[];
   };
 
-  for (const line of lines) {
-    if (isHeading(line)) {
-      if (current && current.body.length) blocks.push(current);
-      current = { name: line.trim(), body: [] };
-    } else if (current) {
-      current.body.push(line);
+  const sections: Section[] = [];
+  let current: Section | null = null;
+  let lastPair = '';
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) {
+      if (current) current.bodyLines.push('');
+      continue;
     }
+
+    const pairMatch = line.match(/^PAIR\s+\d+:\s*(.+)$/i);
+    if (pairMatch) {
+      lastPair = line;
+      continue;
+    }
+
+    const headMatch = line.match(HEADING_RE);
+    if (headMatch) {
+      const name = headMatch[1].trim();
+      const paren = headMatch[2].trim();
+      let canon = slug(name);
+      canon = NAME_ALIASES[canon] ?? canon;
+      // Only treat as a character section if the slug looks plausible.
+      // Reject "THE REAL WORLD", "THE MOTIONS", etc. which can match the head regex.
+      if (current) sections.push(current);
+      current = {
+        rawName: name,
+        canonSlug: canon,
+        parenthetical: paren,
+        pairing: lastPair,
+        bodyLines: []
+      };
+      continue;
+    }
+
+    if (current) current.bodyLines.push(line);
   }
-  if (current && current.body.length) blocks.push(current);
+  if (current) sections.push(current);
 
-  // Quote characters are authoritative — they're the canon speakers.
-  // The docx parser is best-effort: we look up bio by exact-name slug match.
-  const docxBySlug = new Map<string, Block>();
-  for (const b of blocks) docxBySlug.set(slug(b.name), b);
+  // Parse traits from a section body
+  const parseSection = (s: Section): { traits: CharacterTraits; html: string } => {
+    const traits: CharacterTraits = {};
+    if (s.pairing) traits.pairing = s.pairing;
 
+    // Extract state from parenthetical
+    const pm = s.parenthetical.match(/^(Shadow State|Grounded State|Neutral|Indulgence|Maximum Intensity|Performance & Vanity|Internal Indecision|The Apex Predator|The Mastermind)\s*[:\-]?\s*(.*)$/i);
+    if (pm) {
+      traits.state = pm[1];
+      if (pm[2]) traits.represents = pm[2];
+    } else {
+      traits.state = s.parenthetical;
+    }
+
+    const FIELDS: Array<[string, keyof CharacterTraits]> = [
+      ['Age', 'age'],
+      ['Pronouns', 'pronouns'],
+      ['Represents', 'represents'],
+      ['Personality', 'personality'],
+      ['Work/Role', 'role'],
+      ['Role', 'role'],
+      ['Sexuality', 'sexuality'],
+      ['Appearance', 'appearance'],
+      ['Backstory', 'backstory'],
+      ['Dynamic/Arc', 'arc'],
+      ['Dynamic / Arc', 'arc'],
+      ['Alignment', 'alignment']
+    ];
+
+    const htmlParts: string[] = [];
+    let i = 0;
+    while (i < s.bodyLines.length) {
+      const line = s.bodyLines[i];
+      if (!line) {
+        i++;
+        continue;
+      }
+
+      let matched = false;
+      for (const [label, key] of FIELDS) {
+        const re = new RegExp(`^${label.replace(/[/]/g, '\\/')}\\s*:\\s*(.*)$`, 'i');
+        const m = line.match(re);
+        if (m) {
+          const inline = m[1].trim();
+          if (inline) {
+            (traits as Record<string, unknown>)[key] = inline;
+          }
+          matched = true;
+          i++;
+          break;
+        }
+      }
+      if (matched) continue;
+
+      // Family/Relationships block: heading line + bullets until next field/heading
+      const famMatch = line.match(/^(Family\/Relationships|Relationships)\s*:?\s*$/i);
+      if (famMatch) {
+        const family: string[] = [];
+        i++;
+        while (i < s.bodyLines.length) {
+          const bullet = s.bodyLines[i];
+          if (!bullet) {
+            i++;
+            continue;
+          }
+          // Stop if we hit a recognised field or another heading
+          if (/^(Age|Pronouns|Represents|Personality|Work\/Role|Role|Sexuality|Appearance|Backstory|Dynamic|Alignment|Industry|Connection|Before|After|How|What|The Casino)[\s\/:\-]/i.test(bullet)) {
+            break;
+          }
+          family.push(bullet);
+          i++;
+        }
+        if (family.length) traits.family = family;
+        continue;
+      }
+
+      // Treat anything else as free-form prose for the HTML body
+      htmlParts.push(`<p>${escapeHtml(line)}</p>`);
+      i++;
+    }
+
+    return { traits, html: htmlParts.join('') };
+  };
+
+  const bySlugSection = new Map<string, ReturnType<typeof parseSection> & { rawName: string }>();
+  for (const sec of sections) {
+    if (!sec.canonSlug) continue;
+    const parsed = parseSection(sec);
+    bySlugSection.set(sec.canonSlug, { ...parsed, rawName: sec.rawName });
+  }
+
+  // Quote characters are authoritative — every speaker must have a record.
   const bySlug = new Map<string, { name: string; slug: string }>();
   for (const q of quotes) {
     if (!bySlug.has(q.characterSlug)) {
@@ -114,19 +251,31 @@ async function buildCharacters(quotes: Array<{ character: string; characterSlug:
 
   const characters = Array.from(bySlug.values())
     .map(({ slug: s, name }) => {
-      const block = docxBySlug.get(s);
-      const bio = block ? block.body.join('\n').trim() : '';
+      const parsed = bySlugSection.get(s);
       return {
         slug: s,
         name,
-        bio,
+        // Back-compat plain bio (concatenated prose)
+        bio: parsed?.html ? parsed.html.replace(/<[^>]+>/g, '').trim() : '',
+        traits: parsed?.traits ?? {},
+        bodyHtml: parsed?.html ?? '',
         quoteCount: quotes.filter((q) => q.characterSlug === s).length
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  const matched = characters.filter((c) => c.bodyHtml || Object.keys(c.traits).length).length;
+  console.log(`  matched ${matched}/${characters.length} characters to docx sections`);
+
   await writeJson('characters.json', characters);
   return characters;
+}
+
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 // ---------- Geography, Arcs, Exacerbators, Lore (narrative HTML) ----------

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { allCharacters, getCharacter, getQuotesByCharacter } from '@/lib/content';
+import type { CharacterTraits } from '@/lib/content';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import {
   CharacterPortrait,
@@ -29,6 +30,15 @@ export async function generateMetadata({
   return { title: c?.name ?? 'Character' };
 }
 
+function stateColor(state?: string) {
+  const s = (state ?? '').toLowerCase();
+  if (s.includes('shadow')) return 'terracotta';
+  if (s.includes('grounded')) return 'teal';
+  if (s.includes('neutral')) return 'mustard';
+  if (s.includes('apex') || s.includes('mastermind')) return 'terracotta';
+  return 'mustard';
+}
+
 export default async function CharacterPage({
   params
 }: {
@@ -40,11 +50,17 @@ export default async function CharacterPage({
 
   const quotes = getQuotesByCharacter(slug);
   const others = allCharacters.filter((c) => c.slug !== slug).slice(0, 6);
+  const traits: CharacterTraits = character.traits ?? {};
+
+  const eyebrow =
+    traits.state && traits.represents
+      ? `${traits.state} · ${traits.represents}`
+      : traits.state ?? 'A motion';
 
   return (
     <div>
-      {/* Header with portrait */}
-      <section className="bg-paper px-6 pt-36 pb-20">
+      {/* Hero */}
+      <section className="bg-paper px-6 pt-36 pb-16">
         <div className="mx-auto max-w-6xl">
           <Link
             href="/universe/characters"
@@ -53,10 +69,10 @@ export default async function CharacterPage({
             ← All characters
           </Link>
 
-          <div className="mt-12 grid items-center gap-12 md:grid-cols-[1fr_1fr]">
+          <div className="mt-10 grid items-start gap-12 md:grid-cols-[1fr_1fr]">
             <div>
-              <Sticker color="mustard" rotate={-3}>
-                A motion
+              <Sticker color={stateColor(traits.state) as 'mustard' | 'terracotta' | 'teal' | 'cream'} rotate={-3}>
+                {eyebrow}
               </Sticker>
               {hasTitle(slug) ? (
                 <div className="mt-6">
@@ -67,19 +83,10 @@ export default async function CharacterPage({
                   <span className="display-offset">{character.name}</span>
                 </h1>
               )}
-              {character.bio ? (
-                <RevealOnView
-                  delay={0.2}
-                  className="mt-10 max-w-prose whitespace-pre-line text-lg text-ink/80"
-                >
-                  <p>{character.bio}</p>
-                </RevealOnView>
-              ) : (
-                <RevealOnView delay={0.2} className="mt-10 max-w-prose text-lg text-ink/80">
-                  <p>
-                    {character.name} lives in Mo Town. Their long-form profile is being
-                    written — the {character.quoteCount} quotes below are the canon for now.
-                  </p>
+
+              {traits.personality && (
+                <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink/85">
+                  <p>{traits.personality}</p>
                 </RevealOnView>
               )}
             </div>
@@ -116,6 +123,96 @@ export default async function CharacterPage({
           </div>
         </div>
       </section>
+
+      {/* Quick stats + Family/Relationships */}
+      {(traits.age || traits.pronouns || traits.role || traits.sexuality || traits.alignment || traits.appearance || traits.family) && (
+        <section className="bg-paper px-6 pb-20">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+            {/* Quick stats card */}
+            <RevealOnView className="md:col-span-1">
+              <div className="rounded-3xl border-3 border-ink bg-cream p-7 shadow-cartoon">
+                <p className="font-display text-xs uppercase tracking-wider text-terracotta">
+                  The Stats
+                </p>
+                <dl className="mt-5 space-y-4 text-sm">
+                  {traits.age && <Stat label="Age" value={cleanFromImage(traits.age)} />}
+                  {traits.pronouns && <Stat label="Pronouns" value={traits.pronouns} />}
+                  {traits.role && <Stat label="Role" value={traits.role} />}
+                  {traits.sexuality && <Stat label="Sexuality" value={traits.sexuality} />}
+                  {traits.alignment && <Stat label="Alignment" value={traits.alignment} />}
+                  {traits.appearance && <Stat label="Appearance" value={traits.appearance} />}
+                </dl>
+              </div>
+            </RevealOnView>
+
+            {/* Family / Relationships */}
+            {traits.family && traits.family.length > 0 && (
+              <RevealOnView delay={0.1} className="md:col-span-2">
+                <div className="rounded-3xl border-3 border-ink bg-mustard p-7 shadow-cartoon">
+                  <p className="font-display text-xs uppercase tracking-wider text-ink">
+                    Family & Relationships
+                  </p>
+                  <ul className="mt-5 space-y-3">
+                    {traits.family.map((f, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-3 text-sm leading-snug text-ink/85"
+                      >
+                        <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </RevealOnView>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Backstory + Arc */}
+      {(traits.backstory || traits.arc) && (
+        <section className="bg-paper px-6 pb-20">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+            {traits.backstory && (
+              <RevealOnView>
+                <div className="h-full rounded-3xl border-3 border-ink bg-cream p-7 shadow-cartoon-sm">
+                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
+                    Backstory
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-ink/85">
+                    {traits.backstory}
+                  </p>
+                </div>
+              </RevealOnView>
+            )}
+            {traits.arc && (
+              <RevealOnView delay={0.1}>
+                <div className="h-full rounded-3xl border-3 border-ink bg-terracotta/15 p-7 shadow-cartoon-sm">
+                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
+                    Dynamic & Arc
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-ink/85">{traits.arc}</p>
+                </div>
+              </RevealOnView>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Free-form prose body (rare — only when docx had loose paragraphs) */}
+      {character.bodyHtml && (
+        <section className="bg-paper px-6 pb-20">
+          <div className="mx-auto max-w-3xl">
+            <RevealOnView>
+              <div
+                className="space-y-4 text-base leading-relaxed text-ink/85 [&_p]:font-sans"
+                dangerouslySetInnerHTML={{ __html: character.bodyHtml }}
+              />
+            </RevealOnView>
+          </div>
+        </section>
+      )}
 
       {/* Scene */}
       {hasScene(slug) && (
@@ -180,4 +277,20 @@ export default async function CharacterPage({
       </section>
     </div>
   );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="font-display text-[10px] uppercase tracking-wider text-ink/60">
+        {label}
+      </dt>
+      <dd className="mt-1 text-ink">{value}</dd>
+    </div>
+  );
+}
+
+// "20 (from image)" → "20"
+function cleanFromImage(s: string) {
+  return s.replace(/\s*\(from image\)/i, '').trim();
 }

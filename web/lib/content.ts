@@ -8,7 +8,31 @@ import lore from '@/content/lore.json';
 import modules from '@/content/modules.json';
 
 export type Quote = { id: number; character: string; characterSlug: string; text: string };
-export type Character = { slug: string; name: string; bio: string; quoteCount: number };
+
+export type CharacterTraits = {
+  age?: string;
+  pronouns?: string;
+  represents?: string;
+  personality?: string;
+  role?: string;
+  sexuality?: string;
+  appearance?: string;
+  family?: string[];
+  backstory?: string;
+  arc?: string;
+  alignment?: string;
+  state?: string;
+  pairing?: string;
+};
+
+export type Character = {
+  slug: string;
+  name: string;
+  bio: string;
+  traits: CharacterTraits;
+  bodyHtml: string;
+  quoteCount: number;
+};
 export type NarrativeDoc = { title: string; html: string };
 export type ModuleRecord = {
   number: number;
