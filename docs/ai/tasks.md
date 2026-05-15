@@ -5,22 +5,21 @@ Active work. Update as items are completed and new work is identified.
 ## Sprint / Iteration
 
 **Range:** 2026-05-14 to 2026-05-28
-**Goal:** Polish v1 to launch-ready
+**Goal:** Phase 1 polish on `perry-phase1` — visual identity, real graphics, content density, mobile
 
 ## In Progress
 
-(none — v1 just shipped, no work in flight)
+(none — most recent batch landed at `bea18fa`)
 
 ## Up Next
 
-- [ ] Editorial pass on homepage manifesto + workbook sales-page copy — M
-- [ ] Hand-author or parse-fix the 25 character bios — M
-- [ ] Move graphics from `The Motions Graphics (*)` / `The Motions Static Quote Posts/` into `web/public/assets/**` and reference them in the character cards / quote library — M
-- [ ] Wire custom domain in Vercel + set as production — S
-- [ ] Add Open Graph images and per-route metadata.openGraph — S
-- [ ] Add Vercel Analytics or Plausible — XS
-- [ ] Generate sitemap.xml + robots.txt — XS
-- [ ] Mobile QA pass (375px–414px viewport, scroll-anim FPS check) — S
+- [ ] Polish the `/universe` overview + the four narrative pages (`/geography`, `/lore`, `/arcs`, `/exacerbators`) — currently still using auto-converted mammoth HTML, no cartoon styling — M
+- [ ] Editorial pass on hand-authored copy (homepage manifesto, workbook sales-page) so it's not generic — M
+- [ ] Mobile nav menu — currently only logo + Workbook CTA show on mobile; add a small hamburger that reveals Universe/Characters/Quotes/Workbook links — S
+- [ ] Custom domain wired in Vercel + set as production — S
+- [ ] Per-route OG images + `metadata.openGraph` — S
+- [ ] Vercel Analytics or Plausible — XS
+- [ ] sitemap.xml + robots.txt — XS
 
 ## Blocked
 
@@ -28,22 +27,25 @@ Active work. Update as items are completed and new work is identified.
 
 ## Recently Completed
 
-- [x] v1 scaffold: Next.js 15 + Tailwind + Lenis + Framer Motion in `web/` — 2026-05-14
-- [x] Content pipeline parsing 7 source docs → 8 JSON files — 2026-05-14
-- [x] 10 v1 routes built and serving 200 — 2026-05-14
-- [x] Supabase `waitlist` migration + RLS — 2026-05-14
-- [x] `/api/waitlist` end-to-end smoke test green — 2026-05-14
-- [x] Vercel deploy with Root Directory `web` + Framework Preset Next.js — 2026-05-14
-- [x] Repo index files (CODE_MAP, ENTRY_POINTS, DATA_FLOW, IMPORT_GRAPH_SUMMARY, FEATURE_BOUNDARIES) — 2026-05-14
-- [x] AI context docs scaffolded under `docs/ai/` — 2026-05-14
+- [x] Profile vibe pass + sitewide mobile pass (`bea18fa`) — 2026-05-14
+- [x] Character bios fleshed out from canonical PDF/docx (`f8bfbcc`) — 2026-05-14
+- [x] Quotes page redesign: compact grid + pagination + click-to-expand modal (`4936440`) — 2026-05-14
+- [x] Graphics(1) audit → hero-cards + scenes remap (`13cbe1b`) — 2026-05-14
+- [x] Logo, billboard, group shot, 88 quote posters, sample PDF wired (`ed6d1ec`) — 2026-05-14
+- [x] Image optimization pipeline (sharp → WebP), 317 MB → 29 MB — 2026-05-14
+- [x] Mo Town cartoon rebrand (`dd00e2e`) — 2026-05-14
+- [x] PR hotfix to main after merge corrupted `quotes/page.tsx` JSX — 2026-05-14
+- [x] Removed redundant cast group-shot from `/universe/characters` (`15e70b3`) — 2026-05-14
 
 ## Bugs
 
-- [ ] Character bios empty for all 25 characters — P2 — root cause: docx heading style doesn't match canonical names; parser falls through to stubs. Fix path: hand-author MDX per character OR tighten heading detection.
+- [ ] 7 "Bad/Neutral" characters lack a structured `arc` field (Bossy Boots, Honeytrap, Velour, Amp, Mirrorball, Glitch, Capital) — docx uses different field labels for them — P3 — pages render fine without it, just missing the Arc card
 
 ## Tech Debt
 
 - [ ] `web/lib/content.ts` uses TypeScript `as` casts on imported JSON. If source-doc schema drifts, callers won't catch it at compile time. Adding Zod parse on load would harden this. — Low impact while content is build-time only.
-- [ ] `web/components/universe/NarrativePage.tsx` renders mammoth-converted HTML via `dangerouslySetInnerHTML`. Trusted source today (our own docx). If any user-authored input ever flows in, must sanitize.
-- [ ] `web/scripts/build-content.ts` is a single file owning 7 parsers. If any source-doc format changes the diff lands here. Acceptable for v1; consider splitting per-parser if pipeline grows.
-- [ ] GSAP installed but unused. Either remove from `package.json` or schedule a pinned-section feature to justify it.
+- [ ] `web/components/universe/NarrativePage.tsx` renders mammoth-converted HTML via `dangerouslySetInnerHTML`. Trusted source today; sanitize if any user-authored input ever flows in.
+- [ ] `web/scripts/build-content.ts` is a single file owning 7 parsers. Acceptable for v1; split per-parser if pipeline grows.
+- [ ] GSAP installed but unused — either remove from `package.json` or schedule a pinned-section feature.
+- [ ] Amp + Velour have no scene panel — could either commission/source two more illustrations or design the profile so the missing scene reads as intentional (currently degrades silently).
+- [ ] No `lock` files for Word docx (`.gitignore` has `~$*` now, but the deploy still needs to be careful not to commit Word lock files).

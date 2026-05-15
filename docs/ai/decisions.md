@@ -64,6 +64,11 @@ Build the character roster from the quotes CSV. Use the docx as a best-effort bi
 - **Negative:** Bios are empty for all 25 today, because no docx heading style happens to match canonical names exactly. Requires either tighter parser heuristics or hand-authored MDX bios to fix.
 - **Neutral:** The fix is non-blocking — pages render fine without bios.
 
+**Update 2026-05-14:** Bios are no longer empty — see ADR-008 for the
+structured-traits parser. The CSV remains canonical for the cast list;
+`NAME_ALIASES = { flo: 'flow' }` reconciles disagreements between the
+docx's "FLO" and the CSV's "Flow".
+
 ---
 
 ## ADR-004: Web app lives in `web/`, source content stays at repo root
@@ -99,5 +104,80 @@ Install `@supabase/ssr`, build `lib/supabase/server.ts`, and have `/api/waitlist
 - **Positive:** v2 transition is mostly UI work + Stripe wiring, not plumbing.
 - **Negative:** A small amount of code carries no v1 value.
 - **Neutral:** Env vars (`NEXT_PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY`) are required in v1 even though auth is dormant.
+
+---
+
+## ADR-006: One asset directory per role, not per character
+
+**Date:** 2026-05-14
+**Status:** Accepted
+
+**Context**
+The source graphics arrived in five folders ("The Motions Graphics (1..5)") with mixed contents: characters, scenes, title cards, hero illustrations, group shots, billboards. Components needed predictable lookups like "does Quake have a portrait?" without ad-hoc fs scans per render.
+
+**Decision**
+Organize by role, not by character: `public/assets/{characters,hero-cards,scenes,titles,illustrations,quote-posts,logo}/`. Every file inside is named `{slug}.webp` (or for illustrations, descriptive: `welcome.webp`, `cast.webp`). The `CharacterPortrait` component does a one-time fs scan at module load to build `availablePortraits`/`availableHeroCards`/`availableScenes`/`availableTitles` sets; helpers (`hasPortrait(slug)`, `hasHeroCard(slug)`, etc.) are O(1) presence checks.
+
+**Consequences**
+- **Positive:** Adding a new image is just dropping a `.webp` in the right folder — no code change. Pages render gracefully whether a given character has 0–4 art types available.
+- **Negative:** Renames are required when source filenames change (e.g. "Resonate Radio Station.png" → `resonate.webp`). `scripts/remap-illustrations.ts` codifies the mapping for the Graphics(1) folder.
+- **Neutral:** The fallback chain `portrait → hero-card → initial-circle` is encoded in the component, not in each call site.
+
+---
+
+## ADR-007: WebP image pipeline, source PNGs stay in source folders
+
+**Date:** 2026-05-14
+**Status:** Accepted
+
+**Context**
+Source illustrations are 1–3 MB PNGs each. Without optimization, the asset payload was 317 MB — over Vercel's 100 MB compressed-deploy limit and slow regardless. Two paths: (a) store originals out-of-tree (e.g. Cloudflare R2) and serve via CDN; (b) optimize in-tree once and commit the smaller derivatives.
+
+**Decision**
+Build `web/scripts/optimize-images.ts` using sharp. Each role directory gets a max-width + quality target: quote-posts 1000px @ q78, scenes/illustrations 1600px @ q80, characters 800px @ q85, hero 1600px @ q80. Originals are replaced in place with `.webp`. `npm run assets:optimize` is run after new PNGs land. The original source PNGs stay under the repo root (`Character Documentation/`, `The Motions Graphics (1..5)/`) untouched.
+
+**Consequences**
+- **Positive:** Total shipped assets: 317 MB → 29 MB. Well under Vercel's 100 MB ceiling with headroom. Next.js `<Image>` still does runtime AVIF/WebP serving for further reduction.
+- **Negative:** Optimized assets are committed to git, growing the repo over time. Re-running the script is destructive (overwrites in place); originals only live in the source folders.
+- **Neutral:** Logo PNGs (~268 KB total) skip the pipeline — too small to bother.
+
+---
+
+## ADR-008: Character profiles use structured traits, not free-form bios
+
+**Date:** 2026-05-14
+**Status:** Accepted (supersedes part of ADR-003)
+
+**Context**
+The previous parser concatenated each character's docx body into a single `bio` string. The string was empty for most characters because the heading heuristic didn't match. Even when it didn't fail, a wall of free-form text doesn't render well — and the source document has a consistent structure (Age, Pronouns, Represents, Personality, Role, Family/Relationships, Backstory, Dynamic/Arc) worth preserving.
+
+**Decision**
+Rewrite the character parser to detect `^([A-Z][A-Z\s]+?)\s+\(([^)]+)\)\s*$` section headers and pull each "Field: value" line into a typed `CharacterTraits` object. Family/Relationships bullets collect into an array (`string[]`). Free-form paragraphs that don't match any known field land in a `bodyHtml` field for rare cases. The profile page renders Stats / Family / Backstory / Arc as distinct cards rather than one prose block.
+
+**Consequences**
+- **Positive:** 25/25 characters now show personality + role + family + represents. 18/25 also show an arc. Profile pages read like proper biographies. Pages can conditionally render exactly the cards a character has data for.
+- **Negative:** New field labels in future docx revisions need an entry in the field-detection table; otherwise the prose lands in `bodyHtml` (a graceful fallback but loses structure).
+- **Neutral:** The legacy `bio: string` field is still computed (stripped HTML from `bodyHtml`) so older callers keep working.
+
+**Alternatives considered**
+- Hand-author MDX per character — Higher editorial control but no longer source-doc-driven; rejected because the docx is already structured and authoritative.
+
+---
+
+## ADR-009: Sticker color follows character state
+
+**Date:** 2026-05-14
+**Status:** Accepted
+
+**Context**
+Phase-1 character profiles use a `Sticker` decoration as the eyebrow above the title. With one stable color the eyebrow read as decorative rather than informational, despite the canon dividing characters into Shadow / Grounded / Neutral / Bad/Sympathetic / Apex Predator types.
+
+**Decision**
+`stateColor(state)` returns a `StickerTint` based on the parenthetical state from the docx: shadow → terracotta, grounded → teal, neutral → mustard, apex/mastermind/bad → terracotta. The state label itself ("Shadow State · Anxiety & Fear") is what the sticker says. The pair badge ("↔ Paired with HARBOR") below it links to the partner character.
+
+**Consequences**
+- **Positive:** Visual genre cue lands at first glance — terracotta for the difficult emotions, teal for grounded counterparts. Reinforces the pair structure of the canon.
+- **Negative:** The sticker tint is implicit information; for accessibility the state name must always be present in text (it is).
+- **Neutral:** New character types added later need a `stateColor` branch.
 
 ---
