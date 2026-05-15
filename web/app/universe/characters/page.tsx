@@ -8,12 +8,12 @@ export const metadata = { title: 'Characters' };
 
 export default function CharactersPage() {
   return (
-    <div className="bg-paper px-6 pt-36 pb-28">
+    <div className="bg-paper px-5 pt-28 pb-20 sm:px-6 sm:pt-36 sm:pb-28">
       <section className="mx-auto max-w-7xl">
         <Sticker color="mustard" rotate={-3}>
           The Mo Town Cast
         </Sticker>
-        <h1 className="mt-6 font-display text-6xl leading-[0.95] md:text-7xl">
+        <h1 className="mt-5 font-display text-5xl leading-[0.95] sm:mt-6 sm:text-6xl md:text-7xl">
           <span className="display-offset">The twenty-five.</span>
         </h1>
         <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg text-ink/80">

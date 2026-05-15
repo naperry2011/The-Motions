@@ -56,3 +56,26 @@ export function getCharacter(slug: string): Character | undefined {
 export function getQuotesByCharacter(slug: string): Quote[] {
   return allQuotes.filter((q) => q.characterSlug === slug);
 }
+
+/**
+ * If a character is part of a "PAIR X: A ↔ B" pairing, return the partner.
+ * The pairing string in traits looks like "PAIR 1: QUAKE ↔ HARBOR".
+ */
+export function getPair(slug: string): Character | undefined {
+  const me = getCharacter(slug);
+  if (!me?.traits.pairing) return undefined;
+  const match = me.traits.pairing.match(/PAIR\s+\d+\s*:\s*(.+?)\s+↔\s+(.+)$/i);
+  if (!match) return undefined;
+  const a = match[1].trim().toLowerCase();
+  const b = match[2].trim().toLowerCase();
+  const meName = me.name.toLowerCase();
+  // Match by name OR by docx alias ("flo" vs "flow")
+  const partnerToken = a === meName || a === meName.replace(/w$/, '') ? b : a;
+  // Find by slug or by name (case insensitive)
+  return allCharacters.find(
+    (c) =>
+      c.slug === partnerToken ||
+      c.slug === partnerToken.replace(/\s+/g, '-') ||
+      c.name.toLowerCase() === partnerToken
+  );
+}

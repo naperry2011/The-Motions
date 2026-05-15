@@ -13,12 +13,12 @@ export const metadata = {
 export default function WorkbookPage() {
   return (
     <div>
-      <section className="bg-paper px-6 pt-36 pb-20">
+      <section className="bg-paper px-5 pt-28 pb-14 sm:px-6 sm:pt-36 sm:pb-20">
         <div className="mx-auto max-w-4xl">
           <Sticker color="mustard" rotate={-3}>
             The Workbook
           </Sticker>
-          <h1 className="mt-6 font-display text-5xl leading-[0.95] md:text-7xl">
+          <h1 className="mt-5 font-display text-4xl leading-[0.95] sm:mt-6 sm:text-5xl md:text-7xl">
             <span className="display-offset">Going Through</span>
             <br />
             <span className="display-offset">the Motions.</span>
@@ -48,26 +48,28 @@ export default function WorkbookPage() {
         </div>
       </section>
 
-      <section className="bg-paper px-6 py-20">
+      <section className="bg-paper px-5 py-14 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-10 font-display text-xs uppercase tracking-wider text-terracotta">
+          <p className="mb-8 font-display text-xs uppercase tracking-wider text-terracotta sm:mb-10">
             The eight modules
           </p>
-          <ol className="space-y-4">
+          <ol className="space-y-3 sm:space-y-4">
             {allModules.map((m, i) => (
               <RevealOnView key={m.number} delay={i * 0.05}>
                 <li
-                  className={`rounded-3xl border-3 border-ink p-7 shadow-cartoon-sm md:flex md:items-center md:justify-between md:gap-8 ${
+                  className={`rounded-3xl border-3 border-ink p-5 shadow-cartoon-sm md:flex md:items-center md:justify-between md:gap-8 md:p-7 ${
                     i % 2 === 0 ? 'bg-cream' : 'bg-mustard'
                   } ${i % 2 === 0 ? '-rotate-[0.3deg]' : 'rotate-[0.3deg]'}`}
                 >
                   <div>
-                    <p className="font-display text-2xl text-terracotta">
+                    <p className="font-display text-xl text-terracotta sm:text-2xl">
                       Module {String(m.number).padStart(2, '0')}
                     </p>
-                    <p className="mt-2 font-display text-3xl text-ink">{m.title}</p>
+                    <p className="mt-1 font-display text-2xl text-ink sm:mt-2 sm:text-3xl">
+                      {m.title}
+                    </p>
                   </div>
-                  <p className="mt-4 font-editorial italic text-ink/70 md:mt-0">
+                  <p className="mt-3 font-editorial italic text-ink/70 md:mt-0">
                     {m.paths.length} paths · activities included
                   </p>
                 </li>
@@ -78,8 +80,8 @@ export default function WorkbookPage() {
       </section>
 
       <section className="bg-teal-grain text-cream">
-        <Squiggle className="h-6 w-full" color="#f7c948" />
-        <div className="mx-auto max-w-3xl px-6 py-24">
+        <Squiggle className="h-5 w-full sm:h-6" color="#f7c948" />
+        <div className="mx-auto max-w-3xl px-5 py-16 sm:px-6 sm:py-24">
           <Sticker color="mustard" rotate={-2}>
             What you get
           </Sticker>
@@ -117,13 +119,13 @@ export default function WorkbookPage() {
 
       <section
         id="waitlist"
-        className="bg-paper px-6 py-28"
+        className="bg-paper px-5 py-20 sm:px-6 sm:py-28"
       >
         <div className="mx-auto max-w-2xl text-center">
           <Sticker color="terracotta" rotate={3}>
             Waitlist
           </Sticker>
-          <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+          <h2 className="mt-6 font-display text-3xl leading-tight sm:text-4xl md:text-5xl">
             <span className="display-offset">Be first</span>
             <br />
             <span className="font-editorial italic">when it ships.</span>
