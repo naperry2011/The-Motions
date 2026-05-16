@@ -12,6 +12,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 const links = [
   { href: '/universe', label: 'Universe' },
   { href: '/universe/characters', label: 'Characters' },
+  { href: '/universe/geography', label: 'Geography' },
+  { href: '/universe/arcs', label: 'Arcs' },
+  { href: '/universe/exacerbators', label: 'Exacerbators' },
+  { href: '/universe/lore', label: 'Lore' },
+  { href: '/quotes', label: 'Quotes' },
+  { href: '/workbook', label: 'Workbook' }
+];
+
+// Desktop nav shows only the top-level set; the sheet shows everything.
+const topLevelLinks = [
+  { href: '/universe', label: 'Universe' },
+  { href: '/universe/characters', label: 'Characters' },
+  { href: '/quotes', label: 'Quotes' },
   { href: '/workbook', label: 'Workbook' }
 ];
 

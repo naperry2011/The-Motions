@@ -18,12 +18,11 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
 
 - Phase 2 narrative pages all shipped (Geography, Arcs, Exacerbators, Lore) — **Done** through `9f2aee1`
 - `main` redeploy unblocked after PR-merge hotfix — **Done** (`58b6f7b`)
-- Mobile nav menu (hamburger + sheet) + Phase 2 mobile polish — **Done** (`4b9d6ed`)
 - `/universe` overview polish — **Not started**
 
 ## Next
 
-- `/universe` overview page polish (currently a 6-tile grid + Welcome billboard; opportunity for character chips / scene montage)
+- Mobile nav hamburger so universe/characters/quotes are reachable from mobile beyond the homepage entry
 - Editorial copy pass on homepage manifesto + workbook sales-page long-form
 - Custom domain + Vercel production swap
 - Analytics + OG images + sitemap.xml + robots.txt (one combined chore)
@@ -44,7 +43,6 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
 
 ## Recently Completed
 
-- Mobile nav menu (hamburger + slide-down sheet) + Phase 2 mobile fixes — 2026-05-16
 - Phase 2: four narrative pages restructured (Geography / Arcs / Exacerbators / Lore) with bespoke parsers + components — 2026-05-16
 - Asset presence manifest decoupling fs scans from client components — 2026-05-16
 - Phase 1: visual rebrand, full graphics wiring, character bios, sitewide mobile pass — 2026-05-14
