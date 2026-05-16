@@ -460,6 +460,153 @@ async function buildGeographyStructured(
   console.log(`  parsed ${boroughsOut.length} boroughs, residents detected per borough: ${boroughsOut.map((b) => b.residents.length).join('/')}`);
 }
 
+// ---------- Arcs (structured) ----------
+// Parses CHARACTER ARCS & TRANSFORMATIONS.docx into:
+//   - mechanism: the 5-step Core Healing Mechanism (Recognition → Connection → …)
+//   - importantNote: the pull-quote line about non-linearity
+//   - arcs: 9 PairArc records, one per Shadow → Grounded pair
+async function buildArcsStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing arcs structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'CHARACTER ARCS & TRANSFORMATIONS.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // 1. Mechanism: lines like "Recognition → They first have to SEE…"
+  // (the 5 step names)
+  const stepNames = ['Recognition', 'Connection', 'Practice', 'Setback', 'Integration'];
+  const mechanism: Array<{ step: string; body: string }> = [];
+  for (const raw of lines) {
+    const l = raw.trim();
+    for (const step of stepNames) {
+      const re = new RegExp(`^${step}\\s*→\\s*(.+)$`, 'i');
+      const m = l.match(re);
+      if (m && !mechanism.find((x) => x.step === step)) {
+        mechanism.push({ step, body: m[1].trim() });
+      }
+    }
+  }
+
+  // 2. Important Note pull-quote
+  let importantNote = '';
+  for (const raw of lines) {
+    const m = raw.match(/^Important Note:\s*(.+)$/i);
+    if (m) {
+      importantNote = m[1].trim();
+      break;
+    }
+  }
+
+  // 3. Pair section boundaries: lines like "QUAKE → HARBOR"
+  const charBySlug = new Map<string, string>();
+  for (const c of characters) charBySlug.set(c.slug, c.name);
+
+  const pairHeadRe = /^([A-Z]+)\s+→\s+([A-Z]+)\s*$/;
+  const pairs: Array<{
+    rawShadow: string;
+    rawGrounded: string;
+    startLine: number;
+    endLine: number;
+  }> = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].trim().match(pairHeadRe);
+    if (m) {
+      if (pairs.length) pairs[pairs.length - 1].endLine = i;
+      pairs.push({
+        rawShadow: m[1],
+        rawGrounded: m[2],
+        startLine: i,
+        endLine: lines.length
+      });
+    }
+  }
+
+  // 4. Per-pair field extraction
+  const resolveSlug = (rawName: string): string => {
+    let s = slug(rawName);
+    if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+    return s;
+  };
+
+  // Single-line "Field: value" extractor
+  const findInline = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.trim().match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  // "Growth Looks Like:" is a header followed by bullet lines until the
+  // next "Foo:" field heading or end of section.
+  const findGrowthBullets = (body: string[]): string[] => {
+    const out: string[] = [];
+    let inGrowth = false;
+    for (const raw of body) {
+      const l = raw.trim();
+      if (!l) continue;
+      if (/^Growth Looks Like:?\s*$/i.test(l)) {
+        inGrowth = true;
+        continue;
+      }
+      if (!inGrowth) continue;
+      // Stop at the next labeled field
+      if (
+        /^([A-Z][a-zA-Z ']{0,30})('s Role)?:\s*/.test(l) &&
+        !/^([A-Z][a-z]+)\s+→/.test(l)
+      ) {
+        // It's a new field heading
+        break;
+      }
+      out.push(l);
+    }
+    return out;
+  };
+
+  const arcs = pairs.map((p) => {
+    const body = lines.slice(p.startLine + 1, p.endLine);
+    const shadowSlug = resolveSlug(p.rawShadow);
+    const groundedSlug = resolveSlug(p.rawGrounded);
+    const shadowName = charBySlug.get(shadowSlug) ?? p.rawShadow;
+    const groundedName = charBySlug.get(groundedSlug) ?? p.rawGrounded;
+
+    // Try Role field under both the canonical name and the raw docx name
+    // (handles "Flo's Role" vs "Flow's Role").
+    const rawGroundedTitle = p.rawGrounded.charAt(0) + p.rawGrounded.slice(1).toLowerCase();
+    const groundedRole =
+      findInline(body, `${groundedName}'s Role`) ||
+      findInline(body, `${rawGroundedTitle}'s Role`);
+
+    return {
+      shadowSlug,
+      groundedSlug,
+      shadowName,
+      groundedName,
+      startingPoint: findInline(body, 'Starting Point'),
+      turningPoint: findInline(body, 'Turning Point'),
+      thePractice: findInline(body, 'The Practice'),
+      backslideMoment: findInline(body, 'Backslide Moment'),
+      growthBullets: findGrowthBullets(body),
+      groundedRole,
+      backslideOutcome: findInline(body, 'Backslide')
+    };
+  });
+
+  // Merge into existing arcs.json (preserves title + html)
+  const existing = JSON.parse(await fs.readFile(path.join(OUT, 'arcs.json'), 'utf8'));
+  const merged = { ...existing, mechanism, importantNote, arcs };
+  await writeJson('arcs.json', merged);
+  console.log(
+    `  parsed mechanism (${mechanism.length} steps), ${arcs.length} pair arcs`
+  );
+}
+
 // ---------- Modules ----------
 async function buildModules() {
   console.log('Parsing workbook modules…');
@@ -503,6 +650,7 @@ async function main() {
     'arcs.json',
     'Character Arcs & Transformations'
   );
+  await buildArcsStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx'],
     'exacerbators.json',

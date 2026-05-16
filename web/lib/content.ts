@@ -27,6 +27,28 @@ export type GeographyDoc = NarrativeDoc & {
   boroughs?: Borough[];
 };
 
+export type MechanismStep = { step: string; body: string };
+
+export type PairArc = {
+  shadowSlug: string;
+  groundedSlug: string;
+  shadowName: string;
+  groundedName: string;
+  startingPoint: string;
+  turningPoint: string;
+  thePractice: string;
+  backslideMoment: string;
+  growthBullets: string[];
+  groundedRole: string;
+  backslideOutcome: string;
+};
+
+export type ArcsDoc = NarrativeDoc & {
+  mechanism?: MechanismStep[];
+  importantNote?: string;
+  arcs?: PairArc[];
+};
+
 export type CharacterTraits = {
   age?: string;
   pronouns?: string;
@@ -61,7 +83,7 @@ export type ModuleRecord = {
 export const allQuotes = quotes as Quote[];
 export const allCharacters = characters as Character[];
 export const geographyDoc = geography as GeographyDoc;
-export const arcsDoc = arcs as NarrativeDoc;
+export const arcsDoc = arcs as ArcsDoc;
 export const exacerbatorsDoc = exacerbators as NarrativeDoc;
 export const historicDistrictDoc = historicDistrict as NarrativeDoc;
 export const loreDoc = lore as NarrativeDoc;
