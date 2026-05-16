@@ -1,23 +1,10 @@
 import Image from 'next/image';
-import fs from 'node:fs';
-import path from 'node:path';
+import manifest from '@/content/asset-presence.json';
 
-function readSlugSet(dir: string): Set<string> {
-  try {
-    return new Set(
-      fs
-        .readdirSync(path.join(process.cwd(), 'public/assets', dir))
-        .map((f) => f.replace(/\.webp$/, ''))
-    );
-  } catch {
-    return new Set();
-  }
-}
-
-const availablePortraits = readSlugSet('characters');
-const availableTitles = readSlugSet('titles');
-const availableScenes = readSlugSet('scenes');
-const availableHeroCards = readSlugSet('hero-cards');
+const availablePortraits = new Set<string>(manifest.characters);
+const availableTitles = new Set<string>(manifest.titles);
+const availableScenes = new Set<string>(manifest.scenes);
+const availableHeroCards = new Set<string>(manifest.heroCards);
 
 export const hasPortrait = (slug: string) => availablePortraits.has(slug);
 export const hasTitle = (slug: string) => availableTitles.has(slug);

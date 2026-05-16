@@ -286,6 +286,558 @@ async function buildNarrativeDoc(srcRel: string[], outName: string, title: strin
   await writeJson(outName, { title, html });
 }
 
+// ---------- Geography (structured) ----------
+// Layered on top of the legacy narrative HTML. After buildNarrativeDoc has
+// written geography.json with { title, html }, this function re-reads the
+// docx text, parses the 5 borough sections + intro/aesthetic + before/after
+// Capital, detects character mentions per borough, and merges everything
+// back into geography.json.
+async function buildGeographyStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing geography structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'MO TOWN COMPLETE GEOGRAPHY & HOUSING.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // ---- Resident detection ----
+  // The doc has an authoritative "HOUSING BY BOROUGH:" summary section near
+  // the end. Parse that for the canonical resident list per borough.
+  const canonSlugByName = new Map<string, string>();
+  for (const c of characters) {
+    canonSlugByName.set(c.name.toLowerCase(), c.slug);
+  }
+  const residentsByBoroughName = new Map<string, string[]>();
+  {
+    let inHousingSection = false;
+    let currentBorough = '';
+    for (const raw of lines) {
+      const l = raw.trim();
+      if (/^HOUSING BY BOROUGH:?$/i.test(l)) {
+        inHousingSection = true;
+        continue;
+      }
+      if (!inHousingSection) continue;
+      const boroughHead = l.match(/^(THE\s+[A-Z\s]+?):\s*$/);
+      if (boroughHead) {
+        currentBorough = boroughHead[1].trim();
+        residentsByBoroughName.set(currentBorough, []);
+        continue;
+      }
+      if (!currentBorough) continue;
+      // Stop if we hit another all-caps non-housing header
+      if (/^[A-Z\s&]{8,}:?$/.test(l) && !/^THE\s/.test(l)) {
+        inHousingSection = false;
+        continue;
+      }
+      // Entry pattern: "Name [& Name…] - description" or "Name, Name, Name - description"
+      const dashIdx = l.indexOf(' - ');
+      if (dashIdx < 1) continue;
+      const namesPart = l.slice(0, dashIdx);
+      const names = namesPart
+        .split(/,|\s&\s|\sand\s/i)
+        .map((n) => n.trim())
+        .filter(Boolean);
+      const list = residentsByBoroughName.get(currentBorough)!;
+      for (const n of names) {
+        let s = slug(n);
+        if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+        const cs = canonSlugByName.has(n.toLowerCase())
+          ? canonSlugByName.get(n.toLowerCase())!
+          : characters.find((c) => c.slug === s)?.slug;
+        if (cs && !list.includes(cs)) list.push(cs);
+      }
+    }
+  }
+
+  // 1. Find borough section boundaries
+  type RawBorough = {
+    number: number;
+    name: string;
+    subtitle: string;
+    startLine: number;
+    endLine: number;
+    body: string[];
+  };
+  const boroughs: RawBorough[] = [];
+  const headRe = /^(\d+)\.\s+(THE\s+[A-Z\s]+?)\s*\(([^)]+)\)\s*$/;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(headRe);
+    if (m) {
+      if (boroughs.length) boroughs[boroughs.length - 1].endLine = i;
+      boroughs.push({
+        number: Number(m[1]),
+        name: m[2].trim(),
+        subtitle: m[3].trim(),
+        startLine: i,
+        endLine: lines.length,
+        body: []
+      });
+    }
+  }
+
+  // 2. For each borough, slice the body
+  for (const b of boroughs) {
+    b.body = lines.slice(b.startLine + 1, b.endLine).filter((l) => l.trim());
+  }
+
+  // 3. Page-level intro / aesthetic — first section before the boroughs
+  const introLines = boroughs.length ? lines.slice(0, boroughs[0].startLine) : [];
+  let intro = '';
+  let aesthetic = '';
+  for (let i = 0; i < introLines.length; i++) {
+    const t = introLines[i].trim();
+    if (/^OVERALL LAYOUT:/i.test(t)) {
+      // Next non-empty line is the intro paragraph
+      for (let j = i + 1; j < introLines.length; j++) {
+        if (introLines[j].trim()) {
+          intro = introLines[j].trim();
+          break;
+        }
+      }
+    }
+    const aMatch = t.match(/^The Aesthetic:\s*(.+)$/i);
+    if (aMatch) aesthetic = aMatch[1].trim();
+  }
+
+  // 4. Per-borough field extraction
+  const findField = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  // The Vibe section has Before Capital + After Capital sub-blocks.
+  // Returns { before, after } strings.
+  const findVibe = (body: string[]): { before: string; after: string } => {
+    let inVibe = false;
+    let before = '';
+    let after = '';
+    for (const raw of body) {
+      const l = raw.trim();
+      if (/^The Vibe:?\s*$/i.test(l)) {
+        inVibe = true;
+        continue;
+      }
+      if (!inVibe) continue;
+      const bm = l.match(/^Before Capital:\s*(.+)$/i);
+      const am = l.match(/^After Capital:\s*(.+)$/i);
+      if (bm) before = bm[1].trim();
+      if (am) after = am[1].trim();
+    }
+    return { before, after };
+  };
+
+  // 5. Build structured borough records
+  const boroughsOut = boroughs.map((b) => {
+    const vibe = findVibe(b.body);
+    return {
+      slug: slug(b.name),
+      number: b.number,
+      name: b.name,
+      subtitle: b.subtitle,
+      overarchingTheme: findField(b.body, 'Overarching Theme'),
+      whatItRepresents: findField(b.body, 'What It Represents'),
+      residents: residentsByBoroughName.get(b.name) ?? [],
+      vibeBefore: vibe.before,
+      vibeAfter: vibe.after
+    };
+  });
+
+  // 6. Merge into existing geography.json (preserves title + html)
+  const existing = JSON.parse(
+    await fs.readFile(path.join(OUT, 'geography.json'), 'utf8')
+  );
+  const merged = { ...existing, intro, aesthetic, boroughs: boroughsOut };
+  await writeJson('geography.json', merged);
+  console.log(`  parsed ${boroughsOut.length} boroughs, residents detected per borough: ${boroughsOut.map((b) => b.residents.length).join('/')}`);
+}
+
+// ---------- Arcs (structured) ----------
+// Parses CHARACTER ARCS & TRANSFORMATIONS.docx into:
+//   - mechanism: the 5-step Core Healing Mechanism (Recognition → Connection → …)
+//   - importantNote: the pull-quote line about non-linearity
+//   - arcs: 9 PairArc records, one per Shadow → Grounded pair
+async function buildArcsStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing arcs structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'CHARACTER ARCS & TRANSFORMATIONS.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // 1. Mechanism: lines like "Recognition → They first have to SEE…"
+  // (the 5 step names)
+  const stepNames = ['Recognition', 'Connection', 'Practice', 'Setback', 'Integration'];
+  const mechanism: Array<{ step: string; body: string }> = [];
+  for (const raw of lines) {
+    const l = raw.trim();
+    for (const step of stepNames) {
+      const re = new RegExp(`^${step}\\s*→\\s*(.+)$`, 'i');
+      const m = l.match(re);
+      if (m && !mechanism.find((x) => x.step === step)) {
+        mechanism.push({ step, body: m[1].trim() });
+      }
+    }
+  }
+
+  // 2. Important Note pull-quote
+  let importantNote = '';
+  for (const raw of lines) {
+    const m = raw.match(/^Important Note:\s*(.+)$/i);
+    if (m) {
+      importantNote = m[1].trim();
+      break;
+    }
+  }
+
+  // 3. Pair section boundaries: lines like "QUAKE → HARBOR"
+  const charBySlug = new Map<string, string>();
+  for (const c of characters) charBySlug.set(c.slug, c.name);
+
+  const pairHeadRe = /^([A-Z]+)\s+→\s+([A-Z]+)\s*$/;
+  const pairs: Array<{
+    rawShadow: string;
+    rawGrounded: string;
+    startLine: number;
+    endLine: number;
+  }> = [];
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].trim().match(pairHeadRe);
+    if (m) {
+      if (pairs.length) pairs[pairs.length - 1].endLine = i;
+      pairs.push({
+        rawShadow: m[1],
+        rawGrounded: m[2],
+        startLine: i,
+        endLine: lines.length
+      });
+    }
+  }
+
+  // 4. Per-pair field extraction
+  const resolveSlug = (rawName: string): string => {
+    let s = slug(rawName);
+    if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+    return s;
+  };
+
+  // Single-line "Field: value" extractor
+  const findInline = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.trim().match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  // "Growth Looks Like:" is a header followed by bullet lines until the
+  // next "Foo:" field heading or end of section.
+  const findGrowthBullets = (body: string[]): string[] => {
+    const out: string[] = [];
+    let inGrowth = false;
+    for (const raw of body) {
+      const l = raw.trim();
+      if (!l) continue;
+      if (/^Growth Looks Like:?\s*$/i.test(l)) {
+        inGrowth = true;
+        continue;
+      }
+      if (!inGrowth) continue;
+      // Stop at the next labeled field
+      if (
+        /^([A-Z][a-zA-Z ']{0,30})('s Role)?:\s*/.test(l) &&
+        !/^([A-Z][a-z]+)\s+→/.test(l)
+      ) {
+        // It's a new field heading
+        break;
+      }
+      out.push(l);
+    }
+    return out;
+  };
+
+  const arcs = pairs.map((p) => {
+    const body = lines.slice(p.startLine + 1, p.endLine);
+    const shadowSlug = resolveSlug(p.rawShadow);
+    const groundedSlug = resolveSlug(p.rawGrounded);
+    const shadowName = charBySlug.get(shadowSlug) ?? p.rawShadow;
+    const groundedName = charBySlug.get(groundedSlug) ?? p.rawGrounded;
+
+    // Try Role field under both the canonical name and the raw docx name
+    // (handles "Flo's Role" vs "Flow's Role").
+    const rawGroundedTitle = p.rawGrounded.charAt(0) + p.rawGrounded.slice(1).toLowerCase();
+    const groundedRole =
+      findInline(body, `${groundedName}'s Role`) ||
+      findInline(body, `${rawGroundedTitle}'s Role`);
+
+    return {
+      shadowSlug,
+      groundedSlug,
+      shadowName,
+      groundedName,
+      startingPoint: findInline(body, 'Starting Point'),
+      turningPoint: findInline(body, 'Turning Point'),
+      thePractice: findInline(body, 'The Practice'),
+      backslideMoment: findInline(body, 'Backslide Moment'),
+      growthBullets: findGrowthBullets(body),
+      groundedRole,
+      backslideOutcome: findInline(body, 'Backslide')
+    };
+  });
+
+  // Merge into existing arcs.json (preserves title + html)
+  const existing = JSON.parse(await fs.readFile(path.join(OUT, 'arcs.json'), 'utf8'));
+  const merged = { ...existing, mechanism, importantNote, arcs };
+  await writeJson('arcs.json', merged);
+  console.log(
+    `  parsed mechanism (${mechanism.length} steps), ${arcs.length} pair arcs`
+  );
+}
+
+// ---------- Exacerbators (structured) ----------
+// Parses SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx into 6
+// ExacerbatorChain records (one per bad/neutral character). Each chain has
+// a list of CorruptionInteraction entries against their victims.
+async function buildExacerbatorsStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing exacerbators structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  const charBySlug = new Map<string, string>();
+  for (const c of characters) charBySlug.set(c.slug, c.name);
+
+  const resolveSlug = (rawName: string): string => {
+    let s = slug(rawName);
+    if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+    return s;
+  };
+
+  // 1. Find chain section starts ("HONEYTRAP'S CORRUPTIONS:", etc.) and
+  //    interaction starts ("Honeytrap → Quake").
+  // Matches "HONEYTRAP'S CORRUPTIONS:" and "BOSSY BOOTS' CORRUPTIONS:"
+  const chainRe = /^([A-Z][A-Z\s]+?)['’](?:S|s)?\s+CORRUPTIONS:?$/;
+  const interactionRe = /^([A-Za-z ]+?)\s+→\s+([A-Za-z]+)\s*$/;
+
+  type RawInteraction = { victimSlug: string; victimName: string; startLine: number; endLine: number };
+  type RawChain = {
+    exacerbatorRaw: string;
+    exacerbatorSlug: string;
+    exacerbatorName: string;
+    interactions: RawInteraction[];
+  };
+
+  const chains: RawChain[] = [];
+  let currentChain: RawChain | null = null;
+  let currentInter: RawInteraction | null = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    const chainMatch = t.match(chainRe);
+    if (chainMatch) {
+      // Close any open interaction
+      if (currentInter) currentInter.endLine = i;
+      currentInter = null;
+      const rawName = chainMatch[1].trim();
+      const exSlug = resolveSlug(rawName);
+      currentChain = {
+        exacerbatorRaw: rawName,
+        exacerbatorSlug: exSlug,
+        exacerbatorName: charBySlug.get(exSlug) ?? titleCase(rawName),
+        interactions: []
+      };
+      chains.push(currentChain);
+      continue;
+    }
+
+    const interMatch = t.match(interactionRe);
+    if (interMatch && currentChain) {
+      // Only treat as a new interaction if the LHS matches the chain's
+      // exacerbator name (case-insensitive)
+      const lhsSlug = resolveSlug(interMatch[1]);
+      if (lhsSlug !== currentChain.exacerbatorSlug) continue;
+      if (currentInter) currentInter.endLine = i;
+      const vSlug = resolveSlug(interMatch[2]);
+      currentInter = {
+        victimSlug: vSlug,
+        victimName: charBySlug.get(vSlug) ?? titleCase(interMatch[2]),
+        startLine: i,
+        endLine: lines.length
+      };
+      currentChain.interactions.push(currentInter);
+    }
+  }
+
+  // 2. Extract fields from each interaction body
+  const findInline = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.trim().match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  const chainsOut = chains.map((c) => ({
+    exacerbatorSlug: c.exacerbatorSlug,
+    exacerbatorName: c.exacerbatorName,
+    interactions: c.interactions.map((it) => {
+      const body = lines.slice(it.startLine + 1, it.endLine);
+      return {
+        victimSlug: it.victimSlug,
+        victimName: it.victimName,
+        whereTheyMeet: findInline(body, 'Where They Meet'),
+        theTrap: findInline(body, 'The Trap'),
+        theSweetPart: findInline(body, 'The Sweet Part'),
+        theCorruption: findInline(body, 'The Corruption'),
+        theResult: findInline(body, 'The Result')
+      };
+    })
+  }));
+
+  // 3. Merge into existing exacerbators.json
+  const existing = JSON.parse(
+    await fs.readFile(path.join(OUT, 'exacerbators.json'), 'utf8')
+  );
+  const merged = { ...existing, chains: chainsOut };
+  await writeJson('exacerbators.json', merged);
+  console.log(
+    `  parsed ${chainsOut.length} chains, interactions per chain: ${chainsOut.map((c) => c.interactions.length).join('/')}`
+  );
+}
+
+function titleCase(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
+// ---------- Lore (structured chapters) ----------
+// The docx isn't styled with proper heading levels (mammoth.convertToHtml
+// returns 0 heading tags), so chapters are detected from text patterns:
+// an all-caps line of 2+ words that doesn't end with a colon's mid-section
+// punctuation. Sub-headings are kept inside the chapter body as <h3>.
+async function buildLoreStructured() {
+  console.log('Parsing lore chapters…');
+  const file = path.join(
+    ROOT,
+    'THE MOTIONS UNIVERSE LORE - CLIENT WORK CONNECTION.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // Top-level chapter pattern: ALL CAPS, 2+ words, ≥ 8 chars, no period,
+  // optionally followed by a parenthetical or colon.
+  const isTopHeading = (t: string) => {
+    if (!t) return false;
+    if (t.length < 8 || t.length > 70) return false;
+    if (/[.!?]$/.test(t)) return false;
+    if (!/^[A-Z][A-Z\s+()'’\-:&,/]+$/.test(t)) return false;
+    return t.split(/\s+/).length >= 2;
+  };
+
+  // Detect chapter starts
+  type Section = { title: string; startLine: number; endLine: number };
+  const sections: Section[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    if (isTopHeading(t)) {
+      if (sections.length) sections[sections.length - 1].endLine = i;
+      sections.push({ title: t, startLine: i, endLine: lines.length });
+    }
+  }
+
+  // Drop the first one if it's the document title itself
+  // ("THE MOTIONS UNIVERSE LORE - CLIENT WORK CONNECTION")
+  if (sections[0] && /MOTIONS UNIVERSE LORE/i.test(sections[0].title)) {
+    sections.shift();
+  }
+
+  // Render each chapter's body into HTML
+  const escape = (s: string) => escapeHtml(s);
+  const buildBodyHtml = (body: string[]): string => {
+    const parts: string[] = [];
+    let para: string[] = [];
+    const flushPara = () => {
+      if (para.length) {
+        parts.push(`<p>${escape(para.join(' '))}</p>`);
+        para = [];
+      }
+    };
+    for (const raw of body) {
+      const l = raw.trim();
+      if (!l) {
+        flushPara();
+        continue;
+      }
+      // Sub-heading: shorter all-caps or "Foo:"
+      // Mid-importance sub-heading like "In Real Life:" or "QUAKE (Anxiety & Fear):"
+      if (/^[A-Z][A-Za-z0-9\s+()'’\-:&,/]{2,70}:$/.test(l) && l.split(/\s+/).length <= 10) {
+        flushPara();
+        parts.push(`<h3>${escape(l.replace(/:$/, ''))}</h3>`);
+        continue;
+      }
+      // Italic emphasis "Important Note:" style etc — handled above
+      // Quoted line that's purely a quote? leave as paragraph.
+      para.push(l);
+    }
+    flushPara();
+    return parts.join('');
+  };
+
+  const titleCaseHeading = (s: string) => {
+    // "THE CORE CONCEPT:" → "The Core Concept"
+    return s
+      .replace(/:$/, '')
+      .toLowerCase()
+      .replace(/\b\w/g, (m) => m.toUpperCase())
+      // Lowercase the letter directly after an apostrophe ("You'Re" → "You're")
+      .replace(/(['’])([A-Z])/g, (_, ap, ch) => ap + ch.toLowerCase());
+  };
+
+  // Stop chapters at the studio-services section — everything after
+  // "TRANSLATING THE MOTIONS INTO YOUR MARKETING & SERVICES" is internal
+  // service positioning, not public lore.
+  const stopIdx = sections.findIndex((s) =>
+    /TRANSLATING THE MOTIONS/i.test(s.title)
+  );
+  const loreSections = stopIdx >= 0 ? sections.slice(0, stopIdx) : sections;
+
+  const chapters = loreSections.map((s) => {
+    const body = lines.slice(s.startLine + 1, s.endLine);
+    return {
+      slug: slug(s.title),
+      title: titleCaseHeading(s.title),
+      bodyHtml: buildBodyHtml(body)
+    };
+  });
+
+  // Merge into existing lore.json
+  const existing = JSON.parse(await fs.readFile(path.join(OUT, 'lore.json'), 'utf8'));
+  const merged = { ...existing, chapters };
+  await writeJson('lore.json', merged);
+  console.log(`  parsed ${chapters.length} chapters`);
+}
+
 // ---------- Modules ----------
 async function buildModules() {
   console.log('Parsing workbook modules…');
@@ -314,25 +866,57 @@ async function buildModules() {
   await writeJson('modules.json', modules);
 }
 
+// Builds a client-safe manifest of which slugs/IDs have image assets in
+// each public/assets/* folder. Imported by both server and client components
+// so they don't have to do fs scans at module load.
+async function buildAssetPresence() {
+  console.log('Building asset presence manifest…');
+  const PUB = path.resolve(process.cwd(), 'public/assets');
+  const slugsIn = async (dir: string): Promise<string[]> => {
+    try {
+      return (await fs.readdir(path.join(PUB, dir)))
+        .filter((f) => /\.webp$/.test(f))
+        .map((f) => f.replace(/\.webp$/, ''));
+    } catch {
+      return [];
+    }
+  };
+  const numericIn = async (dir: string): Promise<number[]> => {
+    return (await slugsIn(dir)).map((s) => Number(s)).filter((n) => Number.isFinite(n));
+  };
+  const manifest = {
+    characters: await slugsIn('characters'),
+    heroCards: await slugsIn('hero-cards'),
+    scenes: await slugsIn('scenes'),
+    titles: await slugsIn('titles'),
+    quotePosts: await numericIn('quote-posts')
+  };
+  await writeJson('asset-presence.json', manifest);
+}
+
 async function main() {
   await fs.mkdir(OUT, { recursive: true });
+  await buildAssetPresence();
   const quotes = await buildQuotes();
-  await buildCharacters(quotes);
+  const characters = await buildCharacters(quotes);
   await buildNarrativeDoc(
     ['Character Documentation', 'MO TOWN COMPLETE GEOGRAPHY & HOUSING.docx'],
     'geography.json',
     'Mo Town: Geography & Housing'
   );
+  await buildGeographyStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'CHARACTER ARCS & TRANSFORMATIONS.docx'],
     'arcs.json',
     'Character Arcs & Transformations'
   );
+  await buildArcsStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx'],
     'exacerbators.json',
     'Exacerbator → Motion Corruption Interactions'
   );
+  await buildExacerbatorsStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'THE HISTORIC DISTRICT - THE COMMUNITY CENTER.docx'],
     'historic-district.json',
@@ -343,6 +927,7 @@ async function main() {
     'lore.json',
     'The Motions Universe Lore — Client Work Connection'
   );
+  await buildLoreStructured();
   await buildModules();
   console.log('\nContent build complete.');
 }

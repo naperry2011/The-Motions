@@ -42,11 +42,11 @@ export type ModuleRecord = {
 
 export const allQuotes = quotes as Quote[];
 export const allCharacters = characters as Character[];
-export const geographyDoc = geography as NarrativeDoc;
-export const arcsDoc = arcs as NarrativeDoc;
-export const exacerbatorsDoc = exacerbators as NarrativeDoc;
+export const geographyDoc = geography as GeographyDoc;
+export const arcsDoc = arcs as ArcsDoc;
+export const exacerbatorsDoc = exacerbators as ExacerbatorsDoc;
 export const historicDistrictDoc = historicDistrict as NarrativeDoc;
-export const loreDoc = lore as NarrativeDoc;
+export const loreDoc = lore as LoreDoc;
 export const allModules = modules as ModuleRecord[];
 
 export function getCharacter(slug: string): Character | undefined {
