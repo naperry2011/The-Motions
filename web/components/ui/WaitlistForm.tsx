@@ -7,7 +7,9 @@ type Source =
   | 'workbook'
   | 'workbook-leadmagnet'
   | 'quotes'
-  | 'universe';
+  | 'universe'
+  | 'quiz'
+  | 'story';
 
 export function WaitlistForm({
   source = 'homepage',

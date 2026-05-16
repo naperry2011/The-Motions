@@ -215,6 +215,23 @@ export default async function CharacterPage({
           <Zigzag className="h-5 w-full rotate-180 sm:h-6" color="#f7c948" />
         </section>
       )}
+
+      {/* ── QUIZ NUDGE ── */}
+      <section className="bg-paper px-5 py-14 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-3xl rounded-3xl border-3 border-ink bg-cream p-6 text-center shadow-cartoon sm:p-9">
+          <p className="font-editorial text-2xl italic leading-snug text-ink sm:text-3xl">
+            Not sure which motion you&apos;re in?
+          </p>
+          <div className="mt-5">
+            <Link
+              href="/quiz"
+              className="inline-block rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-1"
+            >
+              Take the quiz →
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

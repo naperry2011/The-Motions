@@ -107,8 +107,16 @@ export default function HomePage() {
             </p>
             <p>
               The Motions is the map of those characters: who they are, where they live, what
-              corrupts them, and how they come home. Read the lore. Then go do your work.
+              corrupts them, and how they come home.
             </p>
+          </RevealOnView>
+          <RevealOnView delay={0.35} className="mt-8">
+            <Link
+              href="/story"
+              className="inline-block font-display text-xs uppercase tracking-[0.25em] text-mustard underline-offset-4 hover:underline"
+            >
+              Read the story behind it →
+            </Link>
           </RevealOnView>
         </div>
         <Squiggle className="h-6 w-full rotate-180" color="#f7c948" />
@@ -173,6 +181,31 @@ export default function HomePage() {
               </RevealOnView>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ── QUIZ CTA ── */}
+      <section className="relative bg-mustard px-5 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-4xl text-center">
+          <Sticker color="terracotta" rotate={-2}>
+            The Quiz
+          </Sticker>
+          <h2 className="mt-5 font-display text-3xl leading-tight sm:text-4xl md:text-5xl">
+            <span className="display-offset">Not sure which motion</span>
+            <br />
+            <span className="font-editorial italic">is showing up for you?</span>
+          </h2>
+          <RevealOnView delay={0.2} className="mt-6 text-ink/80">
+            <p>Nine pairs of feelings. Pick what sounds more like you right now. 90 seconds.</p>
+          </RevealOnView>
+          <RevealOnView delay={0.3} className="mt-8">
+            <Link
+              href="/quiz"
+              className="inline-block rounded-full border-3 border-ink bg-ink px-7 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1"
+            >
+              Find your motion →
+            </Link>
+          </RevealOnView>
         </div>
       </section>
 

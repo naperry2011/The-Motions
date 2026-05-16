@@ -5,7 +5,15 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 const Body = z.object({
   email: z.string().email(),
   source: z
-    .enum(['homepage', 'workbook', 'workbook-leadmagnet', 'quotes', 'universe'])
+    .enum([
+      'homepage',
+      'workbook',
+      'workbook-leadmagnet',
+      'quotes',
+      'universe',
+      'quiz',
+      'story'
+    ])
     .default('homepage')
 });
 
