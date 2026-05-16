@@ -6,7 +6,7 @@ Running history of what's been built and current state. Update after major chang
 
 **Status:** Active Development — Phase 1 + Phase 2 both shipped to `main`. Working branch `perry-phase2`; user merges via GitHub PRs.
 **Last Updated:** 2026-05-16
-**Version:** `main` at `58b6f7b` (post-hotfix), `perry-phase2` at `3702544`
+**Version:** `main` at `58b6f7b` (post-hotfix), `perry-phase2` at `4b9d6ed` (mobile nav)
 
 ### What's Working
 - Next.js 15 App Router site under `web/` — 39 routes, clean build, deployed to Vercel from `main`
@@ -70,13 +70,21 @@ Represents promoted to italic kicker, pair badge linking partner character, pers
 ### 2026-05-16 — Phase 2 hotfix on main (commit `58b6f7b`)
 PR #6 merged perry-phase2 → main but the merge dropped the new type definitions in `web/lib/content.ts` (Borough, GeographyDoc, MechanismStep, PairArc, ArcsDoc, CorruptionInteraction, ExacerbatorChain, ExacerbatorsDoc, LoreChapter, LoreDoc) while keeping the `as ArcsDoc` etc. casts that depend on them. Vercel build failed with `Parameter 'a' implicitly has an 'any' type`. Hotfixed by restoring the file from perry-phase2 directly. Second time this has happened on a PR merge — same fix recipe each time.
 
+### 2026-05-16 — Mobile nav menu + Phase 2 mobile polish (commit `4b9d6ed`)
+- `SiteNav` gained a hamburger button (mustard pill, morphs to terracotta X) that opens a slide-down sheet covering ~all 8 routes (Universe, the four narrative pages, Characters, Quotes, Workbook) as chunky cartoon-pill rows with offset shadows, alternating cream/mustard. Active route shown in terracotta with "here" label.
+- Sheet handles: backdrop dim + blur, body-scroll lock, Escape + outside-click + route-change all close, hamburger animates ☰ → ✕.
+- A prominent "Get the workbook ↗" CTA + italic tagline sits at the bottom of the sheet so the conversion path stays one tap away.
+- Phase 2 mobile fixes: `PairArcCard` and `ChainSection` Avatar components had unconditional `text-right` on right-aligned cells; on mobile (where columns stack) it looked stranded. Now `sm:text-right` so it only applies once columns sit side-by-side.
+- Side effect: the GitHub merge from broken main into perry-phase2 (commit `3702544`) had stripped lib/content.ts types on this branch too. Restored from post-hotfix main during the same commit.
+
 ## Architecture Evolution
 
 Stack unchanged: **Next.js 15 App Router + TypeScript + Tailwind + Lenis + Framer Motion + sharp + Supabase + Vercel**. The Phase-2 work shifted the four narrative pages from a single generic `NarrativePage` component (which renders mammoth HTML through `dangerouslySetInnerHTML`) to **page-specific structured parsers + dedicated React components per topic**:
 
 - `web/scripts/build-content.ts` now contains 5 structured parsers (characters, geography, arcs, exacerbators, lore) + the legacy `buildNarrativeDoc` for back-compat HTML.
 - `web/lib/content.ts` exports 8 doc types and helpers (`getCharacter`, `getQuotesByCharacter`, `getPair`).
-- `web/components/universe/` now has 7 components: `CharacterChip`, `BoroughCard`, `MechanismSteps`, `PairArcCard`, `CorruptionRow` (legacy), `ChainSection`, `LoreChapter`, `NarrativePage` (legacy fallback).
+- `web/components/universe/` now has 8 components: `CharacterChip`, `BoroughCard`, `MechanismSteps`, `PairArcCard`, `CorruptionRow` (legacy), `ChainSection`, `LoreChapter`, `NarrativePage` (legacy fallback).
+- `web/components/ui/SiteNav.tsx` is a `'use client'` component with a hamburger + full-width mobile sheet (uses `usePathname`, `framer-motion`).
 - New `web/content/asset-presence.json` is the source of truth for `hasPortrait`/`hasHeroCard`/`hasScene`/`hasTitle`/`hasQuotePost` — generated at build time, importable from both server and client.
 
 ## Lessons Learned

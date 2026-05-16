@@ -14,7 +14,6 @@ Active work. Update as items are completed and new work is identified.
 ## Up Next
 
 - [ ] `/universe` overview page polish — currently a 6-tile grid + Welcome billboard; could add quick-look character chips or a scrolling montage of scene art — M
-- [ ] Mobile nav hamburger — currently only logo + Workbook CTA on mobile; reveal Universe/Characters/Quotes/Workbook links — S
 - [ ] Editorial copy pass on homepage manifesto + workbook sales-page so it stops sounding generic — M
 - [ ] Custom domain wired in Vercel + set as production — S
 - [ ] Per-route OG images + `metadata.openGraph` — S
@@ -27,6 +26,7 @@ Active work. Update as items are completed and new work is identified.
 
 ## Recently Completed
 
+- [x] Mobile nav menu: hamburger + slide-down sheet with all 8 routes + Phase 2 mobile polish (`4b9d6ed`) — 2026-05-16
 - [x] Phase 2 hotfix on main: restored lib/content.ts type defs after PR-merge data loss (`58b6f7b`) — 2026-05-16
 - [x] Lore page condensed into chapter accordion (`9f2aee1`) — 2026-05-16
 - [x] Lore page editorial layout: drop caps + pull quotes + scene images (`58a6d9f`) — 2026-05-16
