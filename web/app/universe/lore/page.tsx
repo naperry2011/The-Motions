@@ -1,13 +1,12 @@
-import Image from 'next/image';
 import { loreDoc } from '@/lib/content';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import { Sticker } from '@/components/decor/Sticker';
 import { Squiggle } from '@/components/decor/Squiggle';
+import { LoreChapter } from '@/components/universe/LoreChapter';
 
 export const metadata = { title: 'Universe Lore' };
 
-// A scene illustration paired with select chapter slugs to break up
-// the long-form prose. Chapters without an image just get a squiggle.
+// A scene illustration paired with select chapter slugs.
 const CHAPTER_IMAGES: Record<
   string,
   { src: string; alt: string; caption?: string }
@@ -39,8 +38,6 @@ const CHAPTER_IMAGES: Record<
   }
 };
 
-// Pull-quotes for chapters where a single line carries the chapter
-// (manually curated for editorial pacing).
 const CHAPTER_PULL_QUOTES: Record<string, string> = {
   'the-core-concept':
     "You're not just building them a brand. You're helping them rebuild their Community Center.",
@@ -48,7 +45,6 @@ const CHAPTER_PULL_QUOTES: Record<string, string> = {
     "The Motions help each other transform — but only when somebody first sees they're not alone in the city."
 };
 
-// Sticker eyebrow rotation alternating left/right for rhythm
 const STICKER_TINTS = ['mustard', 'terracotta', 'teal', 'cream'] as const;
 
 export default function LorePage() {
@@ -66,97 +62,40 @@ export default function LorePage() {
             <span className="display-offset">{loreDoc.title}</span>
           </h1>
           <RevealOnView delay={0.2} className="mt-8 max-w-prose text-lg leading-relaxed text-ink/80">
-            <p className="font-editorial italic text-2xl text-terracotta sm:text-3xl">
+            <p className="font-editorial text-2xl italic text-terracotta sm:text-3xl">
               Your clients are experiencing Mo Town.
             </p>
             <p className="mt-6">
               When an entrepreneur comes to you feeling anxious, confused, stuck,
               overwhelmed — they&apos;re literally living in their own internal Mo Town
-              that&apos;s been disrupted. The pages below map every state, every
-              exacerbator, and every door you can open as their brand companion.
+              that&apos;s been disrupted. Twelve chapters below — tap any to read; the
+              first is already open.
             </p>
           </RevealOnView>
         </div>
       </section>
 
-      {/* CHAPTERS */}
+      {/* CHAPTER ACCORDION */}
       <article className="bg-paper">
-        {chapters.map((c, i) => {
-          const image = CHAPTER_IMAGES[c.slug];
-          const pullQuote = CHAPTER_PULL_QUOTES[c.slug];
-          const tint = STICKER_TINTS[i % STICKER_TINTS.length];
-          const isAlt = i % 2 === 1; // alternating subtle bg tint
-          return (
-            <section
-              key={c.slug}
-              className={isAlt ? 'bg-cream' : 'bg-paper'}
-              id={c.slug}
-            >
-              <div className="mx-auto max-w-3xl px-5 py-14 sm:px-6 sm:py-20">
-                <RevealOnView>
-                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                    Chapter {String(i + 1).padStart(2, '0')}
-                  </p>
-                  <Sticker color={tint} rotate={i % 2 === 0 ? -2 : 2}>
-                    The Lore
-                  </Sticker>
-                  <h2 className="mt-4 font-display text-3xl leading-[1.05] sm:text-4xl md:text-5xl">
-                    <span className="display-offset">{c.title}</span>
-                  </h2>
-                </RevealOnView>
-
-                {image && (
-                  <RevealOnView delay={0.1} className="mt-8">
-                    <figure className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
-                      <div className="relative aspect-[16/9] w-full bg-ink">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 800px"
-                          className="object-cover"
-                        />
-                      </div>
-                      {image.caption && (
-                        <figcaption className="border-t-3 border-ink bg-paper px-5 py-3 text-center font-editorial italic text-sm text-ink/70 sm:text-base">
-                          {image.caption}
-                        </figcaption>
-                      )}
-                    </figure>
-                  </RevealOnView>
-                )}
-
-                <RevealOnView delay={0.15} className="mt-8 sm:mt-10">
-                  <div
-                    className="lore-prose"
-                    dangerouslySetInnerHTML={{ __html: c.bodyHtml }}
-                  />
-                </RevealOnView>
-
-                {pullQuote && (
-                  <RevealOnView delay={0.2} className="mt-10 sm:mt-12">
-                    <blockquote className="rounded-3xl border-3 border-ink bg-mustard px-6 py-7 shadow-cartoon-lg sm:px-10 sm:py-9">
-                      <p className="font-editorial text-2xl italic leading-snug text-ink sm:text-3xl">
-                        &ldquo;{pullQuote}&rdquo;
-                      </p>
-                    </blockquote>
-                  </RevealOnView>
-                )}
-              </div>
-
-              {/* Divider between chapters */}
-              {i < chapters.length - 1 && (
-                <div className="flex justify-center pb-8">
-                  <Squiggle
-                    className="h-4 w-40 opacity-60"
-                    color="#e87454"
-                    strokeWidth={5}
-                  />
-                </div>
-              )}
-            </section>
-          );
-        })}
+        {chapters.map((c, i) => (
+          <div key={c.slug}>
+            <LoreChapter
+              index={i + 1}
+              title={c.title}
+              slug={c.slug}
+              bodyHtml={c.bodyHtml}
+              image={CHAPTER_IMAGES[c.slug]}
+              pullQuote={CHAPTER_PULL_QUOTES[c.slug]}
+              stickerTint={STICKER_TINTS[i % STICKER_TINTS.length]}
+              defaultOpen={i === 0}
+              alt={i % 2 === 1}
+            />
+            {/* Divider between chapter rows */}
+            <div className="bg-paper">
+              <div className="mx-auto max-w-3xl border-t-3 border-ink/15 px-5 sm:px-6" />
+            </div>
+          </div>
+        ))}
       </article>
 
       {/* CLOSING */}
