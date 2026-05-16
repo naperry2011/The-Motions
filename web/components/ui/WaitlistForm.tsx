@@ -2,9 +2,24 @@
 
 import { useState } from 'react';
 
-type Source = 'homepage' | 'workbook' | 'quotes' | 'universe';
+type Source =
+  | 'homepage'
+  | 'workbook'
+  | 'workbook-leadmagnet'
+  | 'quotes'
+  | 'universe';
 
-export function WaitlistForm({ source = 'homepage' }: { source?: Source }) {
+export function WaitlistForm({
+  source = 'homepage',
+  buttonLabel,
+  successMessage,
+  placeholder = 'you@yourdomain.com'
+}: {
+  source?: Source;
+  buttonLabel?: string;
+  successMessage?: string;
+  placeholder?: string;
+}) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
   const [msg, setMsg] = useState('');
@@ -26,7 +41,11 @@ export function WaitlistForm({ source = 'homepage' }: { source?: Source }) {
         return;
       }
       setState('ok');
-      setMsg(data.duplicate ? "You're already on the list." : "You're on the list.");
+      setMsg(
+        data.duplicate
+          ? "You're already on the list."
+          : successMessage ?? "You're on the list."
+      );
       setEmail('');
     } catch {
       setState('error');
@@ -48,7 +67,7 @@ export function WaitlistForm({ source = 'homepage' }: { source?: Source }) {
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="you@yourdomain.com"
+        placeholder={placeholder}
         className="flex-1 rounded-full border-3 border-ink bg-cream px-5 py-3 text-sm text-ink placeholder:text-ink/50 focus:border-terracotta focus:outline-none"
       />
       <button
@@ -56,7 +75,7 @@ export function WaitlistForm({ source = 'homepage' }: { source?: Source }) {
         disabled={state === 'loading'}
         className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
-        {state === 'loading' ? 'Adding…' : 'Join waitlist'}
+        {state === 'loading' ? 'Sending…' : buttonLabel ?? 'Join waitlist'}
       </button>
       {msg && (
         <p

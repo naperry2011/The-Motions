@@ -4,7 +4,9 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 
 const Body = z.object({
   email: z.string().email(),
-  source: z.enum(['homepage', 'workbook', 'quotes', 'universe']).default('homepage')
+  source: z
+    .enum(['homepage', 'workbook', 'workbook-leadmagnet', 'quotes', 'universe'])
+    .default('homepage')
 });
 
 export async function POST(req: Request) {

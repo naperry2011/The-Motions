@@ -93,6 +93,11 @@ export type CharacterTraits = {
   alignment?: string;
   state?: string;
   pairing?: string;
+  // Phase 1 audit additions — populated by TBM copy pass.
+  // `bio`: 1-paragraph profile (who, personality, role in Mo Town, how it shows up in work).
+  // `howItShowsUp`: 2–3 sentences written directly to the reader.
+  bio?: string;
+  howItShowsUp?: string;
 };
 
 export type Character = {
