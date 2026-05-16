@@ -69,6 +69,16 @@ export type ExacerbatorsDoc = NarrativeDoc & {
   chains?: ExacerbatorChain[];
 };
 
+export type LoreChapter = {
+  slug: string;
+  title: string;
+  bodyHtml: string;
+};
+
+export type LoreDoc = NarrativeDoc & {
+  chapters?: LoreChapter[];
+};
+
 export type CharacterTraits = {
   age?: string;
   pronouns?: string;
@@ -106,7 +116,7 @@ export const geographyDoc = geography as GeographyDoc;
 export const arcsDoc = arcs as ArcsDoc;
 export const exacerbatorsDoc = exacerbators as ExacerbatorsDoc;
 export const historicDistrictDoc = historicDistrict as NarrativeDoc;
-export const loreDoc = lore as NarrativeDoc;
+export const loreDoc = lore as LoreDoc;
 export const allModules = modules as ModuleRecord[];
 
 export function getCharacter(slug: string): Character | undefined {

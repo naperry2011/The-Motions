@@ -731,6 +731,113 @@ function titleCase(s: string) {
     .replace(/\b\w/g, (m) => m.toUpperCase());
 }
 
+// ---------- Lore (structured chapters) ----------
+// The docx isn't styled with proper heading levels (mammoth.convertToHtml
+// returns 0 heading tags), so chapters are detected from text patterns:
+// an all-caps line of 2+ words that doesn't end with a colon's mid-section
+// punctuation. Sub-headings are kept inside the chapter body as <h3>.
+async function buildLoreStructured() {
+  console.log('Parsing lore chapters…');
+  const file = path.join(
+    ROOT,
+    'THE MOTIONS UNIVERSE LORE - CLIENT WORK CONNECTION.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // Top-level chapter pattern: ALL CAPS, 2+ words, ≥ 8 chars, no period,
+  // optionally followed by a parenthetical or colon.
+  const isTopHeading = (t: string) => {
+    if (!t) return false;
+    if (t.length < 8 || t.length > 70) return false;
+    if (/[.!?]$/.test(t)) return false;
+    if (!/^[A-Z][A-Z\s+()'’\-:&,/]+$/.test(t)) return false;
+    return t.split(/\s+/).length >= 2;
+  };
+
+  // Detect chapter starts
+  type Section = { title: string; startLine: number; endLine: number };
+  const sections: Section[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    if (isTopHeading(t)) {
+      if (sections.length) sections[sections.length - 1].endLine = i;
+      sections.push({ title: t, startLine: i, endLine: lines.length });
+    }
+  }
+
+  // Drop the first one if it's the document title itself
+  // ("THE MOTIONS UNIVERSE LORE - CLIENT WORK CONNECTION")
+  if (sections[0] && /MOTIONS UNIVERSE LORE/i.test(sections[0].title)) {
+    sections.shift();
+  }
+
+  // Render each chapter's body into HTML
+  const escape = (s: string) => escapeHtml(s);
+  const buildBodyHtml = (body: string[]): string => {
+    const parts: string[] = [];
+    let para: string[] = [];
+    const flushPara = () => {
+      if (para.length) {
+        parts.push(`<p>${escape(para.join(' '))}</p>`);
+        para = [];
+      }
+    };
+    for (const raw of body) {
+      const l = raw.trim();
+      if (!l) {
+        flushPara();
+        continue;
+      }
+      // Sub-heading: shorter all-caps or "Foo:"
+      // Mid-importance sub-heading like "In Real Life:" or "QUAKE (Anxiety & Fear):"
+      if (/^[A-Z][A-Za-z0-9\s+()'’\-:&,/]{2,70}:$/.test(l) && l.split(/\s+/).length <= 10) {
+        flushPara();
+        parts.push(`<h3>${escape(l.replace(/:$/, ''))}</h3>`);
+        continue;
+      }
+      // Italic emphasis "Important Note:" style etc — handled above
+      // Quoted line that's purely a quote? leave as paragraph.
+      para.push(l);
+    }
+    flushPara();
+    return parts.join('');
+  };
+
+  const titleCaseHeading = (s: string) => {
+    // "THE CORE CONCEPT:" → "The Core Concept"
+    return s
+      .replace(/:$/, '')
+      .toLowerCase()
+      .replace(/\b\w/g, (m) => m.toUpperCase())
+      // Lowercase the letter directly after an apostrophe ("You'Re" → "You're")
+      .replace(/(['’])([A-Z])/g, (_, ap, ch) => ap + ch.toLowerCase());
+  };
+
+  // Stop chapters at the studio-services section — everything after
+  // "TRANSLATING THE MOTIONS INTO YOUR MARKETING & SERVICES" is internal
+  // service positioning, not public lore.
+  const stopIdx = sections.findIndex((s) =>
+    /TRANSLATING THE MOTIONS/i.test(s.title)
+  );
+  const loreSections = stopIdx >= 0 ? sections.slice(0, stopIdx) : sections;
+
+  const chapters = loreSections.map((s) => {
+    const body = lines.slice(s.startLine + 1, s.endLine);
+    return {
+      slug: slug(s.title),
+      title: titleCaseHeading(s.title),
+      bodyHtml: buildBodyHtml(body)
+    };
+  });
+
+  // Merge into existing lore.json
+  const existing = JSON.parse(await fs.readFile(path.join(OUT, 'lore.json'), 'utf8'));
+  const merged = { ...existing, chapters };
+  await writeJson('lore.json', merged);
+  console.log(`  parsed ${chapters.length} chapters`);
+}
+
 // ---------- Modules ----------
 async function buildModules() {
   console.log('Parsing workbook modules…');
@@ -820,6 +927,7 @@ async function main() {
     'lore.json',
     'The Motions Universe Lore — Client Work Connection'
   );
+  await buildLoreStructured();
   await buildModules();
   console.log('\nContent build complete.');
 }
