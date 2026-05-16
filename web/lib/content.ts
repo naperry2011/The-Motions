@@ -49,6 +49,26 @@ export type ArcsDoc = NarrativeDoc & {
   arcs?: PairArc[];
 };
 
+export type CorruptionInteraction = {
+  victimSlug: string;
+  victimName: string;
+  whereTheyMeet: string;
+  theTrap: string;
+  theSweetPart: string;
+  theCorruption: string;
+  theResult: string;
+};
+
+export type ExacerbatorChain = {
+  exacerbatorSlug: string;
+  exacerbatorName: string;
+  interactions: CorruptionInteraction[];
+};
+
+export type ExacerbatorsDoc = NarrativeDoc & {
+  chains?: ExacerbatorChain[];
+};
+
 export type CharacterTraits = {
   age?: string;
   pronouns?: string;
@@ -84,7 +104,7 @@ export const allQuotes = quotes as Quote[];
 export const allCharacters = characters as Character[];
 export const geographyDoc = geography as GeographyDoc;
 export const arcsDoc = arcs as ArcsDoc;
-export const exacerbatorsDoc = exacerbators as NarrativeDoc;
+export const exacerbatorsDoc = exacerbators as ExacerbatorsDoc;
 export const historicDistrictDoc = historicDistrict as NarrativeDoc;
 export const loreDoc = lore as NarrativeDoc;
 export const allModules = modules as ModuleRecord[];

@@ -607,6 +607,130 @@ async function buildArcsStructured(
   );
 }
 
+// ---------- Exacerbators (structured) ----------
+// Parses SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx into 6
+// ExacerbatorChain records (one per bad/neutral character). Each chain has
+// a list of CorruptionInteraction entries against their victims.
+async function buildExacerbatorsStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing exacerbators structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'SPECIFIC EXACERBATOR → MOTION CORRUPTION INTERACTIONS.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  const charBySlug = new Map<string, string>();
+  for (const c of characters) charBySlug.set(c.slug, c.name);
+
+  const resolveSlug = (rawName: string): string => {
+    let s = slug(rawName);
+    if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+    return s;
+  };
+
+  // 1. Find chain section starts ("HONEYTRAP'S CORRUPTIONS:", etc.) and
+  //    interaction starts ("Honeytrap → Quake").
+  // Matches "HONEYTRAP'S CORRUPTIONS:" and "BOSSY BOOTS' CORRUPTIONS:"
+  const chainRe = /^([A-Z][A-Z\s]+?)['’](?:S|s)?\s+CORRUPTIONS:?$/;
+  const interactionRe = /^([A-Za-z ]+?)\s+→\s+([A-Za-z]+)\s*$/;
+
+  type RawInteraction = { victimSlug: string; victimName: string; startLine: number; endLine: number };
+  type RawChain = {
+    exacerbatorRaw: string;
+    exacerbatorSlug: string;
+    exacerbatorName: string;
+    interactions: RawInteraction[];
+  };
+
+  const chains: RawChain[] = [];
+  let currentChain: RawChain | null = null;
+  let currentInter: RawInteraction | null = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const t = lines[i].trim();
+    const chainMatch = t.match(chainRe);
+    if (chainMatch) {
+      // Close any open interaction
+      if (currentInter) currentInter.endLine = i;
+      currentInter = null;
+      const rawName = chainMatch[1].trim();
+      const exSlug = resolveSlug(rawName);
+      currentChain = {
+        exacerbatorRaw: rawName,
+        exacerbatorSlug: exSlug,
+        exacerbatorName: charBySlug.get(exSlug) ?? titleCase(rawName),
+        interactions: []
+      };
+      chains.push(currentChain);
+      continue;
+    }
+
+    const interMatch = t.match(interactionRe);
+    if (interMatch && currentChain) {
+      // Only treat as a new interaction if the LHS matches the chain's
+      // exacerbator name (case-insensitive)
+      const lhsSlug = resolveSlug(interMatch[1]);
+      if (lhsSlug !== currentChain.exacerbatorSlug) continue;
+      if (currentInter) currentInter.endLine = i;
+      const vSlug = resolveSlug(interMatch[2]);
+      currentInter = {
+        victimSlug: vSlug,
+        victimName: charBySlug.get(vSlug) ?? titleCase(interMatch[2]),
+        startLine: i,
+        endLine: lines.length
+      };
+      currentChain.interactions.push(currentInter);
+    }
+  }
+
+  // 2. Extract fields from each interaction body
+  const findInline = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.trim().match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  const chainsOut = chains.map((c) => ({
+    exacerbatorSlug: c.exacerbatorSlug,
+    exacerbatorName: c.exacerbatorName,
+    interactions: c.interactions.map((it) => {
+      const body = lines.slice(it.startLine + 1, it.endLine);
+      return {
+        victimSlug: it.victimSlug,
+        victimName: it.victimName,
+        whereTheyMeet: findInline(body, 'Where They Meet'),
+        theTrap: findInline(body, 'The Trap'),
+        theSweetPart: findInline(body, 'The Sweet Part'),
+        theCorruption: findInline(body, 'The Corruption'),
+        theResult: findInline(body, 'The Result')
+      };
+    })
+  }));
+
+  // 3. Merge into existing exacerbators.json
+  const existing = JSON.parse(
+    await fs.readFile(path.join(OUT, 'exacerbators.json'), 'utf8')
+  );
+  const merged = { ...existing, chains: chainsOut };
+  await writeJson('exacerbators.json', merged);
+  console.log(
+    `  parsed ${chainsOut.length} chains, interactions per chain: ${chainsOut.map((c) => c.interactions.length).join('/')}`
+  );
+}
+
+function titleCase(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
 // ---------- Modules ----------
 async function buildModules() {
   console.log('Parsing workbook modules…');
@@ -656,6 +780,7 @@ async function main() {
     'exacerbators.json',
     'Exacerbator → Motion Corruption Interactions'
   );
+  await buildExacerbatorsStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'THE HISTORIC DISTRICT - THE COMMUNITY CENTER.docx'],
     'historic-district.json',
