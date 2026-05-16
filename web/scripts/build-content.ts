@@ -87,7 +87,8 @@ type CharacterTraits = {
 };
 
 const NAME_ALIASES: Record<string, string> = {
-  flo: 'flow' // docx writes "FLO", canon is "Flow"
+  // Canon is now "Flo" (per site audit, May 2026). No aliases currently needed
+  // — kept for future docx-vs-canon mismatches.
 };
 
 const HEADING_RE = /^([A-Z][A-Z\s]+?)\s+\(([^)]+)\)\s*$/;

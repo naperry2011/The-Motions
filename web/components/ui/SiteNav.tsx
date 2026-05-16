@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Public launch surface only — Geography, Arcs, Lore, Exacerbators, Quotes
+// stay live at their URLs but come off the nav (per site audit, May 2026).
+// Story + Quiz will be added in commits 3E + 3F.
 const links = [
   { href: '/universe', label: 'Universe' },
   { href: '/universe/characters', label: 'Characters' },
@@ -24,6 +27,8 @@ const topLevelLinks = [
   { href: '/quotes', label: 'Quotes' },
   { href: '/workbook', label: 'Workbook' }
 ];
+
+const topLevelLinks = links;
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);

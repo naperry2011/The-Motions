@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { allCharacters, allQuotes } from '@/lib/content';
+import { allCharacters } from '@/lib/content';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { RevealOnView } from '@/components/motion/RevealOnView';
-import { Marquee } from '@/components/motion/Marquee';
 import { WaitlistForm } from '@/components/ui/WaitlistForm';
 import { Sticker } from '@/components/decor/Sticker';
 import { Squiggle, Zigzag } from '@/components/decor/Squiggle';
@@ -13,20 +12,15 @@ import {
   hasHeroCard
 } from '@/components/decor/CharacterPortrait';
 
-const featured = [3, 11, 27, 44, 58, 71, 92, 130, 165, 201, 237].map((i) =>
-  allQuotes.find((q) => q.id === i)
-);
-
-// Every canonical character has a hero card, so just curate eight for the homepage.
+// Six featured Motions: three shadow / three grounded across three pairs,
+// chosen to show range without revealing the full cast.
 const FEATURED_SLUGS = [
-  'quake',
-  'drift',
-  'pilot',
-  'flow',
-  'capital',
-  'mirrorball',
-  'honeytrap',
-  'ledger'
+  'quake',    // shadow — Pair 1
+  'harbor',   // grounded — Pair 1
+  'drift',    // shadow — Pair 7
+  'frame',    // grounded — Pair 7
+  'sputter',  // shadow — Pair 9
+  'flo'       // grounded — Pair 9
 ];
 const featuredCharacters = FEATURED_SLUGS.map(
   (s) => allCharacters.find((c) => c.slug === s)!
@@ -57,9 +51,7 @@ export default function HomePage() {
               <span className="font-editorial italic text-teal">on purpose.</span>
             </h1>
             <RevealOnView delay={0.4} className="mt-6 max-w-lg text-base text-ink/80 sm:mt-8 sm:text-lg">
-              The Motions is a creative universe — a town called Mo Town, twenty-five
-              characters who embody the motions we move through, and an eight-module workbook
-              for the work that hasn&apos;t found its rhythm yet.
+              The internal world of the solopreneur, mapped.
             </RevealOnView>
             <RevealOnView delay={0.55} className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
               <Link
@@ -67,12 +59,6 @@ export default function HomePage() {
                 className="rounded-full border-3 border-ink bg-terracotta px-5 py-2.5 text-[11px] font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1 sm:px-6 sm:py-3 sm:text-xs"
               >
                 Enter Mo Town
-              </Link>
-              <Link
-                href="/workbook"
-                className="rounded-full border-3 border-ink bg-cream px-5 py-2.5 text-[11px] font-display uppercase tracking-wider text-ink shadow-cartoon-sm transition-transform hover:-translate-y-1 sm:px-6 sm:py-3 sm:text-xs"
-              >
-                See the workbook
               </Link>
             </RevealOnView>
           </div>
@@ -121,8 +107,16 @@ export default function HomePage() {
             </p>
             <p>
               The Motions is the map of those characters: who they are, where they live, what
-              corrupts them, and how they come home. Read the lore. Then go do your work.
+              corrupts them, and how they come home.
             </p>
+          </RevealOnView>
+          <RevealOnView delay={0.35} className="mt-8">
+            <Link
+              href="/story"
+              className="inline-block font-display text-xs uppercase tracking-[0.25em] text-mustard underline-offset-4 hover:underline"
+            >
+              Read the story behind it →
+            </Link>
           </RevealOnView>
         </div>
         <Squiggle className="h-6 w-full rotate-180" color="#f7c948" />
@@ -146,7 +140,7 @@ export default function HomePage() {
               href="/universe/characters"
               className="rounded-full border-3 border-ink bg-mustard px-5 py-2 text-xs font-display uppercase tracking-wider text-ink shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
             >
-              All 25 →
+              Meet the Motions →
             </Link>
           </div>
 
@@ -177,7 +171,11 @@ export default function HomePage() {
                   </div>
                   <div className="border-t-3 border-ink px-4 py-3">
                     <p className="font-display text-xl leading-none">{c.name}</p>
-                    <p className="mt-2 text-xs text-ink/60">{c.quoteCount} quotes →</p>
+                    {c.traits?.represents && (
+                      <p className="mt-2 line-clamp-2 text-xs text-ink/60">
+                        {c.traits.represents}
+                      </p>
+                    )}
                   </div>
                 </Link>
               </RevealOnView>
@@ -186,25 +184,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── QUOTE MARQUEE ── */}
-      <section className="relative border-y-3 border-ink bg-mustard py-16">
-        <Marquee duration={70}>
-          {featured.filter(Boolean).map((q) => (
-            <span key={q!.id} className="font-display text-2xl text-ink md:text-3xl">
-              &ldquo;{q!.text}&rdquo;
-              <span className="ml-4 font-editorial italic text-terracotta">
-                — {q!.character}
-              </span>
-            </span>
-          ))}
-        </Marquee>
-        <div className="mt-10 text-center">
-          <Link
-            href="/quotes"
-            className="rounded-full border-3 border-ink bg-ink px-5 py-2 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm hover:-translate-y-0.5 transition-transform"
-          >
-            All 250 quotes →
-          </Link>
+      {/* ── QUIZ CTA ── */}
+      <section className="relative bg-mustard px-5 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-4xl text-center">
+          <Sticker color="terracotta" rotate={-2}>
+            The Quiz
+          </Sticker>
+          <h2 className="mt-5 font-display text-3xl leading-tight sm:text-4xl md:text-5xl">
+            <span className="display-offset">Not sure which motion</span>
+            <br />
+            <span className="font-editorial italic">is showing up for you?</span>
+          </h2>
+          <RevealOnView delay={0.2} className="mt-6 text-ink/80">
+            <p>Nine pairs of feelings. Pick what sounds more like you right now. 90 seconds.</p>
+          </RevealOnView>
+          <RevealOnView delay={0.3} className="mt-8">
+            <Link
+              href="/quiz"
+              className="inline-block rounded-full border-3 border-ink bg-ink px-7 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon transition-transform hover:-translate-y-1"
+            >
+              Find your motion →
+            </Link>
+          </RevealOnView>
+        </div>
+      </section>
+
+      {/* ── BIG BADS TEASE ── */}
+      <section className="relative border-y-3 border-ink bg-ink px-5 py-20 text-cream sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="font-display text-xs uppercase tracking-[0.3em] text-terracotta">
+            Something else
+          </p>
+          <TextReveal
+            as="p"
+            text="Not every force in Mo Town wants you to find your rhythm."
+            className="mt-6 font-editorial text-2xl italic leading-snug text-cream/90 sm:text-3xl md:text-4xl"
+          />
         </div>
       </section>
 
@@ -232,7 +247,7 @@ export default function HomePage() {
                 href="/workbook"
                 className="rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon hover:-translate-y-0.5 transition-transform"
               >
-                Preview the workbook
+                The workbook is coming →
               </Link>
             </RevealOnView>
           </div>

@@ -1,21 +1,14 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  allCharacters,
-  getCharacter,
-  getPair,
-  getQuotesByCharacter
-} from '@/lib/content';
+import { allCharacters, getCharacter, getPair } from '@/lib/content';
 import type { CharacterTraits } from '@/lib/content';
 import { RevealOnView } from '@/components/motion/RevealOnView';
 import {
   CharacterPortrait,
   CharacterHeroCard,
-  CharacterTitle,
   CharacterScene,
   hasHeroCard,
   hasPortrait,
-  hasTitle,
   hasScene
 } from '@/components/decor/CharacterPortrait';
 import { Sticker } from '@/components/decor/Sticker';
@@ -46,6 +39,13 @@ function stateColor(state?: string): StickerTint {
   return 'mustard';
 }
 
+function stateLabel(state?: string): string {
+  const s = (state ?? '').toLowerCase();
+  if (s.includes('shadow')) return 'Shadow State';
+  if (s.includes('grounded')) return 'Grounded State';
+  return state ?? 'A motion';
+}
+
 export default async function CharacterPage({
   params
 }: {
@@ -55,19 +55,19 @@ export default async function CharacterPage({
   const character = getCharacter(slug);
   if (!character) notFound();
 
-  const quotes = getQuotesByCharacter(slug);
-  const others = allCharacters.filter((c) => c.slug !== slug).slice(0, 6);
   const traits: CharacterTraits = character.traits ?? {};
   const pair = getPair(slug);
-
-  const stateLabel = traits.state ?? 'A motion';
   const tint = stateColor(traits.state);
+  const label = stateLabel(traits.state);
+
+  // Bio fallback chain: TBM-written `bio` → existing `personality` → nothing.
+  const bio = traits.bio ?? traits.personality;
 
   return (
     <div>
-      {/* ── HERO ── */}
+      {/* ── 1. CHARACTER CARD ── */}
       <section className="bg-paper px-5 pt-28 pb-12 sm:px-6 sm:pt-32">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
           <Link
             href="/universe/characters"
             className="inline-block text-[11px] font-display uppercase tracking-wider text-ink/60 hover:text-terracotta"
@@ -75,92 +75,78 @@ export default async function CharacterPage({
             ← All characters
           </Link>
 
-          <div className="mt-6 grid items-start gap-8 md:mt-10 md:grid-cols-[1fr_1fr] md:gap-12">
-            {/* Left: type + title + represents */}
-            <div>
-              <Sticker color={tint} rotate={-3}>
-                {stateLabel}
-              </Sticker>
-
-              {hasTitle(slug) ? (
-                <div className="mt-5">
-                  <CharacterTitle
-                    slug={slug}
-                    name={character.name}
-                    className="h-auto w-full max-w-md"
-                  />
+          <RevealOnView delay={0.1} className="mt-6 sm:mt-8">
+            {hasHeroCard(slug) ? (
+              <div className="relative overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
+                <CharacterHeroCard
+                  slug={slug}
+                  name={character.name}
+                  priority
+                  className="h-auto w-full"
+                />
+                <div className="absolute left-4 top-4 sm:left-6 sm:top-6">
+                  <Sticker color={tint} rotate={-3}>
+                    {label}
+                  </Sticker>
                 </div>
-              ) : (
-                <h1 className="mt-5 font-display text-[clamp(3rem,11vw,7rem)] leading-[0.95]">
-                  <span className="display-offset">{character.name}</span>
-                </h1>
-              )}
-
-              {traits.represents && (
-                <p className="mt-6 max-w-prose font-editorial text-2xl italic leading-snug text-terracotta sm:text-3xl">
-                  {traits.represents}.
+              </div>
+            ) : hasPortrait(slug) ? (
+              <div className="relative mx-auto aspect-square max-w-xl">
+                <div className="absolute inset-0 rounded-full border-3 border-ink bg-mustard shadow-cartoon-lg" />
+                <CharacterPortrait
+                  slug={slug}
+                  name={character.name}
+                  size={520}
+                  priority
+                  className="relative h-full w-full object-contain p-6"
+                />
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                  <Sticker color={tint} rotate={-3}>
+                    {label}
+                  </Sticker>
+                </div>
+                <p className="mt-6 text-center font-display text-5xl text-ink sm:text-6xl">
+                  {character.name}
                 </p>
-              )}
-
-              {pair && (
-                <div className="mt-7">
-                  <Link
-                    href={`/universe/characters/${pair.slug}`}
-                    className="inline-flex items-center gap-2 rounded-full border-3 border-ink bg-cream px-4 py-2 font-display text-xs uppercase tracking-wider text-ink shadow-cartoon-sm transition-transform hover:-translate-y-0.5"
-                  >
-                    <span className="text-terracotta">↔</span>
-                    <span>Paired with</span>
-                    <span className="text-terracotta">{pair.name}</span>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Right: hero card / portrait */}
-            <RevealOnView delay={0.1}>
-              {hasHeroCard(slug) ? (
-                <div className="overflow-hidden rounded-3xl border-3 border-ink shadow-cartoon-lg">
-                  <CharacterHeroCard
-                    slug={slug}
-                    name={character.name}
-                    priority
-                    className="h-auto w-full"
-                  />
-                </div>
-              ) : hasPortrait(slug) ? (
-                <div className="relative aspect-square animate-bobble">
-                  <div className="absolute inset-0 rounded-full border-3 border-ink bg-mustard shadow-cartoon-lg" />
-                  <CharacterPortrait
-                    slug={slug}
-                    name={character.name}
-                    size={520}
-                    priority
-                    className="relative h-full w-full object-contain p-6"
-                  />
-                </div>
-              ) : (
-                <div className="flex aspect-square items-center justify-center rounded-3xl border-3 border-ink bg-mustard shadow-cartoon-lg">
-                  <span className="font-display text-7xl text-ink sm:text-9xl">
-                    {character.name.charAt(0)}
-                  </span>
-                </div>
-              )}
-            </RevealOnView>
-          </div>
+              </div>
+            ) : (
+              <div className="flex aspect-square items-center justify-center rounded-3xl border-3 border-ink bg-mustard shadow-cartoon-lg">
+                <span className="font-display text-7xl text-ink sm:text-9xl">
+                  {character.name}
+                </span>
+              </div>
+            )}
+          </RevealOnView>
         </div>
       </section>
 
-      {/* ── PERSONALITY BAND (full-width manifesto feel) ── */}
-      {traits.personality && (
-        <section className="bg-paper px-5 pb-12 sm:px-6">
+      {/* ── 2. WHAT [NAME] REPRESENTS ── */}
+      {traits.represents && (
+        <section className="bg-paper px-5 pb-10 sm:px-6">
           <div className="mx-auto max-w-4xl">
             <RevealOnView>
-              <div className="rounded-3xl border-3 border-ink bg-mustard px-6 py-8 shadow-cartoon-lg sm:px-10 sm:py-10">
+              <p className="font-display text-[11px] uppercase tracking-[0.25em] text-terracotta">
+                What {character.name} represents
+              </p>
+              <p className="mt-4 max-w-prose font-editorial text-3xl italic leading-snug text-ink sm:text-4xl md:text-5xl">
+                {traits.represents}.
+              </p>
+            </RevealOnView>
+          </div>
+        </section>
+      )}
+
+      {/* ── 3. BIO ── */}
+      {bio && (
+        <section className="bg-paper px-5 pb-10 sm:px-6">
+          <div className="mx-auto max-w-4xl">
+            <RevealOnView>
+              <div className="rounded-3xl border-3 border-ink bg-cream px-6 py-7 shadow-cartoon sm:px-9 sm:py-9">
                 <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                  Who they are
+                  Bio
                 </p>
-                <p className="mt-4 font-display text-2xl leading-snug text-ink sm:text-3xl">
-                  {traits.personality}
+                <p className="mt-4 text-base leading-relaxed text-ink/85 sm:text-lg">
+                  {bio}
                 </p>
               </div>
             </RevealOnView>
@@ -168,197 +154,84 @@ export default async function CharacterPage({
         </section>
       )}
 
-      {/* ── STATS + FAMILY (side by side on md+) ── */}
-      {(traits.age ||
-        traits.pronouns ||
-        traits.role ||
-        traits.sexuality ||
-        traits.alignment ||
-        traits.appearance ||
-        traits.family) && (
+      {/* ── 4. HOW THIS MOTION SHOWS UP FOR YOU ── */}
+      {traits.howItShowsUp && (
         <section className="bg-paper px-5 pb-12 sm:px-6">
-          <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
-            {/* Stats */}
-            {(traits.age ||
-              traits.pronouns ||
-              traits.role ||
-              traits.sexuality ||
-              traits.alignment ||
-              traits.appearance) && (
-              <RevealOnView>
-                <div className="h-full rounded-3xl border-3 border-ink bg-cream p-6 shadow-cartoon sm:p-7">
-                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                    The Stats
-                  </p>
-                  <dl className="mt-5 space-y-4 text-sm">
-                    {traits.age && (
-                      <Stat label="Age" value={cleanFromImage(traits.age)} />
-                    )}
-                    {traits.pronouns && <Stat label="Pronouns" value={traits.pronouns} />}
-                    {traits.role && <Stat label="Role" value={traits.role} />}
-                    {traits.sexuality && (
-                      <Stat label="Sexuality" value={traits.sexuality} />
-                    )}
-                    {traits.alignment && (
-                      <Stat label="Alignment" value={traits.alignment} />
-                    )}
-                    {traits.appearance && (
-                      <Stat label="Appearance" value={traits.appearance} />
-                    )}
-                  </dl>
-                </div>
-              </RevealOnView>
-            )}
-
-            {/* Family */}
-            {traits.family && traits.family.length > 0 && (
-              <RevealOnView delay={0.08} className="md:col-span-2">
-                <div className="h-full rounded-3xl border-3 border-ink bg-terracotta/15 p-6 shadow-cartoon sm:p-7">
-                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                    Family & Ties
-                  </p>
-                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {traits.family.map((f, i) => (
-                      <li
-                        key={i}
-                        className="flex gap-3 rounded-2xl border-3 border-ink bg-cream px-4 py-3 text-sm leading-snug text-ink/85"
-                      >
-                        <span className="mt-1.5 inline-block h-2 w-2 shrink-0 rounded-full bg-terracotta" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealOnView>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* ── BACKSTORY + ARC ── */}
-      {(traits.backstory || traits.arc) && (
-        <section className="relative bg-paper px-5 pb-16 sm:px-6">
-          <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
-            {traits.backstory && (
-              <RevealOnView>
-                <div className="h-full rounded-3xl border-3 border-ink bg-cream p-6 shadow-cartoon sm:p-7">
-                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                    Backstory
-                  </p>
-                  <p className="mt-4 text-sm leading-relaxed text-ink/85 sm:text-base">
-                    {traits.backstory}
-                  </p>
-                </div>
-              </RevealOnView>
-            )}
-            {traits.arc && (
-              <RevealOnView delay={0.08}>
-                <div className="h-full rounded-3xl border-3 border-ink bg-mustard p-6 shadow-cartoon sm:p-7">
-                  <p className="font-display text-xs uppercase tracking-wider text-terracotta">
-                    Their Arc
-                  </p>
-                  <p className="mt-4 text-sm leading-relaxed text-ink/85 sm:text-base">
-                    {traits.arc}
-                  </p>
-                </div>
-              </RevealOnView>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Free-form prose body (rare — only when docx had loose paragraphs) */}
-      {character.bodyHtml && (
-        <section className="bg-paper px-5 pb-12 sm:px-6">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-4xl">
             <RevealOnView>
-              <div
-                className="space-y-4 text-base leading-relaxed text-ink/85 [&_p]:font-sans"
-                dangerouslySetInnerHTML={{ __html: character.bodyHtml }}
-              />
+              <div className="rounded-3xl border-3 border-ink bg-mustard px-6 py-8 shadow-cartoon-lg sm:px-10 sm:py-10">
+                <p className="font-display text-xs uppercase tracking-wider text-terracotta">
+                  How this motion shows up for you
+                </p>
+                <p className="mt-4 font-display text-2xl leading-snug text-ink sm:text-3xl">
+                  {traits.howItShowsUp}
+                </p>
+              </div>
             </RevealOnView>
           </div>
         </section>
       )}
 
-      {/* ── SCENE ── */}
+      {/* ── 5. PAIRED WITH ── */}
+      {pair && (
+        <section className="bg-paper px-5 pb-16 sm:px-6">
+          <div className="mx-auto max-w-4xl">
+            <RevealOnView>
+              <Link
+                href={`/universe/characters/${pair.slug}`}
+                className="group flex items-center justify-between gap-4 rounded-3xl border-3 border-ink bg-cream p-5 shadow-cartoon transition-transform hover:-translate-y-1 sm:p-7"
+              >
+                <div>
+                  <p className="font-display text-[11px] uppercase tracking-[0.25em] text-terracotta">
+                    Paired with
+                  </p>
+                  <p className="mt-2 font-display text-3xl text-ink sm:text-4xl">
+                    {pair.name}
+                  </p>
+                </div>
+                <span className="font-display text-3xl text-terracotta transition-transform group-hover:translate-x-1 sm:text-4xl">
+                  ↔
+                </span>
+              </Link>
+            </RevealOnView>
+          </div>
+        </section>
+      )}
+
+      {/* ── 6. WHERE [NAME] LIVES ── */}
       {hasScene(slug) && (
         <section className="relative bg-teal-grain">
           <Squiggle className="h-5 w-full sm:h-6" color="#f7c948" />
           <div className="mx-auto max-w-5xl px-5 py-12 sm:px-6 sm:py-16">
+            <p className="mb-6 text-center font-display text-[11px] uppercase tracking-[0.25em] text-mustard">
+              Where {character.name} lives
+            </p>
             <CharacterScene
               slug={slug}
               name={character.name}
               className="w-full rounded-3xl border-3 border-ink shadow-cartoon-lg"
             />
-            <p className="mt-4 text-center font-editorial italic text-cream/80">
-              Where {character.name} lives.
-            </p>
           </div>
           <Zigzag className="h-5 w-full rotate-180 sm:h-6" color="#f7c948" />
         </section>
       )}
 
-      {/* ── QUOTES ── */}
-      <section className="bg-paper px-5 py-16 sm:px-6 sm:py-24">
-        <div className="mx-auto max-w-5xl">
-          <Sticker color="terracotta" rotate={-2}>
-            From {character.name}
-          </Sticker>
-          <ul className="mt-8 space-y-4 sm:space-y-5">
-            {quotes.map((q, i) => (
-              <RevealOnView key={q.id}>
-                <li
-                  className={`rounded-3xl border-3 border-ink p-6 shadow-cartoon sm:p-8 ${
-                    i % 2 === 0 ? 'bg-cream' : 'bg-mustard'
-                  }`}
-                >
-                  <p className="font-display text-xl leading-snug text-ink sm:text-2xl md:text-3xl">
-                    &ldquo;{q.text}&rdquo;
-                  </p>
-                </li>
-              </RevealOnView>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── MORE ── */}
-      <section className="bg-teal px-5 py-14 text-cream sm:px-6 sm:py-20">
-        <div className="mx-auto max-w-5xl">
-          <p className="mb-6 font-display text-xs uppercase tracking-[0.3em] text-mustard sm:mb-8">
-            More motions
+      {/* ── QUIZ NUDGE ── */}
+      <section className="bg-paper px-5 py-14 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-3xl rounded-3xl border-3 border-ink bg-cream p-6 text-center shadow-cartoon sm:p-9">
+          <p className="font-editorial text-2xl italic leading-snug text-ink sm:text-3xl">
+            Not sure which motion you&apos;re in?
           </p>
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
-            {others.map((o) => (
-              <li key={o.slug}>
-                <Link
-                  href={`/universe/characters/${o.slug}`}
-                  className="block rounded-2xl border-3 border-cream/30 bg-teal-700 p-3 text-center font-display text-xl text-cream transition-colors hover:border-mustard hover:text-mustard sm:p-4 sm:text-2xl"
-                >
-                  {o.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-5">
+            <Link
+              href="/quiz"
+              className="inline-block rounded-full border-3 border-ink bg-terracotta px-6 py-3 text-xs font-display uppercase tracking-wider text-cream shadow-cartoon-sm transition-transform hover:-translate-y-1"
+            >
+              Take the quiz →
+            </Link>
+          </div>
         </div>
       </section>
     </div>
   );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="font-display text-[10px] uppercase tracking-wider text-ink/60">
-        {label}
-      </dt>
-      <dd className="mt-1 leading-snug text-ink">{value}</dd>
-    </div>
-  );
-}
-
-// "20 (from image)" → "20"
-function cleanFromImage(s: string) {
-  return s.replace(/\s*\(from image\)/i, '').trim();
 }

@@ -19,6 +19,19 @@ const FIELDS: Array<[keyof CorruptionInteraction, string]> = [
   ['theResult', 'The result']
 ];
 
+// An interaction is considered empty when none of the 5 narrative fields
+// have any text. Bossy Boots, Amp→Pilot, Glitch→Drift, and Glitch→Ledger
+// fall into this bucket in the current docx — site audit asked us to either
+// fill copy or hide the empty tiles. We hide them.
+const hasContent = (it: CorruptionInteraction) =>
+  Boolean(
+    it.whereTheyMeet ||
+      it.theTrap ||
+      it.theSweetPart ||
+      it.theCorruption ||
+      it.theResult
+  );
+
 export function ChainSection({
   chain,
   isDark
@@ -26,6 +39,7 @@ export function ChainSection({
   chain: ExacerbatorChain;
   isDark: boolean;
 }) {
+  const interactions = chain.interactions.filter(hasContent);
   const [open, setOpen] = useState<CorruptionInteraction | null>(null);
 
   useEffect(() => {
@@ -75,14 +89,14 @@ export function ChainSection({
               isDark ? 'text-mustard' : 'text-terracotta'
             }`}
           >
-            {chain.interactions.length} documented victims · tap any to expand
+            {interactions.length} documented victims · tap any to expand
           </p>
         </div>
       </div>
 
       {/* Tile grid */}
       <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {chain.interactions.map((it) => (
+        {interactions.map((it) => (
           <li key={it.victimSlug}>
             <CorruptionTile
               interaction={it}
