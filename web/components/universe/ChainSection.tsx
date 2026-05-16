@@ -305,7 +305,7 @@ function ModalAvatar({
           />
         )}
       </span>
-      <div className={align === 'right' ? 'text-right' : ''}>
+      <div className={align === 'right' ? 'sm:text-right' : ''}>
         <p className="font-display text-[10px] uppercase tracking-wider text-mustard">
           {role}
         </p>

@@ -33,7 +33,13 @@ A statically pre-rendered Next.js 15 App Router site (`web/`) backed by Supabase
 - **Responsibility:** Mo Town cartoon visual identity components — Squiggle / Zigzag / ShakeLines / Dot SVGs, Sticker badges, CharacterPortrait / HeroCard / Title / Scene presence-aware image loaders, QuotePost lookups
 - **Tech:** Plain SVG + Tailwind; `next/image` for raster assets
 - **Key files:** `web/components/decor/*`
-- **Depends on:** `public/assets/{characters,hero-cards,scenes,titles,quote-posts,illustrations,logo}/` directories — fs scan at module load builds presence sets (`hasPortrait`, `hasHeroCard`, etc.)
+- **Depends on:** `web/content/asset-presence.json` (built at content-build time) for the presence sets. The actual image files live at `public/assets/{characters,hero-cards,scenes,titles,quote-posts,illustrations,logo}/`.
+
+### Universe page components
+- **Responsibility:** Page-specific components for each narrative section (Geography boroughs, Arcs pairs, Exacerbator corruption chains with modal, Lore chapter accordion). Each consumes structured JSON emitted by the corresponding parser.
+- **Tech:** React Server Components for layout + 'use client' islands where state is needed (ChainSection, LoreChapter)
+- **Key files:** `web/components/universe/{CharacterChip,BoroughCard,MechanismSteps,PairArcCard,ChainSection,LoreChapter,NarrativePage}.tsx`
+- **Depends on:** typed loaders in `lib/content.ts`; reuses decor primitives
 
 ### Asset pipeline
 - **Responsibility:** Optimize source PNGs into shipped WebP, normalize filenames to `{slug}.webp` per role directory
@@ -87,5 +93,7 @@ A statically pre-rendered Next.js 15 App Router site (`web/`) backed by Supabase
 - Content shape is asserted with TypeScript `as` casts, not validated at runtime. Source-doc schema drift won't fail at compile time.
 - GSAP is installed but unused; either remove or schedule a feature that needs it.
 - Two characters (Amp, Velour) have no scene panel — profile pages skip the scene band silently.
+- Pilot and Pinch aren't assigned to a borough — the source doc puts them in parenthetical "lives here during week / weekends" notes on Polish's and Plenty's entries.
 - The asset pipeline is destructive (replaces PNGs with WebP in place) — originals only live in the source folders.
 - `next build` clobbers `.next/server/vendor-chunks/*.js` that `next dev` depends on — never run both in parallel.
+- PR merges via the GitHub UI have twice silently dropped new type definitions from `lib/content.ts` while keeping the `as X` casts that depend on them. Vercel build fails with implicit-any errors. Hotfix recipe: `git checkout main; git checkout <branch> -- web/lib/content.ts; commit; push`.
