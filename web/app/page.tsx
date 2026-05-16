@@ -22,7 +22,7 @@ const FEATURED_SLUGS = [
   'quake',
   'drift',
   'pilot',
-  'flow',
+  'flo',
   'capital',
   'mirrorball',
   'honeytrap',

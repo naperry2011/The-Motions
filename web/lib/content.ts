@@ -139,8 +139,8 @@ export function getPair(slug: string): Character | undefined {
   const a = match[1].trim().toLowerCase();
   const b = match[2].trim().toLowerCase();
   const meName = me.name.toLowerCase();
-  // Match by name OR by docx alias ("flo" vs "flow")
-  const partnerToken = a === meName || a === meName.replace(/w$/, '') ? b : a;
+  // Match by name (canonical is "Flo" per audit)
+  const partnerToken = a === meName ? b : a;
   // Find by slug or by name (case insensitive)
   return allCharacters.find(
     (c) =>

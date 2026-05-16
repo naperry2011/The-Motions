@@ -7,7 +7,7 @@ import type { Borough } from '@/lib/content';
 // Each borough → one resident's scene art as the accent visual.
 // Chosen because that character's location anchors the borough geographically.
 const BOROUGH_ACCENT_SLUG: Record<string, string> = {
-  'the-heart': 'flow', // Flow City Park, central gathering
+  'the-heart': 'flo', // Flo City Park, central gathering
   'the-heights': 'north', // North Roof at the summit
   'the-lower-wards': 'guess', // Guess Market in the chaos
   'the-margins': 'shade', // Shade Street on the edges

@@ -35,7 +35,7 @@ export const PUBLIC_CHARACTER_SLUGS = [
   'resonate',
   // Pair 9
   'sputter',
-  'flow'
+  'flo'
 ] as const;
 
 const PUBLIC_SET = new Set<string>(PUBLIC_CHARACTER_SLUGS);
