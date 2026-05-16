@@ -1,19 +1,7 @@
 import Image from 'next/image';
-import fs from 'node:fs';
-import path from 'node:path';
+import manifest from '@/content/asset-presence.json';
 
-const dir = path.join(process.cwd(), 'public/assets/quote-posts');
-let availablePosts: Set<number>;
-try {
-  availablePosts = new Set(
-    fs
-      .readdirSync(dir)
-      .map((f) => Number(f.replace(/\.webp$/, '')))
-      .filter((n) => Number.isFinite(n))
-  );
-} catch {
-  availablePosts = new Set();
-}
+const availablePosts = new Set<number>(manifest.quotePosts);
 
 export function hasQuotePost(id: number) {
   return availablePosts.has(id);

@@ -759,8 +759,37 @@ async function buildModules() {
   await writeJson('modules.json', modules);
 }
 
+// Builds a client-safe manifest of which slugs/IDs have image assets in
+// each public/assets/* folder. Imported by both server and client components
+// so they don't have to do fs scans at module load.
+async function buildAssetPresence() {
+  console.log('Building asset presence manifest…');
+  const PUB = path.resolve(process.cwd(), 'public/assets');
+  const slugsIn = async (dir: string): Promise<string[]> => {
+    try {
+      return (await fs.readdir(path.join(PUB, dir)))
+        .filter((f) => /\.webp$/.test(f))
+        .map((f) => f.replace(/\.webp$/, ''));
+    } catch {
+      return [];
+    }
+  };
+  const numericIn = async (dir: string): Promise<number[]> => {
+    return (await slugsIn(dir)).map((s) => Number(s)).filter((n) => Number.isFinite(n));
+  };
+  const manifest = {
+    characters: await slugsIn('characters'),
+    heroCards: await slugsIn('hero-cards'),
+    scenes: await slugsIn('scenes'),
+    titles: await slugsIn('titles'),
+    quotePosts: await numericIn('quote-posts')
+  };
+  await writeJson('asset-presence.json', manifest);
+}
+
 async function main() {
   await fs.mkdir(OUT, { recursive: true });
+  await buildAssetPresence();
   const quotes = await buildQuotes();
   const characters = await buildCharacters(quotes);
   await buildNarrativeDoc(
