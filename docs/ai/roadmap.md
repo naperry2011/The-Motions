@@ -8,22 +8,21 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
 
 ## Current Focus
 
-**Theme:** Phase 1 polish — every public surface looks and feels like Mo Town, not a generic Next.js site.
+**Theme:** Launch readiness — make `/universe` overview as strong as the four narrative pages, fix mobile navigation, get a custom domain on production.
 **Goals:**
-1. Bring the four narrative pages (geography / lore / arcs / exacerbators) up to the same cartoon-vibe bar as the character profiles
-2. Editorial / copy pass so the marketing surfaces stop sounding generic
-3. Mobile menu so non-character pages are reachable on phones beyond the Workbook CTA
+1. `/universe` overview polish so the entry to the universe matches the bar set by `/geography` / `/arcs` / `/exacerbators` / `/lore`
+2. Mobile nav menu so non-character pages are reachable on phones
+3. Custom domain + analytics + OG images — small launch chores
 
 ## Now
 
-- Character profile bios fleshed out from the canonical database — **Done** (`f8bfbcc`)
-- Character profile vibe + mobile pass — **Done** (`bea18fa`)
-- Narrative pages styling pass (geography, lore, arcs, exacerbators) — **Not started**
+- Phase 2 narrative pages all shipped (Geography, Arcs, Exacerbators, Lore) — **Done** through `9f2aee1`
+- `main` redeploy unblocked after PR-merge hotfix — **Done** (`58b6f7b`)
+- `/universe` overview polish — **Not started**
 
 ## Next
 
-- `/universe` overview polish (currently just a 6-tile grid + Welcome billboard)
-- Mobile nav hamburger so universe/characters/quotes are reachable from mobile beyond the homepage entry point
+- Mobile nav hamburger so universe/characters/quotes are reachable from mobile beyond the homepage entry
 - Editorial copy pass on homepage manifesto + workbook sales-page long-form
 - Custom domain + Vercel production swap
 - Analytics + OG images + sitemap.xml + robots.txt (one combined chore)
@@ -40,20 +39,17 @@ The Motions is a premium creative IP and solopreneur brand companion. The web pl
 - Mo Town interactive map (illustrated SVG with hotspots → character / district)
 - Per-character art for Amp and Velour (currently use hero card; no portrait or scene)
 - Cohort program: scheduled live sessions layered on top of the self-paced workbook
+- CI typecheck workflow that blocks PR merges if `tsc --noEmit` fails (would have caught the PR #6 type-stripping issue automatically)
 
 ## Recently Completed
 
-- Phase 1 visual rebrand to Mo Town cartoon style — 2026-05-14
-- Full graphics wiring (logo, billboard, group shot, 88 quote posters, sample PDF) — 2026-05-14
-- Graphics(1) 50-file audit + remap to hero-cards/ + scenes/ — 2026-05-14
-- Image optimization pipeline (sharp → WebP, 317 MB → 29 MB) — 2026-05-14
-- Quote library redesign (compact grid, pagination, modal) — 2026-05-14
-- Character bios from canonical database (structured traits) — 2026-05-14
-- Sitewide mobile pass (nav, hero fonts, paddings, toolbar wrap) — 2026-05-14
-- Hotfix to `main` after PR-merge JSX corruption — 2026-05-14
+- Phase 2: four narrative pages restructured (Geography / Arcs / Exacerbators / Lore) with bespoke parsers + components — 2026-05-16
+- Asset presence manifest decoupling fs scans from client components — 2026-05-16
+- Phase 1: visual rebrand, full graphics wiring, character bios, sitewide mobile pass — 2026-05-14
 
 ## Deferred / Cancelled
 
 - Headless CMS (Sanity / Payload) — Sticking with committed JSON. Revisit only if non-technical editing becomes a blocker.
-- GSAP ScrollTrigger usage — Installed but never imported. Framer Motion `whileInView` + `useScroll` covers every section. Keep for later if a pinned sequence demands it.
+- GSAP ScrollTrigger usage — Installed but never imported. Framer Motion `whileInView` + `useScroll` covers every section.
 - Per-character commissioned portrait art for Amp/Velour — Hero card stands in well enough; deferring until v2.
+- CI typecheck workflow — User chose "hotfix when it happens" for the PR-merge data-loss issue rather than build a prevention layer.

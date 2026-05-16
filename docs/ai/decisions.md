@@ -181,3 +181,72 @@ Phase-1 character profiles use a `Sticker` decoration as the eyebrow above the t
 - **Neutral:** New character types added later need a `stateColor` branch.
 
 ---
+
+## ADR-010: Per-page structured parsers for narrative pages
+
+**Date:** 2026-05-16
+**Status:** Accepted (Phase 2)
+
+**Context**
+Phase 1 left the four narrative pages (`/universe/geography`, `/arcs`, `/exacerbators`, `/lore`) rendering as a single block of mammoth-converted HTML through one generic `NarrativePage` component. The hero stickers looked great but the body was flat text. We had 25 hero cards, 23 scenes, character data, and pair relationships sitting unused on these pages.
+
+**Decision**
+Each of the four narrative pages becomes a dedicated React page powered by a page-specific structured parser in `scripts/build-content.ts`. Each parser detects the document's section pattern (borough headers, pair headers, exacerbator possessives, chapter headings) and emits typed JSON that the page renders with bespoke components. Legacy `NarrativePage` stays in the tree as a fallback but the four pages stop using it.
+
+**Decision matrix per page:**
+- **Geography**: 5 borough cards with one resident's scene as accent art + portrait chips + Before/After vibe cards
+- **Arcs**: 5-step mechanism band + 9 Shadow→Grounded pair cards with portraits + stage fields
+- **Exacerbators**: 6 chain bands; each interaction is a tile that opens a modal (condensed to keep page short)
+- **Lore**: 12-chapter accordion with drop caps + optional scene images + pull quotes
+
+**Consequences**
+- **Positive:** Each narrative page now has the same visual quality as the character profiles. Character names embed as clickable chips, scene art reinforces location/identity, page heights are bounded by collapse patterns where appropriate.
+- **Negative:** `build-content.ts` is ~700 lines now with 10 parsers. New source-doc revisions need parser updates rather than just a re-run.
+- **Neutral:** Each page lives in its own `app/universe/<page>/page.tsx` with its own component set — more files, less monolithic.
+
+**Alternatives considered**
+- One smarter generic renderer that auto-decorates the legacy HTML (character-name detection, sticker-style H2s, etc.) — Rejected because the four docs have radically different shapes (5 boroughs vs 9 pairs vs 6 chains vs 12 chapters) and a generic renderer would either degrade to the lowest common denominator or grow more conditional logic than 4 specific parsers.
+
+---
+
+## ADR-011: Asset presence manifest, not fs scans
+
+**Date:** 2026-05-16
+**Status:** Accepted
+
+**Context**
+`CharacterPortrait.tsx` originally did `fs.readdirSync` at module load to build `availablePortraits`/`hasHeroCard`/etc. sets. When `ChainSection.tsx` (the new client component for the Exacerbators tile grid + modal) needed `hasHeroCard`, the build failed: `'use client'` components can't bundle Node built-ins.
+
+**Decision**
+Add a `buildAssetPresence()` step to the content pipeline that scans `public/assets/{characters,hero-cards,scenes,titles,quote-posts}/` and emits `content/asset-presence.json` with arrays of slugs / numeric IDs per role. `CharacterPortrait.tsx` and `QuotePost.tsx` import that JSON and construct `Set`s at module load — no `fs` at runtime, safe for both server and client components.
+
+**Consequences**
+- **Positive:** Client components can use `hasPortrait` / `hasHeroCard` / `hasQuotePost` everywhere. The manifest is precomputed once per build, smaller than an fs traversal.
+- **Negative:** Adding a new asset file requires re-running `npm run content:build` so the manifest picks it up — was implicit before, now explicit.
+- **Neutral:** The manifest is committed alongside other content JSON; size is trivial.
+
+---
+
+## ADR-012: Condense long narrative pages with click-to-expand patterns
+
+**Date:** 2026-05-16
+**Status:** Accepted
+
+**Context**
+The Phase-2 Exacerbators page (6 chains × 6 victims × 5 fields each as full-width cards) and the Lore page (12 stacked editorial chapters) were beautiful but generated 3000–5000px of scroll each. User feedback after each landed: "it looks amazing but condense it."
+
+**Decision**
+Both pages convert to click-to-expand patterns rather than show-everything-at-once:
+- **Exacerbators**: each interaction is a compact tile (Exacerbator → Victim portraits + 3-line teaser of "The Trap") in a 2/3-column grid. Click opens a modal with the full 5-field card. (`ChainSection.tsx`, `'use client'`.)
+- **Lore**: chapter accordion — each chapter is a tight ~80px header row (number disc + sticker + title + "+" toggle) with the editorial body (scene, drop-cap prose, pull-quote) animating open in place. First chapter open by default. (`LoreChapter.tsx`, `'use client'`, framer-motion height animation.)
+
+**Consequences**
+- **Positive:** Both pages now collapse to a single-screen scannable index of titles/tiles. Users see the full breadth before drilling in. Mobile-friendly. Editorial detail still appears on demand.
+- **Negative:** Content is one click away from the reader instead of in front of them. Acceptable for browse/explore content; would be wrong for read-through-once content.
+- **Neutral:** Page bundle weight goes up slightly (each gained a client component) but well under 5 kB total.
+
+**Alternatives considered**
+- Pagination (load 30, click to load more) — Used on `/quotes`. Less ideal for chaptered content where readers want to scan all titles first.
+- Tabs (one chapter visible) — Hides too much; readers would need to know who they care about before seeing anything.
+
+---
