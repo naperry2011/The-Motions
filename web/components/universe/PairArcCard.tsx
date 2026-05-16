@@ -177,7 +177,7 @@ function PortraitPanel({
           />
         )}
       </span>
-      <div className={align === 'right' ? 'sm:text-right' : ''}>
+      <div className={align === 'right' ? 'text-right' : ''}>
         <p
           className={`font-display text-[10px] uppercase tracking-wider ${labelCls}`}
         >
