@@ -286,6 +286,180 @@ async function buildNarrativeDoc(srcRel: string[], outName: string, title: strin
   await writeJson(outName, { title, html });
 }
 
+// ---------- Geography (structured) ----------
+// Layered on top of the legacy narrative HTML. After buildNarrativeDoc has
+// written geography.json with { title, html }, this function re-reads the
+// docx text, parses the 5 borough sections + intro/aesthetic + before/after
+// Capital, detects character mentions per borough, and merges everything
+// back into geography.json.
+async function buildGeographyStructured(
+  characters: Array<{ name: string; slug: string }>
+) {
+  console.log('Parsing geography structure…');
+  const file = path.join(
+    ROOT,
+    'Character Documentation',
+    'MO TOWN COMPLETE GEOGRAPHY & HOUSING.docx'
+  );
+  const text = await readDocxText(file);
+  const lines = text.split(/\r?\n/);
+
+  // ---- Resident detection ----
+  // The doc has an authoritative "HOUSING BY BOROUGH:" summary section near
+  // the end. Parse that for the canonical resident list per borough.
+  const canonSlugByName = new Map<string, string>();
+  for (const c of characters) {
+    canonSlugByName.set(c.name.toLowerCase(), c.slug);
+  }
+  const residentsByBoroughName = new Map<string, string[]>();
+  {
+    let inHousingSection = false;
+    let currentBorough = '';
+    for (const raw of lines) {
+      const l = raw.trim();
+      if (/^HOUSING BY BOROUGH:?$/i.test(l)) {
+        inHousingSection = true;
+        continue;
+      }
+      if (!inHousingSection) continue;
+      const boroughHead = l.match(/^(THE\s+[A-Z\s]+?):\s*$/);
+      if (boroughHead) {
+        currentBorough = boroughHead[1].trim();
+        residentsByBoroughName.set(currentBorough, []);
+        continue;
+      }
+      if (!currentBorough) continue;
+      // Stop if we hit another all-caps non-housing header
+      if (/^[A-Z\s&]{8,}:?$/.test(l) && !/^THE\s/.test(l)) {
+        inHousingSection = false;
+        continue;
+      }
+      // Entry pattern: "Name [& Name…] - description" or "Name, Name, Name - description"
+      const dashIdx = l.indexOf(' - ');
+      if (dashIdx < 1) continue;
+      const namesPart = l.slice(0, dashIdx);
+      const names = namesPart
+        .split(/,|\s&\s|\sand\s/i)
+        .map((n) => n.trim())
+        .filter(Boolean);
+      const list = residentsByBoroughName.get(currentBorough)!;
+      for (const n of names) {
+        let s = slug(n);
+        if (s in NAME_ALIASES) s = NAME_ALIASES[s];
+        const cs = canonSlugByName.has(n.toLowerCase())
+          ? canonSlugByName.get(n.toLowerCase())!
+          : characters.find((c) => c.slug === s)?.slug;
+        if (cs && !list.includes(cs)) list.push(cs);
+      }
+    }
+  }
+
+  // 1. Find borough section boundaries
+  type RawBorough = {
+    number: number;
+    name: string;
+    subtitle: string;
+    startLine: number;
+    endLine: number;
+    body: string[];
+  };
+  const boroughs: RawBorough[] = [];
+  const headRe = /^(\d+)\.\s+(THE\s+[A-Z\s]+?)\s*\(([^)]+)\)\s*$/;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(headRe);
+    if (m) {
+      if (boroughs.length) boroughs[boroughs.length - 1].endLine = i;
+      boroughs.push({
+        number: Number(m[1]),
+        name: m[2].trim(),
+        subtitle: m[3].trim(),
+        startLine: i,
+        endLine: lines.length,
+        body: []
+      });
+    }
+  }
+
+  // 2. For each borough, slice the body
+  for (const b of boroughs) {
+    b.body = lines.slice(b.startLine + 1, b.endLine).filter((l) => l.trim());
+  }
+
+  // 3. Page-level intro / aesthetic — first section before the boroughs
+  const introLines = boroughs.length ? lines.slice(0, boroughs[0].startLine) : [];
+  let intro = '';
+  let aesthetic = '';
+  for (let i = 0; i < introLines.length; i++) {
+    const t = introLines[i].trim();
+    if (/^OVERALL LAYOUT:/i.test(t)) {
+      // Next non-empty line is the intro paragraph
+      for (let j = i + 1; j < introLines.length; j++) {
+        if (introLines[j].trim()) {
+          intro = introLines[j].trim();
+          break;
+        }
+      }
+    }
+    const aMatch = t.match(/^The Aesthetic:\s*(.+)$/i);
+    if (aMatch) aesthetic = aMatch[1].trim();
+  }
+
+  // 4. Per-borough field extraction
+  const findField = (body: string[], label: string): string => {
+    for (const l of body) {
+      const re = new RegExp(`^${label}\\s*:\\s*(.+)$`, 'i');
+      const m = l.match(re);
+      if (m) return m[1].trim();
+    }
+    return '';
+  };
+
+  // The Vibe section has Before Capital + After Capital sub-blocks.
+  // Returns { before, after } strings.
+  const findVibe = (body: string[]): { before: string; after: string } => {
+    let inVibe = false;
+    let before = '';
+    let after = '';
+    for (const raw of body) {
+      const l = raw.trim();
+      if (/^The Vibe:?\s*$/i.test(l)) {
+        inVibe = true;
+        continue;
+      }
+      if (!inVibe) continue;
+      const bm = l.match(/^Before Capital:\s*(.+)$/i);
+      const am = l.match(/^After Capital:\s*(.+)$/i);
+      if (bm) before = bm[1].trim();
+      if (am) after = am[1].trim();
+    }
+    return { before, after };
+  };
+
+  // 5. Build structured borough records
+  const boroughsOut = boroughs.map((b) => {
+    const vibe = findVibe(b.body);
+    return {
+      slug: slug(b.name),
+      number: b.number,
+      name: b.name,
+      subtitle: b.subtitle,
+      overarchingTheme: findField(b.body, 'Overarching Theme'),
+      whatItRepresents: findField(b.body, 'What It Represents'),
+      residents: residentsByBoroughName.get(b.name) ?? [],
+      vibeBefore: vibe.before,
+      vibeAfter: vibe.after
+    };
+  });
+
+  // 6. Merge into existing geography.json (preserves title + html)
+  const existing = JSON.parse(
+    await fs.readFile(path.join(OUT, 'geography.json'), 'utf8')
+  );
+  const merged = { ...existing, intro, aesthetic, boroughs: boroughsOut };
+  await writeJson('geography.json', merged);
+  console.log(`  parsed ${boroughsOut.length} boroughs, residents detected per borough: ${boroughsOut.map((b) => b.residents.length).join('/')}`);
+}
+
 // ---------- Modules ----------
 async function buildModules() {
   console.log('Parsing workbook modules…');
@@ -317,12 +491,13 @@ async function buildModules() {
 async function main() {
   await fs.mkdir(OUT, { recursive: true });
   const quotes = await buildQuotes();
-  await buildCharacters(quotes);
+  const characters = await buildCharacters(quotes);
   await buildNarrativeDoc(
     ['Character Documentation', 'MO TOWN COMPLETE GEOGRAPHY & HOUSING.docx'],
     'geography.json',
     'Mo Town: Geography & Housing'
   );
+  await buildGeographyStructured(characters);
   await buildNarrativeDoc(
     ['Character Documentation', 'CHARACTER ARCS & TRANSFORMATIONS.docx'],
     'arcs.json',

@@ -9,6 +9,24 @@ import modules from '@/content/modules.json';
 
 export type Quote = { id: number; character: string; characterSlug: string; text: string };
 
+export type Borough = {
+  slug: string;
+  number: number;
+  name: string;
+  subtitle: string;
+  overarchingTheme: string;
+  whatItRepresents: string;
+  residents: string[];
+  vibeBefore: string;
+  vibeAfter: string;
+};
+
+export type GeographyDoc = NarrativeDoc & {
+  intro?: string;
+  aesthetic?: string;
+  boroughs?: Borough[];
+};
+
 export type CharacterTraits = {
   age?: string;
   pronouns?: string;
@@ -42,7 +60,7 @@ export type ModuleRecord = {
 
 export const allQuotes = quotes as Quote[];
 export const allCharacters = characters as Character[];
-export const geographyDoc = geography as NarrativeDoc;
+export const geographyDoc = geography as GeographyDoc;
 export const arcsDoc = arcs as NarrativeDoc;
 export const exacerbatorsDoc = exacerbators as NarrativeDoc;
 export const historicDistrictDoc = historicDistrict as NarrativeDoc;
